@@ -16,78 +16,149 @@ export class JobService {
         return log?.application || null;
     }
 
-    // Smart deduplication logic
+    // --- Advanced Matching Helpers ---
+
+    private normalizeString(str: string): string {
+        return str.toLowerCase().trim().replace(/[^\w\s]/g, ''); // Remove punctuation
+    }
+
+    private cleanCompanyName(name: string): string {
+        return this.normalizeString(name)
+            .replace(/\b(inc|llc|ltd|corp|corporation|gmbh|co|company)\b/g, '')
+            .trim();
+    }
+
+    private cleanRoleTitle(title: string): string {
+        return this.normalizeString(title)
+            .replace(/\b(senior|junior|lead|principal|staff|intern|ii|iii|iv)\b/g, '') // Levels
+            .replace(/\b(remote|hybrid|onsite|full time|contract)\b/g, '') // Type/Location
+            .replace(/\b(m\/f\/d|f\/m\/d)\b/g, '') // Gender markers
+            .trim();
+    }
+
+    // Jaccard Similarity (Token Overlap)
+    // Returns 0 to 1
+    private calculateSimilarity(str1: string, str2: string): number {
+        const set1 = new Set(str1.split(/\s+/));
+        const set2 = new Set(str2.split(/\s+/));
+
+        const intersection = new Set([...set1].filter(x => set2.has(x)));
+        const union = new Set([...set1, ...set2]);
+
+        return intersection.size / union.size;
+    }
+
+    // --- Main Logic ---
+
     async findExistingApplication(data: ExtractedJobData, threadId?: string) {
-        // 1. Check Thread ID (High Confidence)
+        // 1. Thread ID (Absolute Link)
         if (threadId) {
             const byThread = await this.findByThreadId(threadId);
             if (byThread) return byThread;
         }
 
-        // 2. Check Job ID + Company (High Confidence)
-        if (data.jobId && data.company) {
+        const safeCompany = data.company || "";
+        const safeRole = data.role || "";
+        const safeJobId = data.jobId ? data.jobId.trim() : null;
+
+        // 2. Job ID + Company (Strong Link)
+        if (safeJobId && safeCompany) {
+            // Try strict match on Job ID first
             const byJobId = await prisma.jobApplication.findFirst({
                 where: {
-                    company: { contains: data.company.trim() },
-                    jobId: data.jobId.trim()
+                    jobId: safeJobId,
+                    // Optional: stricter verification with company check
+                    // company: { contains: safeCompany } 
                 }
             });
             if (byJobId) return byJobId;
         }
 
-        // 3. Fuzzy match (Legacy/Last Resort)
-        // Only if we fail to match thread or ID. 
-        return this.findDuplicate(data.company, data.role);
-    }
+        // 3. Domain Match (Medium-Strong Link)
+        // If we have a domain, find jobs with same domain and check role similarity
+        if (data.companyInfo?.domain) {
+            const domainCandidates = await prisma.jobApplication.findMany({
+                where: { companyDomain: data.companyInfo.domain }
+            });
 
-    // Fuzzy deduplication logic (Helper)
-    async findDuplicate(company: string | undefined | null, role: string | undefined | null) {
-        // Simple exact match for now, could be enhanced with fuzzy search if database supports it
-        // or by normalizing strings (lowercase, remove punctuation)
-        // For SQLite, we can use raw query or simple findFirst
+            // Check role similarity
+            const match = domainCandidates.find(c => {
+                const sim = this.calculateSimilarity(
+                    this.cleanRoleTitle(c.role),
+                    this.cleanRoleTitle(safeRole)
+                );
+                return sim > 0.6; // Threshold for "Software Engineer" vs "Senior Software Engineer" ~ 0.66
+            });
+            if (match) return match;
+        }
 
-        const safeCompany = company || "Unknown Company";
-        const safeRole = role || "Unknown Role";
+        // 4. Fuzzy Name Match (Fallback)
+        const cleanedInputCompany = this.cleanCompanyName(safeCompany);
 
-        // Normalize logic in code for better control
-        const normalizedCompany = safeCompany.toLowerCase().trim();
-        const normalizedRole = safeRole.toLowerCase().trim();
-
-        // Efficiently fetch potentially similar records
+        // Fetch candidates with somewhat matching company names to reduce in-memory processing
         const candidates = await prisma.jobApplication.findMany({
             where: {
-                company: { contains: normalizedCompany }, // naive approach
+                OR: [
+                    { company: { contains: cleanedInputCompany } },
+                    { company: { contains: safeCompany } }
+                ]
             }
         });
 
-        // In-memory strict check? Or just trust the query?
-        // Let's stick to "Company Name" and "Role" should match reasonably well
-        // If Role is completely different, treated as new application
-        return candidates.find((c: any) =>
-            c.company.toLowerCase().includes(normalizedCompany) &&
-            c.role.toLowerCase().includes(normalizedRole)
-        );
+        return candidates.find(c => {
+            const dbCleanCompany = this.cleanCompanyName(c.company);
+            const companyMatch = dbCleanCompany.includes(cleanedInputCompany) || cleanedInputCompany.includes(dbCleanCompany);
+
+            if (!companyMatch) return false;
+
+            // Check Role Similarity
+            const roleSim = this.calculateSimilarity(
+                this.cleanRoleTitle(c.role),
+                this.cleanRoleTitle(safeRole)
+            );
+
+            return roleSim > 0.5; // Lower threshold if company matches well
+        });
     }
 
     async createOrUpdateApplication(userId: string, data: ExtractedJobData, threadId?: string, source: string = 'GMAIL') {
         const existing = await this.findExistingApplication(data, threadId);
 
         if (existing) {
-            // Update logic
+            console.log(`[JobService] Merging with existing job: ${existing.id} (${existing.company} - ${existing.role})`);
+
+            // Smart Merge Logic
             return await prisma.jobApplication.update({
                 where: { id: existing.id },
                 data: {
                     status: data.status || existing.status,
                     lastUpdate: new Date(),
-                    // Update rich data if missing
+                    // Update rich data if missing or likely better?
+                    // Prefer keeping existing valid data unless new data fills gaps
                     jobId: existing.jobId || data.jobId,
-                    salaryRange: !existing.salaryRange ? (data.salary ? JSON.stringify(data.salary) : null) : existing.salaryRange,
+                    salaryRange: existing.salaryRange || (data.salary ? JSON.stringify(data.salary) : null),
+
+                    // Domain enrichment
+                    companyDomain: existing.companyDomain || data.companyInfo?.domain,
+                    companyLinkedIn: existing.companyLinkedIn || data.companyInfo?.linkedIn,
+                    jobPostUrl: existing.jobPostUrl || data.urls?.jobPost,
+
+                    // Always append next steps if new one exists? Or replace? 
+                    // Let's replace for now, maybe append in future logic
                     nextSteps: data.nextSteps || existing.nextSteps,
+
+                    // People - merge or overwrite?
+                    recruiterName: existing.recruiterName || data.people?.recruiterName,
+                    recruiterEmail: existing.recruiterEmail || data.people?.recruiterEmail,
+                    hiringManager: existing.hiringManager || data.people?.hiringManager,
+
+                    sentimentScore: data.sentimentScore ?? existing.sentimentScore,
                 }
             });
         }
 
-        // Create new
+        console.log(`[JobService] Creating new application: ${data.company} - ${data.role}`);
+
         return await prisma.jobApplication.create({
             data: {
                 userId,
@@ -97,7 +168,6 @@ export class JobService {
                 status: data.status || "APPLIED",
                 source: source,
                 appliedDate: new Date(),
-                // Map other fields
                 location: data.location,
                 salaryRange: data.salary ? JSON.stringify(data.salary) : null,
                 companyDomain: data.companyInfo?.domain,

@@ -124,6 +124,7 @@ model EmailLog {
   threadId        String
   receivedDate    DateTime
   snippet         String?
+  body            String?   // Full email body (HTML or Text)
   
   applicationId   String?
   application     JobApplication? @relation(fields: [applicationId], references: [id])
