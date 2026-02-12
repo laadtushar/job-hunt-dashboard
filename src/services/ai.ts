@@ -1,5 +1,6 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import prisma from "@/lib/prisma";
 
 export interface ExtractedJobData {
     isJobRelated: boolean;
@@ -17,45 +18,170 @@ export interface ExtractedJobData {
     sentiment?: string; // positive, negative, neutral
     sentimentScore?: number; // 0-1
     feedback?: string;
+    _meta?: {
+        model: string;
+        provider: string;
+    };
 }
 
+
 export class AIService {
-    private genAI: GoogleGenerativeAI;
-    private model: any;
+    private genAI?: GoogleGenerativeAI;
+    private model?: any;
+    private provider: 'GEMINI' | 'OPENROUTER';
 
     constructor() {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) {
-            console.warn("GEMINI_API_KEY is not set. AI parsing will fail.");
+        this.provider = (process.env.AI_PROVIDER as 'GEMINI' | 'OPENROUTER') || 'GEMINI';
+
+        if (this.provider === 'GEMINI') {
+            const apiKey = process.env.GEMINI_API_KEY;
+            if (!apiKey) {
+                console.warn("GEMINI_API_KEY is not set. AI parsing will fail.");
+            } else {
+                this.genAI = new GoogleGenerativeAI(apiKey);
+                this.model = this.genAI.getGenerativeModel({
+                    model: "gemini-2.0-flash",
+                    generationConfig: { responseMimeType: "application/json" }
+                });
+            }
         }
-        this.genAI = new GoogleGenerativeAI(apiKey || "");
-        // "gemini-2.5-flash-lite" is the cost-effective model requested by user
-        this.model = this.genAI.getGenerativeModel({
-            model: "gemini-2.5-flash-lite",
-            generationConfig: { responseMimeType: "application/json" }
-        });
     }
 
-    async parseEmail(emailBody: string, subject: string): Promise<ExtractedJobData> {
+    private async _generateJson<T>(prompt: string): Promise<T> {
+        let jsonString = "";
+
+        if (this.provider === 'GEMINI') {
+            if (!this.model) throw new Error("Gemini Model not initialized");
+            const result = await this.model.generateContent(prompt);
+            const response = await result.response;
+            jsonString = response.text();
+        } else if (this.provider === 'OPENROUTER') {
+            const apiKey = process.env.OPENROUTER_API_KEY;
+            if (!apiKey) throw new Error("OPENROUTER_API_KEY is not set");
+
+            const model = process.env.OPENROUTER_MODEL || "google/gemini-2.0-flash-lite-001";
+
+            let retries = 5;
+            let attempt = 0;
+            let delay = 2000;
+
+            while (attempt < retries) {
+                try {
+                    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${apiKey}`,
+                            "Content-Type": "application/json",
+                            "HTTP-Referer": "https://jobhunt-dashboard.local",
+                            "X-Title": "Job Hunt Dashboard",
+                        },
+                        body: JSON.stringify({
+                            "model": model,
+                            "messages": [{ "role": "user", "content": prompt }],
+                            "response_format": { "type": "json_object" }
+                        })
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 || response.status === 503) {
+                            const errText = await response.text();
+                            let waitTime = delay;
+                            try {
+                                const errJson = JSON.parse(errText);
+                                if (errJson.error?.metadata?.retry_after_seconds) {
+                                    waitTime = errJson.error.metadata.retry_after_seconds * 1000;
+                                }
+                            } catch (e) { }
+
+                            attempt++;
+                            console.warn(`[AIService] OpenRouter ${response.status} (Attempt ${attempt}/${retries}). Retrying in ${waitTime}ms...`);
+
+                            if (attempt >= retries) throw new Error(`OpenRouter API Error: ${response.status} - ${errText}`);
+                            await new Promise(resolve => setTimeout(resolve, waitTime + 500));
+                            delay *= 1.5;
+                            continue;
+                        }
+                        const errText = await response.text();
+                        throw new Error(`OpenRouter API Error: ${response.status} - ${errText}`);
+                    }
+
+                    const data = await response.json();
+                    jsonString = data.choices?.[0]?.message?.content || "";
+                    break;
+
+                } catch (e: any) {
+                    if (attempt < retries - 1 && (e.cause?.code === 'ECONNRESET' || e.message.includes('fetch failed'))) {
+                        attempt++;
+                        console.warn(`[AIService] Network Error (Attempt ${attempt}/${retries}). Retrying...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                        continue;
+                    }
+                    throw e;
+                }
+            }
+        }
+
+        const cleanText = jsonString.replace(/```json\s*/g, "").replace(/```\s*/g, "");
+        try {
+            return JSON.parse(cleanText) as T;
+        } catch (e) {
+            try {
+                const fixed = cleanText.replace(/[\u0000-\u001F]+/g, "");
+                return JSON.parse(fixed) as T;
+            } catch (e2) {
+                throw new Error(`Failed to parse JSON: ${jsonString.substring(0, 100)}...`);
+            }
+        }
+    }
+
+    async parseEmail(emailBody: string, subject: string, sender?: string): Promise<ExtractedJobData> {
+        // Fetch USER FEEDBACK for False Positives
+        let feedbackContext = "";
+        try {
+            const falsePositives = await prisma.userFeedback.findMany({
+                where: { type: "FALSE_POSITIVE" },
+                take: 20
+            });
+            if (falsePositives.length > 0) {
+                const examples = falsePositives.map(fp => {
+                    try {
+                        const input = JSON.parse(fp.input);
+                        return `- Sender: "${input.sender}", Subject: "${input.subject}" -> NOT JOB RELATED`;
+                    } catch (e) { return ""; }
+                }).filter(s => s).join("\n");
+
+                if (examples) {
+                    feedbackContext = `
+                    USER FEEDBACK (LEARNED RULES):
+                    The user has explicitly marked similar emails as NOT job related. Review these patterns:
+                    ${examples}
+                    
+                    If the current email matches any of these patterns, set "isJobRelated": false.
+                    `;
+                }
+            }
+        } catch (e) {
+            console.warn("Failed to fetch user feedback:", e);
+        }
+
         const prompt = `
         Analyze the following email and extract job application details.
-        
+        ${feedbackContext}
+
         STRICT RULES:
         1.  **Is this job related?** Set "isJobRelated": true ONLY if it is a confirmation, update, interview invite, rejection, or offer. Marketing spam = false.
         2.  **Job ID**: Look for "Job ID", "Ref", "Requisition ID", or codes in footers (e.g., "ID: 30883532").
-        3.  **Status**:
-            - "APPLIED": "Application received", "Thank you for applying", "We have received your application".
-            - "SCREEN": "assessment", "online test", "hiring manager review".
-            - "INTERVIEW": "interview", "chat", "availability", "schedule a time".
-            - "OFFER": "offer", "congratulations".
-            - "REJECTED": "unfortunately", "not moving forward", "pursuing other candidates".
-        4.  **Company**: Extract the CLEAR company name. If the email is from a recruiting agency (e.g., "ApplyGateway"), try to find the *actual* hiring company in the body. If not found, use the agency name.
-        5.  **Role**: precise job title (e.g., "Senior Software Engineer").
-        6.  **Salary**: Look for "£", "$", "salary", "annum". Extract ranges if available.
-        7.  **Next Steps**: Summarize strict next actions (e.g., "Complete coding test by Friday").
+        3.  **Status**: "APPLIED", "SCREEN", "INTERVIEW", "OFFER", "REJECTED".
+        4.  **Company**: Extract the CLEAR company name.
+        5.  **Role**: precise job title.
+        6.  **Salary**: Extract ranges if available.
+        7.  **Next Steps**: Summarize strict next actions.
+        8.  **Sender Domain**: Use the Sender email to infer company domain if it's a corporate address (not gmail/yahoo).
         
+        Sender: ${sender || "Unknown"}
         Subject: ${subject}
-        Body: ${emailBody.substring(0, 5000)} // Truncate to avoid token limits
+        Body: ${emailBody.substring(0, 8000)} 
         
         Return ONLY valid JSON:
         {
@@ -67,39 +193,94 @@ export class AIService {
             "location": "string | null",
             "salary": { "base": "string", "bonus": "string", "equity": "string" },
             "urls": { "jobPost": "string", "applicationStatus": "string" },
-            "people": { "recruiterName": "string", "recruiterEmail": "string" },
+            "people": { "recruiterName": "string", "recruiterEmail": "string", "hiringManager": "string" },
+            "companyInfo": { "domain": "string", "linkedIn": "string" },
             "nextSteps": "string",
-            "sentimentScore": number (0-100),
+            "sentimentScore": number (0-1),
             "feedback": "string"
         }
         `;
 
         try {
-            const result = await this.model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
+            const result = await this._generateJson<ExtractedJobData>(prompt);
+            result._meta = {
+                provider: this.provider,
+                model: this.provider === 'GEMINI' ? 'gemini-2.0-flash' : (process.env.OPENROUTER_MODEL || 'unknown')
+            };
+            return result;
+        } catch (error: any) {
+            console.error('AI Service Error:', error.message);
+            return { isJobRelated: false, feedback: error.message };
+        }
+    }
 
-            let cleanText = text.replace(/```json\s*/g, "").replace(/```\s*/g, "");
+    async resolveIdentity(newJob: ExtractedJobData, candidates: { id: string, role: string, company: string, status: string, appliedDate: Date }[]): Promise<string | null> {
+        if (!candidates || candidates.length === 0) return null;
 
-            // Try to parse clean text
-            try {
-                return JSON.parse(cleanText) as ExtractedJobData;
-            } catch (e) {
-                // Second attempt: aggressive escape of control chars if first parse fails
-                try {
-                    // Remove all control characters (incl. newlines) which might break JSON strings
-                    // This is valid because we only want data, formatting inside strings is secondary
-                    const fixed = cleanText.replace(/[\u0000-\u001F]+/g, "");
-                    return JSON.parse(fixed) as ExtractedJobData;
-                } catch (e2) {
-                    console.error('AI Parsing Failed. Raw text:', text);
-                    return { isJobRelated: false };
+        // Fetch USER FEEDBACK for Merging
+        let feedbackContext = "";
+        try {
+            const mergePatterns = await prisma.userFeedback.findMany({
+                where: { type: "MERGE_PATTERN" },
+                take: 20
+            });
+            if (mergePatterns.length > 0) {
+                const examples = mergePatterns.map(mp => {
+                    try {
+                        const input = JSON.parse(mp.input);
+                        // input might be { roleA: "...", roleB: "...", company: "..." }
+                        return `- At "${input.company}", "${input.roleA}" IS THE SAME AS "${input.roleB}"`;
+                    } catch (e) { return ""; }
+                }).filter(s => s).join("\n");
+
+                if (examples) {
+                    feedbackContext = `
+                    USER FEEDBACK (LEARNED EQUIVALENCES):
+                    The user has explicitly confirmed these are the SAME application:
+                    ${examples}
+                    `;
                 }
             }
+        } catch (e) {
+            console.warn("Failed to fetch user feedback:", e);
+        }
 
+        const candidatesDesc = candidates.map((c, i) =>
+            `${i + 1}. ID: ${c.id}\n   Role: ${c.role}\n   Company: ${c.company}\n   Status: ${c.status}\n   Date: ${c.appliedDate.toISOString().split('T')[0]}`
+        ).join("\n");
+
+        const prompt = `
+        You are an expert HR Data Auditor. Task: Determine if a new job update refers to an existing application.
+        ${feedbackContext}
+
+        NEW UPDATE:
+        Company: ${newJob.company}
+        Role: ${newJob.role}
+        Status: ${newJob.status}
+        
+        EXISTING CANDIDATES:
+        ${candidatesDesc}
+        
+        INSTRUCTIONS:
+        - Analyze semantic similarity. "Senior Engineer" == "SDE III".
+        - If the new update is just a status change (e.g. "We are moving forward" email) for a candidate, MATCH IT.
+        - If roles are different (e.g. "Product Manager" vs "Engineer"), DO NOT MATCH.
+        - If the candidate is old (> 6 months) and this looks like a fresh application, DO NOT MATCH.
+        
+        Return JSON:
+        {
+            "matchId": "ID_OF_MATCH" | null,
+            "reason": "Brief explanation"
+        }
+        `;
+
+        try {
+            const result = await this._generateJson<{ matchId: string | null, reason: string }>(prompt);
+            console.log(`[AI Judge] Decision: ${result.matchId} (${result.reason})`);
+            return result.matchId;
         } catch (error) {
-            console.error('AI Service Error:', error);
-            return { isJobRelated: false };
+            console.error('[AI Judge] Failed:', error);
+            return null; // Fallback to safe "No Match"
         }
     }
 }
