@@ -29,7 +29,12 @@ export default async function Home() {
   // Fetch initial data
   const jobs = await prisma.jobApplication.findMany({
     where: { userId: session.user.id },
-    orderBy: { lastUpdate: 'desc' }
+    orderBy: { lastUpdate: 'desc' },
+    include: {
+      emailLogs: {
+        orderBy: { receivedDate: 'desc' }
+      }
+    }
   })
 
   return (
