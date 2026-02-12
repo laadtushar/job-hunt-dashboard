@@ -80,6 +80,7 @@ export async function POST(req: Request) {
                         threadId: msg.threadId,
                         receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
                         snippet: fullMsg.snippet || null,
+                        body: body, // Save full body for display
                         applicationId: savedJob.id
                     }
                 });
