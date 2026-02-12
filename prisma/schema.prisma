@@ -129,5 +129,18 @@ model EmailLog {
   applicationId   String?
   application     JobApplication? @relation(fields: [applicationId], references: [id])
   
+  // AI Meta Data
+  aiModel         String?
+  aiProvider      String?
+  aiOutput        String?   // JSON string of the full extraction result
+  
   createdAt       DateTime @default(now())
+  isIgnored       Boolean @default(false)
+}
+
+model UserFeedback {
+  id        String   @id @default(cuid())
+  type      String   // "MERGE_PATTERN", "FALSE_POSITIVE"
+  input     String   // JSON content
+  createdAt DateTime @default(now())
 }

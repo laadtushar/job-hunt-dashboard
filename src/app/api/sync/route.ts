@@ -15,8 +15,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // TODO: Get tokens from session or database. NextAuth with Google provider usually stores them in Account model.
-    // We need to fetch the tokens associated with this user.
     const account = await prisma.account.findFirst({
         where: { userId: session.user.id, provider: "google" },
     });
@@ -25,74 +23,116 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "No Google account linked" }, { status: 400 });
     }
 
-    const gmailService = new GmailService(account.access_token, account.refresh_token as string);
-    const aiService = new AIService();
-    const jobService = new JobService();
-    // Optional: Get sheet ID from user input or DB
-    const sheetsService = new GoogleSheetsService(account.access_token, account.refresh_token as string, "YOUR_SHEET_ID_HERE");
+    // 1. Fetch Request Config
+    const { limit } = await req.json().catch(() => ({}));
+    const syncLimit = limit ? parseInt(limit) : 50;
 
-    try {
-        // 1. Fetch recent emails (e.g., last 7 days or since last sync)
-        const { limit } = await req.json().catch(() => ({}));
-        const syncLimit = limit ? parseInt(limit) : 50;
+    const userId = session.user.id!; // Capture userId for closure usage
 
-        // 1. Fetch recent emails (e.g., last 7 days or since last sync)
-        const messages = await gmailService.listEmails(session.user.id, "label:inbox subject:application OR subject:job OR subject:interview after:2024/01/01", syncLimit);
-        // ^ Refine query for production
+    const encoder = new TextEncoder();
 
-        let processedCount = 0;
-        const results = [];
+    // Create a streaming response
+    const stream = new ReadableStream({
+        async start(controller) {
+            const sendLog = (message: string, type: 'info' | 'success' | 'error' = 'info', data?: any) => {
+                const payload = JSON.stringify({ message, type, data });
+                controller.enqueue(encoder.encode(payload + "\n"));
+            };
 
-        for (const msg of messages) {
-            // Check if already processed
-            if (!msg.id || !msg.threadId) continue;
-            const existingLog = await prisma.emailLog.findUnique({ where: { gmailId: msg.id } });
-            if (existingLog) continue;
+            try {
+                sendLog("Initializing services...", "info");
 
-            // 2. Get full details
-            const fullMsg = await gmailService.getEmailDetails(msg.id);
-            if (!fullMsg || !fullMsg.payload || !fullMsg.internalDate) continue;
+                const gmailService = new GmailService(account.access_token!, account.refresh_token as string);
+                const aiService = new AIService();
+                const jobService = new JobService();
 
-            const subjectHeader = fullMsg.payload.headers?.find((h: any) => h.name === "Subject");
-            const subject = subjectHeader ? subjectHeader.value : "No Subject";
-            const body = GmailService.getBody(fullMsg.payload) || "";
+                sendLog(`Fetching last ${syncLimit} emails...`, "info");
+                const messages = await gmailService.listEmails(userId, "label:inbox subject:application OR subject:job OR subject:interview after:2024/01/01", syncLimit);
 
-            // 3. AI Parse
-            const extractedData = await aiService.parseEmail(body, subject || "No Subject");
+                sendLog(`Found ${messages.length} potential emails. Processing...`, "info");
 
-            if (extractedData.isJobRelated) {
-                // 4. Create/Update Job
-                // Pass threadId for smart grouping
-                const savedJob = await jobService.createOrUpdateApplication(session.user.id, extractedData, msg.threadId);
+                let processedCount = 0;
+                let newJobsCount = 0;
 
-                // 5. Append to Sheets (Fire and forget or await?)
-                try {
-                    // await sheetsService.appendApplication(extractedData);
-                    // TODO: Enable this after user configures sheet ID
-                } catch (e) {
-                    console.error("Sheets sync error", e);
+                for (const [index, msg] of messages.entries()) {
+                    if (!msg.id || !msg.threadId) continue;
+
+                    // Quick check if already processed
+                    const existingLog = await prisma.emailLog.findUnique({ where: { gmailId: msg.id } });
+                    if (existingLog) {
+                        // sendLog(`Skipping ${index + 1}/${messages.length} (Already processed)`, "info");
+                        continue;
+                    }
+
+                    // Get details
+                    const fullMsg = await gmailService.getEmailDetails(msg.id);
+                    if (!fullMsg || !fullMsg.payload) continue;
+
+                    const subjectHeader = fullMsg.payload.headers?.find((h: any) => h.name === "Subject");
+                    const subject = subjectHeader?.value || "No Subject";
+                    const fromHeader = fullMsg.payload.headers?.find((h: any) => h.name === "From");
+                    const sender = fromHeader?.value || "";
+                    const body = GmailService.getBody(fullMsg.payload) || "";
+
+                    sendLog(`${index + 1}/${messages.length}: Analyzing "${subject.substring(0, 40)}..."`, "info");
+
+
+                    // AI Parse
+                    const extractedData = await aiService.parseEmail(body, subject || "No Subject", sender);
+
+                    if (extractedData.isJobRelated) {
+                        sendLog(`  ✨ Job Found: ${extractedData.company} - ${extractedData.status}`, "success");
+
+                        // Save Job
+                        try {
+                            const savedJob = await jobService.createOrUpdateApplication(userId, extractedData, msg.threadId, aiService);
+
+                            // Log Email
+                            await prisma.emailLog.create({
+                                data: {
+                                    gmailId: msg.id,
+                                    threadId: msg.threadId,
+                                    receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
+                                    snippet: fullMsg.snippet || null,
+                                    body: body,
+                                    applicationId: savedJob.id,
+                                    aiModel: extractedData._meta?.model,
+                                    aiProvider: extractedData._meta?.provider,
+                                    aiOutput: JSON.stringify(extractedData)
+                                }
+                            });
+                            newJobsCount++;
+                        } catch (e) {
+                            console.error("Failed to save job:", e);
+                            sendLog(`  ❌ Failed to save job: ${e}`, "error");
+                        }
+
+                    } else {
+                        if (extractedData.feedback && extractedData.feedback.includes("OpenRouter API Error")) {
+                            sendLog(`  ❌ AI Error: ${extractedData.feedback}`, "error");
+                        } else if (extractedData.feedback) {
+                            // Optional: log other feedback if needed, currently just OpenRouter errors are critical
+                            // sendLog(`  ℹ️ Skipped: ${extractedData.feedback}`, "info");
+                        }
+                    }
+                    processedCount++;
                 }
 
-                // 6. Log email
-                await prisma.emailLog.create({
-                    data: {
-                        gmailId: msg.id,
-                        threadId: msg.threadId,
-                        receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
-                        snippet: fullMsg.snippet || null,
-                        body: body, // Save full body for display
-                        applicationId: savedJob.id
-                    }
-                });
+                sendLog(`Sync Complete! Processed ${processedCount} emails. Found ${newJobsCount} new job updates.`, "success");
 
-                results.push({ subject, company: extractedData.company, status: extractedData.status });
-                processedCount++;
+            } catch (error: any) {
+                console.error("Sync Error:", error);
+                sendLog(`Sync Failed: ${error.message}`, "error");
+            } finally {
+                controller.close();
             }
         }
+    });
 
-        return NextResponse.json({ success: true, processed: processedCount, results });
-    } catch (error) {
-        console.error("Sync Error:", error);
-        return NextResponse.json({ error: "Failed to sync emails" }, { status: 500 });
-    }
+    return new Response(stream, {
+        headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Transfer-Encoding': 'chunked',
+        },
+    });
 }
