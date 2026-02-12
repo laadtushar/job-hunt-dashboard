@@ -1,0 +1,121 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp736635ecs;
+        Thu, 12 Feb 2026 03:59:55 -0800 (PST)
+X-Received: by 2002:a05:620a:3183:b0:828:faae:b444 with SMTP id af79cd13be357-8cb33d0a66bmr247630885a.20.1770897595293;
+        Thu, 12 Feb 2026 03:59:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770897595; cv=none;
+        d=google.com; s=arc-20240605;
+        b=a4ywV0vYdeTgk/9I2gjhIXghvF65CCPTlX6c2RS5Mem2Mezv+hucb0sjQclcGs53KM
+         5br+e07QmhalwPZAXbvPJGNtGzSSuyj+r8JKR66ZTEV2YnnfL3n+5R0g6rv103+L/JEu
+         6VP1g3dwMMeIpNH5c0hSsE9Tyx3dxQHCNd2bEQIblfCcDs+0u/zv6kC0AzlWvnIyAP4H
+         8TPAdkNDIK2+mDtkMdFKtnSBves53+6tHpxhH116InYnPzzMV25It9oQetaBLVRY9p3j
+         M2t4nO9i+xZmCLmCsmpnobIibN7rhERV9D2ez53wnhgMI/jYhIAPow45q8ucvzoJ2neG
+         3a0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:date:message-id:mime-version:subject:to:from
+         :dkim-signature:dkim-signature;
+        bh=2vi3H41ivbscYS3IPtvn+MGiZX15gLF53+cjxugVwYs=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=k3HKhY91WYQjaOt5B1vzV77sVHqr//JXds7jTisjfThMQXOC5MzPYQ7OFuRWPwFdMv
+         cP4Se7u9chsGa5voVeX727aRg1ABhOdD2IKbom4VmYwMj+BToq8CCf1I5pZV+ZRjMraP
+         qXsN2cA6+cKOjgYInJPKCJO+iSBKRzyMgixMJMj2F9R2dNHb5VATP3YsXuHqfF8c17Ks
+         +T6XyQi87o37UrDwKZg9irCxXRSiaEKJn783sjV7Nmyf6u642fTr1LPItNh/OEKEeJZg
+         4VJN/LVcUy93N+ZljhOSPxMq6oP+J1mHibUhL6lLU5YWOIGX2BM8wQlRrvesy5PhqD+s
+         uYOA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b=GkqSzlQW;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=ivicffv1;
+       spf=pass (google.com: domain of 0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+Return-Path: <0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com>
+Received: from a78-44.smtp-out.amazonses.com (a78-44.smtp-out.amazonses.com. [54.240.78.44])
+        by mx.google.com with ESMTPS id 6a1803df08f44-8971cdd00a3si47877186d6.425.2026.02.12.03.59.55
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:59:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) client-ip=54.240.78.44;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b=GkqSzlQW;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=ivicffv1;
+       spf=pass (google.com: domain of 0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=o52kitveeafei4picxt43fxtgwymyfqu; d=ashbyhq.com; t=1770897595;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date;
+	bh=2vi3H41ivbscYS3IPtvn+MGiZX15gLF53+cjxugVwYs=;
+	b=GkqSzlQW6h22tp3X5/JzKtK8qYL+u+NJJkA/EMhlJg9wUhkC6mOCV+wFEuzPAtkO
+	Od8qm7HPY5eysWy9dD4jDaZDYR6DxhLL2nP8xJ21tDeXjfZm3mDI9k5rXSz+csbRsXI
+	8mJrHSqWVq+DPEO9ivpB9uIbUN+qdSeATetb8pCFo7juRRuBSKJGzojSNoeSouRKqCm
+	EkYJV64BNDs9Fjdyjrwt8gLOOwU6nSu6Rwr/c2u5Uuy4fvF+WO7/HxftfZWNrGJNiXx
+	KWeRVNUvAesfHvDsMcVigBR/hhnBPDxacIeUlc1cKK8OoTfSKkBarM+6ueZkEyIkaq1
+	/3MtEF/HHA==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1770897594;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=2vi3H41ivbscYS3IPtvn+MGiZX15gLF53+cjxugVwYs=;
+	b=ivicffv1LmynFG2d5gpGv0FwYdQ0V8FPUJvaVnthoFXLashh5AWtUvt/lrlaDWPZ
+	qrzXhcu4MJNHDYn6Y2aa0XaWOk4ZPXNt2Jl5MvG+jaFZ0pEysK/HbjwJChx0lVp++Ry
+	bNahcT1Iyi06lFRNOQPYYwC1bEI63Xk/ttHWtWGs=
+From: Deliveroo Hiring Team <no-reply@ashbyhq.com>
+To: tusharlaad2002@gmail.com
+Subject: =?UTF-8?Q?Thanks_for_applying_to_Delivero?=
+ =?UTF-8?Q?o_=E2=80=93_we=E2=80=99ve_got_your_application!?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_11825_1512850693.1770897594879"
+Message-ID: <0100019c51b8d9ff-b0c88e80-94ec-46cf-88b0-7b38dd01313f-000000@email.amazonses.com>
+Date: Thu, 12 Feb 2026 11:59:54 +0000
+Feedback-ID: ::1.us-east-1.WOmir7uCwltm0aTT8gfbA5rz60mv7TkX4bFsmUZNNF0=:AmazonSES
+X-SES-Outgoing: 2026.02.12-54.240.78.44
+
+------=_Part_11825_1512850693.1770897594879
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Tushar,
+
+Thanks for applying for a role at Deliveroo =E2=80=94 we=E2=80=99re excited=
+ to learn more about you.
+
+
+We=E2=80=99ve received your application and our team will take a look as so=
+on as possible. If your experience looks like a strong match for what we=E2=
+=80=99re hiring for, we=E2=80=99ll be in touch with next steps.
+
+
+We do our best to respond to everyone, but with the volume of applications =
+we receive, it=E2=80=99s not always possible. Either way, we really appreci=
+ate you taking the time to apply.
+
+
+All the best,
+The Deliveroo Recruitment Team
+
+Please note: Do not reply to this email. This email is sent from an unatten=
+ded mailbox. Replies will not be received.
+------=_Part_11825_1512850693.1770897594879
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">Hi <span>Tushar</span>,</div><div style=3D"min-height:1.2em;margin=
+-top:0;margin-bottom:0">&nbsp;</div><div style=3D"min-height:1.2em;margin-t=
+op:0;margin-bottom:0">Thanks for applying for a role at Deliveroo =E2=80=94=
+ we=E2=80=99re excited to learn more about you.<br /><br class=3D"trailing-=
+break" /></div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0"=
+>We=E2=80=99ve received your application and our team will take a look as s=
+oon as possible. If your experience looks like a strong match for what we=
+=E2=80=99re hiring for, we=E2=80=99ll be in touch with next steps.<br /></d=
+iv><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">We do our b=
+est to respond to everyone, but with the volume of applications we receive,=
+ it=E2=80=99s not always possible. Either way, we really appreciate you tak=
+ing the time to apply.<br /></div><div style=3D"min-height:1.2em;margin-top=
+:0;margin-bottom:0">All the best,<br />The Deliveroo Recruitment Team</div>=
+<div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;</div><d=
+iv style=3D"min-height:1.2em;margin-top:0;margin-bottom:0"><strong>Please n=
+ote: Do not reply to this email. This email is sent from an unattended mail=
+box. Replies will not be received.</strong></div><div style=3D"min-height:1=
+.2em;margin-top:0;margin-bottom:0">&nbsp;</div></body></html>
+------=_Part_11825_1512850693.1770897594879--

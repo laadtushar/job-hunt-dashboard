@@ -1,0 +1,93 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp666140ecs;
+        Thu, 12 Feb 2026 01:30:04 -0800 (PST)
+X-Received: by 2002:a05:6a00:a8f:b0:824:9eaf:54ea with SMTP id d2e1a72fcca58-824b2ea38b4mr1683883b3a.28.1770888603906;
+        Thu, 12 Feb 2026 01:30:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770888603; cv=none;
+        d=google.com; s=arc-20240605;
+        b=G5i60wAbwhSWnytYtMg5u/Ws1z5YuQ9XVhKu5YICbpIAZNrVfsoEFsh4rWwxSE/N04
+         dtQQb9tfdgigbI/6b9kppBXYsv/fAhZo5Aiu9c3vXPA8O3VFE8WP9iABGOV8ZIRHNO1m
+         sG0pz1O+DFpSzkW16MXvpRy76vLlmcdlaL+2uQtDmXQGAAy8wknxctNvpezh/DNwxSu4
+         SRK7sEpnzqDe0mC6ip5EuStJN0ytpb35IcvUdM9wOSFLUjR7ti63eIQsJDH6o5cRzNni
+         Hihgn21WfSfGmlHtcr7pSR6d+8a49yoFCvj+nXdu/Nwx+XumcTTaioaZieJdN69OO4QF
+         t6RQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=+GUkGiPlCbUxHt6iLN7srG6v71Dy2v49RlG+1hg+pPI=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=A3KJ5MpYToYRjliqYO3CL/oZUCS/ti8zRhgwZv3DROTcgQ3ifOXEWEOioaoPvqHJBR
+         jIJZ8OpBCAR89XJA9u9jrGLw509ipaVTFOa4fdf+KLsxlIKFMZ2ofuEdvgHvRwCrDWaP
+         ubI2UP+Pa1paR4OszPjQBkZVF2nL54x+7pWuXPAuyJ0o+vB7sUfOhjuDaH3zRz7cuzZM
+         TEOIy+eRKHG9M1/HhP2/FK8tMTWJVXtbB6oRiLxSWrGXxV+XXGFjVpN8RT4o2eZuvYO/
+         LtXyV/lBTtHGT6w+HRGyELMyiTMYYPT1GPL2OO9XFyiBPrtAWTTYRWW1VYyNE6Wunk2y
+         XQCw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=cercMP8P;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=Rz15AGwU;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id d2e1a72fcca58-8249e40de0esi7533448b3a.91.2026.02.12.01.30.03
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:30:03 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=cercMP8P;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=Rz15AGwU;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770888603; x=1770895803;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=+GUkGiPlCbUxHt6iLN7srG6v71Dy2v49RlG+1hg+pPI=;
+ b=cercMP8PQFq04f0LgzUuuDsNPrecUoOuif9/d9elrjFFeDVuOv36QB08dR52TB/ScNGh0b0lpF9BwDrdKrZfpRkPeT+RNZ5amUG4S/vpVQ3cmmaK5dZq8sxKLilh69E54BnqtV3Bj3EVCNgprMFftqnxT/u/rI5G1FeHxJZH+3g=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770888603; x=1770895803;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=+GUkGiPlCbUxHt6iLN7srG6v71Dy2v49RlG+1hg+pPI=;
+ b=Rz15AGwUVMRCJuulL3tNZMCPnCneUJsmCf3udmNcCxW97JYj/b+iJuUHp1VRnAnFqfMP7OKpz7GrfjkLGUERPgpZXdzlLlTxFBKfVNjJs9hQZKzDkUW2+VpvZa4eT2omGgX/h1vPdJXjf00VeagMw5FOFlL4FBoGZRD5kQ9KjOc=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:CandidateAutoReply:5ff5c19deab70c1acacf09a2:mailgun
+Received: by 21609c8e4d2a3694559a49ef5f24d6756a77db639452f156c6ba1ad183346469 with HTTP
+ id 698d9d9bf680488250cee44f; Thu, 12 Feb 2026 09:30:03 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:30:03 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="d8e84a9dea6aed153c73b2ad784778adc60158d90a8152a2921c6d382ab9"
+Subject: =?UTF-8?q?=F0=9F=94=B5_Thank_you_for_applying_to_Infomedia?=
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001636003", "person_id": "168606029003", "silo_id": "3",
+ "user_id": ""}
+Message-Id: <20260212093003.3f8af0a24977fe98@us.greenhouse-mail.io>
+
+--d8e84a9dea6aed153c73b2ad784778adc60158d90a8152a2921c6d382ab9
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Tushar,
+
+Thanks for applying to Infomedia. Your application has been received and we will review it right away.
+
+You should hear something back within 1-2 weeks. If your application seems like a good fit for the position we will contact you to schedule a phone interview.
+
+Regards,
+Infomedia Talent Team
+
+** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.
+--d8e84a9dea6aed153c73b2ad784778adc60158d90a8152a2921c6d382ab9
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p>Tushar,</p>
+<p>Thanks for applying to Infomedia. Your application has been received and we will review it right away.&nbsp;</p>
+<p>You should hear something back within 1-2 weeks. If your application seems like a good fit for the position we will contact you to schedule a phone interview.</p>
+<p>Regards,<br>Infomedia Talent Team</p>
+<p>** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.</p>
+--d8e84a9dea6aed153c73b2ad784778adc60158d90a8152a2921c6d382ab9--

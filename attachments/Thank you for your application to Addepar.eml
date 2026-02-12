@@ -1,0 +1,90 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp672555ecs;
+        Thu, 12 Feb 2026 01:45:03 -0800 (PST)
+X-Received: by 2002:a05:6a00:460a:b0:824:3cf6:3fb4 with SMTP id d2e1a72fcca58-824b04e576fmr2046601b3a.32.1770889503168;
+        Thu, 12 Feb 2026 01:45:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770889503; cv=none;
+        d=google.com; s=arc-20240605;
+        b=J5odB8Hp48Bfv23IhBvKlRHT8NrQj1IuePslpTQvhkbqv3zsH19SEuliHedEwaDvtN
+         3njdAunZyBGMEzN0S3xNImvkROVvahKCYWT86+sIjWD9e6Xv2arHHxzODHhLh3/0AZVf
+         yT4ZRePM7WZcW9WBZap9icI9zJ2qu7TjNGrBB/nIMrX5RAeH3V/yqrPT0AQR4J8f31rA
+         VKmSxryD837eijjLFzf1bgfPwO2OwWW2rU/JLiT197lSJjc/aOqDQhkAtre5+PYPO6/7
+         4JtFI+E4bA/lPUkfuPb+3+704WHQnAEs+PoDJCfzKk8QpmCvAnbnFKLVcB4dsSMt6PCu
+         98xQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=K6+nwIJX6YPGOImg65/ilNC86IWi0WjZhKYZON6GTh4=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=GceCKl/r58rRUF/0d5uHT3/ZAiPBp0qJDAHYos6KmqYSkafyxWOo1c2ew5FM+p5AyU
+         cxxhPL3ITZKVrmO/SoDjY/EVlGXdctOhLmzqcbx+1aFYPLxWuuSUNR54Dgbfyft9cG6z
+         QgP9mlg98ANNEIkB8drNP/yxbLZw494BpO4AE6ARXEP0Vwy0Zk3iytcx3c8Qj/s2TavP
+         Cp49DdBK+RyGAfj+3tGQzaX/b9vGI9c8MW4dGvakBMtajpVHkXvTPnwjRi87uqBoFTbq
+         Jho5kSACQcAyyCSc0qjYgBt23by15UKWpge3b7denEbbE3I+w1eYAMCKwSaWi46RCwAF
+         JS1A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=AgXlnFAH;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=t+tyXFU2;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id d2e1a72fcca58-8249e943bc5si8446273b3a.262.2026.02.12.01.45.02
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:45:03 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=AgXlnFAH;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=t+tyXFU2;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770889501; x=1770896701;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=K6+nwIJX6YPGOImg65/ilNC86IWi0WjZhKYZON6GTh4=;
+ b=AgXlnFAHHrZwIQsSZHfgxwbcj3oVNRWTnBtZLaxrdamnLew1E02mQb8hGank3HHn6Y5Y94QDaDu0+5+h2qWCd1lq1Mi5fG74aFOrlJ62Gk22RZ7kNLK1PumKoWRb2yrySuAudiNDsQsGs8T/FnjTolh0RJHfwejDDo+Ve3fotew=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770889501; x=1770896701;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=K6+nwIJX6YPGOImg65/ilNC86IWi0WjZhKYZON6GTh4=;
+ b=t+tyXFU25BKmqcBqsawNgvS9Rv/eJVgIkGbC/6EnqqZU2/dHxVUzBcZhcI3pWuVDkPSWWnObtr3k7aDoxa+mCM+d1XZhyuCIqH3kXgKm1crrL5vBa4nV6lJiQZjtVoAb4SfJP8cRVAC5w9wYVA+aux9ISk1DL48XmpGkfN12gsQ=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:CandidateAutoReply:5ff5c19deab70c1acacf09a2:mailgun
+Received: by 30a5c745f335f507796fe13fbffc2c3d8d05946278bc3567007b9199c060a8f9 with HTTP
+ id 698da11d7e718d21a417fb51; Thu, 12 Feb 2026 09:45:01 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:45:01 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="ea2c4f27d908ab154159b83c81f16944e44cc32085b85abc9374430229a4"
+Subject: Thank you for your application to Addepar
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4002678002", "person_id": "261811884002", "silo_id": "2",
+ "user_id": ""}
+Message-Id: <20260212094501.a550a95084f3dcef@us.greenhouse-mail.io>
+
+--ea2c4f27d908ab154159b83c81f16944e44cc32085b85abc9374430229a4
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hi Tushar,
+
+Thank you for applying to Addepar, we have received your application.
+
+We're excited about the possibility of working with you to help investment professionals provide the most informed, precise guidance for their clients.
+
+We will review your resume and be in touch if there is a potential fit.
+
+All the best,
+Addepar Recruiting Team
+--ea2c4f27d908ab154159b83c81f16944e44cc32085b85abc9374430229a4
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p>Hi Tushar,</p>
+<p>Thank you for applying to Addepar, we have received your application. <br><br>We're excited about the possibility of working with you to help investment professionals provide the most informed, precise guidance for their clients.<br><br>We will review your resume and be in touch if there is a potential fit. <br><br>All the best, <br>Addepar Recruiting Team</p>
+--ea2c4f27d908ab154159b83c81f16944e44cc32085b85abc9374430229a4--

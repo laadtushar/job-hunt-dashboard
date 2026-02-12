@@ -1,0 +1,438 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp657388ecs;
+        Thu, 12 Feb 2026 01:11:04 -0800 (PST)
+X-Received: by 2002:a05:690c:a8e:b0:796:2043:bf1d with SMTP id 00721157ae682-7973765e70fmr21984117b3.52.1770887463807;
+        Thu, 12 Feb 2026 01:11:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770887463; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OoWxY0pdjX51IvcsWQOxqXQI98VCc4DQtFC53Y5I0MS8FPDz/YbNshri5Ke66zlHO/
+         sbV/EXIZ+bS6pwl7eI/wZAwvEbE3JojKujQUnsAtE1DqsHK+FfTs1armL/k4qkHkHqWb
+         3ifmc3PdkV2EpKE08Oa8YFMmx6PM2R/svtzrKSPLa8cgaDWP5c8LAhFuVpM+eylfRs8p
+         Y/vx/4CN/6JkkC2whjcog5t+yMxzZyCME0yArIzorAnp58mz8oK3cunqbsJvZPqVhDrl
+         b0cXIHLWZD89N9S4s0bdPaU+R15KuteNbp0wvhqOhA9VuUotXVeIBOdsTJA0SIBgQSco
+         Jnew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=-x-gh-msgid:organization-name:organization-id
+         :content-transfer-encoding:mime-version:subject:message-id:to:from
+         :date:dkim-signature;
+        bh=twQKAdb7gSU/MftmZ7xTpJeb1a/HNGUPP+jnLexuVAY=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=Kvu/Th8M562jUzBVfibvyOliDouJ5t3jkVFGX889Q4qPb5s21JPzsTp6vvoh06Z7Vl
+         TOjoGEIhYU7DMP17VSFZOnkxYcKBMI1IHB0DlBi83TuXv08F8M27pvl4tSwpKH5RY3mD
+         azaxFs1ypLmzohdHMpDnf5ps70tBRKE/1TtLj/hTyPrj3pmpzPdH+8P+wuVjwKqpNnfY
+         2OtSrZtCxVc6ZNHfylN66/CWQUV1keDTfuMdQHUOITUAxeiA1W7cMm67se2jmclyLmQh
+         i8jB8GH+1toqFBFnDuorQhio1Nr+P6qwf+efRK6QpenML6gTOLdzfakXW2EFPvDeAOAv
+         Ldeg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@klaviyo.com header.s=google header.b="cy/AQBLS";
+       spf=pass (google.com: domain of no-reply@klaviyo.com designates 209.85.220.97 as permitted sender) smtp.mailfrom=no-reply@klaviyo.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=klaviyo.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <no-reply@klaviyo.com>
+Received: from mail-sor-f97.google.com (mail-sor-f97.google.com. [209.85.220.97])
+        by mx.google.com with SMTPS id 00721157ae682-7966c275a75sor25010537b3.15.2026.02.12.01.11.03
+        for <tusharlaad2002@gmail.com>
+        (Google Transport Security);
+        Thu, 12 Feb 2026 01:11:03 -0800 (PST)
+Received-SPF: pass (google.com: domain of no-reply@klaviyo.com designates 209.85.220.97 as permitted sender) client-ip=209.85.220.97;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@klaviyo.com header.s=google header.b="cy/AQBLS";
+       spf=pass (google.com: domain of no-reply@klaviyo.com designates 209.85.220.97 as permitted sender) smtp.mailfrom=no-reply@klaviyo.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=klaviyo.com;
+       dara=pass header.i=@gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klaviyo.com; s=google; t=1770887463; x=1771492263; dara=google.com;
+        h=-x-gh-msgid:organization-name:organization-id
+         :content-transfer-encoding:mime-version:subject:message-id:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=twQKAdb7gSU/MftmZ7xTpJeb1a/HNGUPP+jnLexuVAY=;
+        b=cy/AQBLSqzrSbDD+fTDPFkRrmLLGEgHIuZLxbaVCsPwXCwNu/Me41oPWCKcLqE1tYl
+         vrFph3EBrtbGiu2zCk6eRnoN7lwiN1ci01CYPwATt1feH7LpmZaUP805dFc/3b2S6Cry
+         BVThKLTGOKdFcRVjAiSQw6l1UAMD7sSuAi7hv7HBtIeu2MDSvMX60GnszxgQr4qCW1Yk
+         GkybaFH/C3FaWljdCSd/S/15hMPfq4B7pV21Zeop2nt2wX9DHlnzx4trjL9PWIzs7Tz3
+         AQyKaDMElcFCPEJG0r3r82pRHr5AueX3CxW6oLub0SU0G3TscW2saPKObeXcrpeqRl6c
+         B1FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770887463; x=1771492263;
+        h=-x-gh-msgid:organization-name:organization-id
+         :content-transfer-encoding:mime-version:subject:message-id:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=twQKAdb7gSU/MftmZ7xTpJeb1a/HNGUPP+jnLexuVAY=;
+        b=buyHA6N3MwRirLiIq4HrFZg30Wz/Shjm7sbNqjYYlhI1OEVlKTAFoz8ANBQucmzuUJ
+         e6UDb3in6+nOTJ1SDK0QxnA6018LEdwuHjFBdSMNDeJEVlwHp4I/cXLZJZ3WmoLpXGXB
+         oREweclOBJgPaVx3oEuokEDLTcB5B+td2zVMWxUy2zuSXIwefRSbPDn/LQpYC3r7eCsg
+         scf4WFHhjzpYEBzI4CfZcKOFYUstHlFqLvkmsyJYHvRV/hb45Q1Hs2j8HqLECbWEIFwf
+         NCV2M2yL+qDgf80SGUnqcWeGiMZc7u5UGAx5/FPLhLjnWx89wh6z6fAUFKW9yTUfnxyB
+         oxhw==
+X-Gm-Message-State: AOJu0YwDKflt6vCoRMh022Y6W5n4vT0GPrCw9ttGkohwsNpCoPVnuMBx
+	UOE6w5rmtIcgl7h3mWNGMx2AJWC27EAiqg0nCJuSuMmP4nq6UIitGcwwH44sCeC6k8oJFVFNP2U
+	Odf4qK66Sko5jZhJdEvhADebIN7kQfWwSmasGHhCWYyCB
+X-Gm-Gg: AZuq6aJhrq9ggWdDCuZiscKGK/V36HRiebJOMX62AlssusIqkzFs6kXAmjX9CJCpLHa
+	sFNTnwBuCYcFprFys4+uYw6XnnnqAqWTBxNQ5LGci7C9iyTR3VySO1xcvZt1usXmjKr8a6+Pkuo
+	h4yTxNy7CuQ13GJd9Wg0fqwbrjFXkdnZCb4MoI8IPBHoXf/rr1PNwLV6JSKl3U2AZUKYd/LBOma
+	IOBsQgi77l9+dSIIysa9Pv2d4ri9srwqXp2Ag841yRJ2Y8r8xccOjWubxGYbqXQHcHQAPVKRyTV
+	pNFCoa1/fqhsUUN+sQwBT13dX7wJw3YCjFd15PX+wZpf5lTylajveJmTxTaC7fmNrmPa3ChWJLI
+	KTRHUdThRIo/pov0bVHLJdzzj1FIn1jGH4ENjuhvfmAxb0oZJ
+X-Received: by 2002:a05:690c:91:b0:786:25e9:387c with SMTP id 00721157ae682-7972f111500mr21202737b3.20.1770887463162;
+        Thu, 12 Feb 2026 01:11:03 -0800 (PST)
+Return-Path: <no-reply@klaviyo.com>
+Received: from gh-mail.klaviyo.com (egress-a.prod.use1.greenhouse.io. [52.20.168.64])
+        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-7966c02094csm4351177b3.0.2026.02.12.01.11.03
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 01:11:03 -0800 (PST)
+X-Relaying-Domain: klaviyo.com
+Date: Thu, 12 Feb 2026 09:11:02 +0000
+From: no-reply@klaviyo.com
+To: tusharlaad2002@gmail.com
+Message-ID: <698d9926de0e2_1274706987524e7@prod-s3-greenhouse-sidekiq-mailer-worker-84b79f6d46-7ggc6.mail>
+Subject: Thank you for applying to Klaviyo
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_698d9926dbda4_127470698752319";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GH-Mailer: Email::CustomSmtpClient::SmtpMailer#send_with_body
+X-GH-Action: JobBoardCandidateImporting::Workers::JobApplicationsImporterWorker
+organization-id: 4000641003
+organization-name: Klaviyo
+-x-gh-msgid: 3103a581335242b9ed7e
+X-Gh-Mailer-Variables-Silo-ID: 3
+X-Gh-Mailer-Variables-Org-ID: 4000641003
+
+
+----==_mimepart_698d9926dbda4_127470698752319
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Tushar,
+
+Thank you for applying to the Software Engineer - Catalog Insights - Anal=
+ytics role with Klaviyo, we appreciate your interest in joining our team!=
+
+
+Right now, our team is actively reviewing applications. We like to move a=
+s fast as possible, while ensuring that every submission is reviewed with=
+ the time and attention it deserves. This typically takes a couple weeks.=
+
+
+If your background is a match for the role, a Klaviyo team member will re=
+ach out to schedule next steps. If you don't get selected to move forward=
+, we hope you=E2=80=99ll still consider us for future opportunities.
+
+In the meantime, check us out on LinkedIn ( https://www.linkedin.com/comp=
+any/klaviyo/ ), Instagram ( https://www.instagram.com/lifeatklaviyo/?hl=3D=
+en ), Built In Boston ( https://www.builtinboston.com/company/klaviyo ), =
+Comparably ( https://www.comparably.com/companies/klaviyo ) and Glassdoor=
+ ( https://www.glassdoor.com/Overview/Working-at-Klaviyo-EI_IE1169266.11,=
+18.htm ).
+
+Thank you,
+The Klaviyo Talent Acquisition Team
+
+Please note: This email is sent from an unattended mailbox and responses =
+will not be read.
+
+Klaviyo ( # )
+
+in ( https://www.linkedin.com/company/klaviyo )
+
+insta ( https://www.instagram.com/lifeatklaviyo/ )
+
+tw ( https://twitter.com/klaviyo )
+
+CAREERS ( https://careers.klaviyo.com/en/ ) BLOG ( https://careers.klaviy=
+o.com/en/careers-blog/ )
+
+=C2=A9 2024 Klaviyo, Inc. All rights reserved. 125 Summer St., Floor 6, B=
+oston, MA 02111
+
+Klaviyo is committed to a policy of equal opportunity and non-discriminat=
+ion. We do not discriminate on the basis of race, ethnicity, citizenship,=
+ national origin, color, religion or religious creed, age, sex (including=
+ pregnancy), gender identity, sexual orientation, physical or mental disa=
+bility, veteran or active military status, marital status, criminal recor=
+d, genetics, retaliation, sexual harassment or any other characteristic p=
+rotected by applicable law.
+
+If you need assistance or an accommodation due to a disability, please em=
+ail us at interviewaccommodations@klaviyo.com. This information will be t=
+reated as confidential and used only for the purpose of determining an ap=
+propriate accommodation for the interview process.
+
+Privacy Policy ( https://www.klaviyo.com/legal/job-applicant-privacy-noti=
+ce )=
+
+----==_mimepart_698d9926dbda4_127470698752319
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!-- [if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->
+<p>&nbsp;</p>
+<!-- [if !mso]><!-->
+<p>&nbsp;</p>
+<!--<![endif]-->
+<table class=3D"em_full_wrap" style=3D"table-layout: fixed; min-width: 10=
+0%;" border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bgco=
+lor=3D"#ffffff"><!-- ADD MODULES HERE --> <!-- Main Content - Letter - Bo=
+dy + Signature - Cotton -->
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"top">
+<table class=3D"em_main_table1" style=3D"width: 600px; table-layout: fixe=
+d;" border=3D"0" width=3D"600" cellspacing=3D"0" cellpadding=3D"0" align=3D=
+"center" bgcolor=3D"#FFFFFF">
+<tbody>
+<tr>
+<td class=3D"em_side34" style=3D"width: 57px;" width=3D"57">&nbsp;</td>
+<td align=3D"center" valign=3D"top">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center">
+<tbody>
+<tr>
+<td class=3D"em_h30" style=3D"height: 40px;" height=3D"40">&nbsp;</td>
+</tr>
+<tr>
+<td class=3D"em_defaultlink em_dm_txt_white" style=3D"font-family: 'Sohne=
+', Helvetica, Arial, sans-serif; font-size: 18px; line-height: 31px; colo=
+r: #232426; font-weight: 300;" align=3D"left" valign=3D"top">Hi Tushar,<b=
+r><br>Thank you for applying to the Software Engineer - Catalog Insights =
+- Analytics role with Klaviyo, we appreciate your interest in joining our=
+ team!<br><br>Right now, our team is actively reviewing applications. We =
+like to move as fast as possible, while ensuring that every submission is=
+ reviewed with the time and attention it deserves. This typically takes a=
+ couple weeks.<br><br>If your background is a match for the role, a Klavi=
+yo team member will reach out to schedule next steps. If you don't get se=
+lected to move forward, we hope you&rsquo;ll still consider us for future=
+ opportunities.<br><br>In the meantime, check us out on <a href=3D"https:=
+//www.linkedin.com/company/klaviyo/">LinkedIn</a>, <a href=3D"https://www=
+.instagram.com/lifeatklaviyo/?hl=3Den">Instagram</a>, <a href=3D"https://=
+www.builtinboston.com/company/klaviyo">Built In Boston</a>, <a href=3D"ht=
+tps://www.comparably.com/companies/klaviyo">Comparably</a> and <a href=3D=
+"https://www.glassdoor.com/Overview/Working-at-Klaviyo-EI_IE1169266.11,18=
+.htm">Glassdoor</a>.<br><br>Thank you,<br>The Klaviyo Talent Acquisition =
+Team</td>
+</tr>
+<tr>
+<td class=3D"em_h20" style=3D"height: 20px; font-size: 1px; line-height: =
+1px;" height=3D"20"><br><span style=3D"font-weight: 400;"><span style=3D"=
+font-size: 11px;"><em><br><br><br><br><br><br><br>Please note: This email=
+ is sent from an unattended mailbox and responses will not be read.<br></=
+em></span></span></td>
+</tr>
+<tr>
+<td class=3D"em_defaultlink em_dm_txt_white" style=3D"font-family: 'Sohne=
+', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-=
+height: 30px; color: #181b1e;" align=3D"left" valign=3D"top">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td class=3D"em_side34" style=3D"width: 57px;" width=3D"57">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<!-- //Main Content - Letter - Body + Signature - Cotton --> <!-- Individ=
+ual Components - Logomark -->
+<tr>
+<td style=3D"text-align: left;" align=3D"center" valign=3D"top">
+<table class=3D"em_main_table1" style=3D"width: 600px; table-layout: fixe=
+d; border-radius: 4px;" border=3D"0" width=3D"600" cellspacing=3D"0" cell=
+padding=3D"0" align=3D"center" bgcolor=3D"#FFFFFF">
+<tbody>
+<tr>
+<td style=3D"width: 57px;" width=3D"57">&nbsp;</td>
+<td style=3D"padding: 5px 0px;" align=3D"center" valign=3D"top">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"left">
+<tbody>
+<tr>
+<td class=3D"em_dm_logo" align=3D"center" valign=3D"top"><a style=3D"text=
+-decoration: none; color: #000000;" href=3D"#" target=3D"_blank" rel=3D"n=
+oopener"><span style=3D"color: #000000;"><img style=3D"max-width: 125px; =
+display: block; font-size: 13px; line-height: 17px; font-family: Arial, s=
+ans-serif; color: #333333;" src=3D"https://d3k81ch9hvuctc.cloudfront.net/=
+company/LUKDWG/images/52d492a0-7ef4-4cd1-8de3-a9fdcc24ed51.png" alt=3D"Kl=
+aviyo" width=3D"125" border=3D"0"></span></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style=3D"width: 57px;" width=3D"57">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" align=3D"center" valign=3D"top">&nbsp;</t=
+d>
+</tr>
+<!--//Lines & Spacers - Spacers - Double (60px) - Cotton--> <!--Footer - =
+Standard - Footer-->
+<tr>
+<td align=3D"center" valign=3D"top">
+<table class=3D"em_ftr_dm em_wrapper" style=3D"width: 600px;" border=3D"0=
+" width=3D"600" cellspacing=3D"0" cellpadding=3D"0" align=3D"center" bgco=
+lor=3D"#ffffff">
+<tbody>
+<tr>
+<td style=3D"padding: 40px 15px;" align=3D"center" valign=3D"top">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center">=
+
+<tbody>
+<tr>
+<td class=3D"em_aside38" align=3D"center" valign=3D"top">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center">
+<tbody>
+<tr>
+<td class=3D"em_wht" style=3D"font-size: 1px; line-height: 1px; height: 2=
+px;" bgcolor=3D"#232426" height=3D"2"><span style=3D"font-size: 12px;">&n=
+bsp;</span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 40px 34px 60px;" align=3D"center" valign=3D"top">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center">
+<tbody>
+<tr>
+<td style=3D"padding-bottom: 40px;" align=3D"center" valign=3D"top">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center">=
+
+<tbody>
+<tr>
+<td class=3D"em_dm_in" align=3D"center" valign=3D"top"><a style=3D"text-d=
+ecoration: none; color: #000000;" href=3D"https://www.linkedin.com/compan=
+y/klaviyo" target=3D"_blank" rel=3D"noopener"><span style=3D"color: #0000=
+00;"><img style=3D"max-width: 25px; display: block; font-size: 13px; line=
+-height: 17px; font-family: Arial, sans-serif; color: #333333;" src=3D"ht=
+tps://d3k81ch9hvuctc.cloudfront.net/company/LUKDWG/images/e08b8dbe-0f54-4=
+2ef-b2e1-f28d5892ac9b.png" alt=3D"in" width=3D"25" border=3D"0"></span></=
+a></td>
+<td style=3D"width: 20px;" width=3D"20">&nbsp;</td>
+<td class=3D"em_dm_insta" align=3D"center" valign=3D"top"><a style=3D"tex=
+t-decoration: none; color: #000000;" href=3D"https://www.instagram.com/li=
+featklaviyo/" target=3D"_blank" rel=3D"noopener"><span style=3D"color: #0=
+00000;"><img style=3D"max-width: 25px; display: block; font-size: 13px; l=
+ine-height: 17px; font-family: Arial, sans-serif; color: #333333;" src=3D=
+"https://d3k81ch9hvuctc.cloudfront.net/company/LUKDWG/images/56ad0d4f-719=
+0-411d-8d7a-6ab4e341ed4d.png" alt=3D"insta" width=3D"25" border=3D"0"></s=
+pan></a></td>
+<td style=3D"width: 20px;" width=3D"20">&nbsp;</td>
+<td class=3D"em_dm_tw" align=3D"center" valign=3D"top"><a style=3D"text-d=
+ecoration: none;" href=3D"https://twitter.com/klaviyo" target=3D"_blank" =
+rel=3D"noopener"><span style=3D"color: #000000;"><img style=3D"display: b=
+lock; font-family: Arial, sans-serif; font-size: 9px; line-height: 12px; =
+color: #000000; max-width: 27px;" src=3D"https://d3k81ch9hvuctc.cloudfron=
+t.net/company/LUKDWG/images/96589baf-c7b7-4562-bf18-519ba8af29b5.png" alt=
+=3D"tw" width=3D"27" height=3D"27" border=3D"0"></span></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class=3D"em_defaultlink em_f10 em_dm_txt_white em_pbottom" style=3D"f=
+ont-family: 'Sohne', Helvetica, sans-serif; font-size: 11px; line-height:=
+ 20px; padding-bottom: 10px; font-weight: bold; letter-spacing: 0.08em; t=
+ext-transform: uppercase; color: #232426;" align=3D"center" valign=3D"top=
+"><span style=3D"color: #000000; font-family: sans-serif;"><span style=3D=
+"font-size: 12px; font-weight: 400; letter-spacing: normal; text-transfor=
+m: none;"><a style=3D"text-decoration: none; color: #232426;" href=3D"htt=
+ps://careers.klaviyo.com/en/" target=3D"_blank" rel=3D"noopener">CAREERS<=
+/a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=3D"text-decoration: none; color=
+: #232426;" href=3D"https://careers.klaviyo.com/en/careers-blog/" target=3D=
+"_blank" rel=3D"noopener">BLOG</a></span></span></td>
+</tr>
+<tr>
+<td class=3D"em_defaultlink em_f10 em_dm_txt_white" style=3D"font-family:=
+ 'Sohne', Helvetica, sans-serif; font-size: 10px; line-height: 20px; lett=
+er-spacing: 0.5px; color: #232426;" align=3D"center" valign=3D"top"><span=
+ style=3D"color: #000000; font-family: sans-serif;"><span style=3D"font-s=
+ize: 12px; letter-spacing: normal;">&copy; 2024 Klaviyo, Inc. All rights =
+reserved. 125 Summer St., Floor 6, Boston, MA 02111</span></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"top">
+<table class=3D"em_main_table1" style=3D"width: 600px; table-layout: fixe=
+d;" border=3D"0" width=3D"600" cellspacing=3D"0" cellpadding=3D"0" align=3D=
+"center" bgcolor=3D"#ffffff">
+<tbody>
+<tr>
+<td class=3D"em_side15" style=3D"width: 64px;" width=3D"64">&nbsp;</td>
+<td align=3D"center" valign=3D"top">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center">
+<tbody>
+<tr>
+<td class=3D"em_defaultlink em_dm_txt_white" style=3D"font-family: 'Sohne=
+', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 17px; colo=
+r: #232426;" align=3D"center" valign=3D"top"><span style=3D"color: #00000=
+0; font-family: sans-serif;"><span style=3D"font-size: 12px;">Klaviyo is =
+committed to a policy of equal opportunity and non-discrimination. We do =
+not discriminate on the basis of race, ethnicity, citizenship, national o=
+rigin, color, religion or religious creed, age, sex (including pregnancy)=
+, gender identity, sexual orientation, physical or mental disability, vet=
+eran or active military status, marital status, criminal record, genetics=
+, retaliation, sexual harassment or any other characteristic protected by=
+ applicable law.<br><br>If you need assistance or an accommodation due to=
+ a disability, please email us at <a style=3D"text-decoration: underline;=
+" href=3D"mailto:interviewaccommodations@klaviyo.com">interviewaccommodat=
+ions@klaviyo.com</a>. This information will be treated as confidential an=
+d used only for the purpose of determining an appropriate accommodation f=
+or the interview process. <br><br><a style=3D"text-decoration: underline;=
+ color: #232426;" href=3D"https://www.klaviyo.com/legal/job-applicant-pri=
+vacy-notice" target=3D"_blank" rel=3D"noopener">Privacy&nbsp;Policy</a></=
+span></span></td>
+</tr>
+<tr>
+<td class=3D"em_h30" style=3D"height: 40px;" height=3D"40">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td class=3D"em_side15" style=3D"width: 64px;" width=3D"64">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class=3D"em_hide em_ftr_dm" style=3D"line-height: 1px; min-width: 600=
+px; background-color: #ffffff;"><img style=3D"max-height: 1px; min-height=
+: 1px; display: block; width: 600px; min-width: 600px;" src=3D"https://d3=
+k81ch9hvuctc.cloudfront.net/company/QULiUc/images/6a373da7-4d06-44be-9f27=
+-4b56b0afa2f6.gif" alt=3D"" width=3D"600" height=3D"1" border=3D"0"></td>=
+
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<!--//Footer - Standard - Footer--> <!--// ADD MODULES HERE --></tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>=
+
+----==_mimepart_698d9926dbda4_127470698752319--

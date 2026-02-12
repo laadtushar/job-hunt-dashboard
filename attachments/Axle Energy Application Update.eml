@@ -1,0 +1,149 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp858061ecs;
+        Thu, 12 Feb 2026 07:05:25 -0800 (PST)
+X-Received: by 2002:a17:907:72cb:b0:b8a:f9d7:1aec with SMTP id a640c23a62f3a-b8f8f228d5emr203165666b.10.1770908725202;
+        Thu, 12 Feb 2026 07:05:25 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1770908725; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=YiXklxiFoEeNeC6Q1SMxm86d8L/Wd1Dy1wAEcsStjogJ4Zuqb+4gi05SGEdoARGOsc
+         wfsjN1UIY6VTB13aLUmcACqykn5QsuZfiBf6fv9wwO0a2HhCaGkOhrnMTRmpbv4y2Pof
+         eyWM/aEgsfkdl/5RsJ4vroD4hT8XcyhPGKpg41TKXOnE7VZeU3w+Qxh0xsQMF31ckxdl
+         eqhcNj/fxyMv8ew7Jp8sWYo2BzLbUf2EJpH6Klgh8T9Yw4n7vUZoGde1PglUVwdVHQw0
+         e6EsZipm2zL0bu9mz7lLSXz6xoJ/V6Z2f437Ecl0ZfUSjASGKT2+c42/mXcGCjQV4cZS
+         /xvQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:from:dkim-signature;
+        bh=rzYytgQ8s9sEbK8IVL4Jvq2TejqHXjYj0L48qU1J55M=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=EVwbb0ogPEg+430QRNqly4PDcLoWqrCukZKmvdKA2LGwcIUwm0w0xzmJ2K3HfhoqY7
+         dpE6OQbb8R/A/OuLp5nPuLTeyib8LYif3ylEnrXk+NeMxo8sMU5HK/5l6hrc01vJ5TlO
+         IH5jwbUXldS8YJmzh3w5c6NxzC4Y+6gWTU6ZlrCQnWymdNxRfeSKdu0H7LAH5MIBNkhf
+         riv5lYeXTGxjtO7k0pmzT2BZOdl1jL4EQXKFhDP1B52BAN9x6X/jvKOjr+jy7hIKvV4k
+         5Nh5z06w13gz4erce7L6YQLvrFsO/mMERFrWa4BD79sguM9w5VDc7mwyN4HI3psNVpMf
+         c9AQ==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@axle.energy header.s=google header.b=WnVQo7v9;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of julia@axle.energy designates 209.85.220.41 as permitted sender) smtp.mailfrom=julia@axle.energy;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=axle.energy;
+       dara=pass header.i=@gmail.com
+Return-Path: <julia@axle.energy>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-b8f6f5a8311sor116920366b.9.2026.02.12.07.05.25
+        for <tusharlaad2002@gmail.com>
+        (Google Transport Security);
+        Thu, 12 Feb 2026 07:05:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of julia@axle.energy designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@axle.energy header.s=google header.b=WnVQo7v9;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of julia@axle.energy designates 209.85.220.41 as permitted sender) smtp.mailfrom=julia@axle.energy;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=axle.energy;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1770908724; cv=none;
+        d=google.com; s=arc-20240605;
+        b=epCZeCSmHpnKiv6dnALgwfFT/yvChs8rxpOs9K5YK8Cq6ITOiK8WfwYdLrmpr7288/
+         w1Py/hO4e55rUSzkAbG23CCOvm3yp/hLF513Yhg/rWnAvHIf0MmGopl1luLBsBWuAOXj
+         9JCpN7eeu1xXId7WobV4mQgQcqiMO2NeZf7iIo27GpIMgimwo4MwMUwIbnqnomgvhvKc
+         P2RNdhew+rKtQZtqTkE3kDUaaXAiZRgYgRXhGbUSHFRGf3ANmHIeTMEpEBoFlxxhS8I1
+         UWjCfSt3VbCG4SKt8E40WqaGV5OF3GoOx5+0r3VBpdvcpqmJWr3HLmf1sMugj5O2Pcpm
+         sQJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:from:dkim-signature;
+        bh=rzYytgQ8s9sEbK8IVL4Jvq2TejqHXjYj0L48qU1J55M=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=UyLGhPO7sGycRE95Nbttone5q2Qnw0giNxISDt0UeGuFnsvwhFev+5heh4imqTNPzE
+         dLYlbYcz7iTieHKkSVIBDu4i65tz2nRqLAPnM8YKa62zqYRCXxHNbu/2Jm6EQak4/pLt
+         K5lw5EZnAjUg6OeMlOv1l1u5K+rtDnxrELTYo7lc77GebcDE/701c9NVudszVqC+nLmv
+         c83ju4VnMXsErN++5qWDXZLx9QyDUJGrHjA16iu6z2JjnNNEqv5uFwFjH6sqNxEGUWWQ
+         XKVjyedIh7HeXm4wYrRnHDrpztC3Xn4GNOsurl6zLoJ8TxjVo0X2CgrkI2ZKwYblYxnw
+         cZMw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=axle.energy; s=google; t=1770908724; x=1771513524; dara=google.com;
+        h=to:subject:message-id:date:mime-version:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rzYytgQ8s9sEbK8IVL4Jvq2TejqHXjYj0L48qU1J55M=;
+        b=WnVQo7v9uLA//j6SogvD2jmsjOgYbr5PnY+G2IF+H+9H2f81kyBAy4rtW8OAJJWcBM
+         U3ds5egycah8cdZ6dnLYyWd0Rd8s+ehdUJz6f1KFs/fJAbLnlYndaUmngc/JWL/VujDP
+         hQB5YJeJbjLSb5N6cwsGzS5JSwJMP0r/+zUxbPxaidy03VcXJ9OtcX6hW6BSUHnB2T/s
+         vGdUl4TEfuptlxl0x55T5nZOsnqwyDcWtanDavQGGIHuGLkmOhApHIilKWAt+aoBBRPs
+         ktvYS+/4ek2cOQm3OiqQ6eLiuB7UY69NfvQebpRfgZatmKSsRnNLTmw2L9pCClT+z9xx
+         iruA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770908724; x=1771513524;
+        h=to:subject:message-id:date:mime-version:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rzYytgQ8s9sEbK8IVL4Jvq2TejqHXjYj0L48qU1J55M=;
+        b=b7m9SbBlG6+fPdnlqzrZbtOrTOuS2xX77yjBGQTt7afXpT2tEbC3jolBS0+E/ZW4CS
+         3VjW1SIQnDvocDGd0BBmJvtpbGVeuUouB0gB48T2zr5wEHdpt5yklkQQnX+hGUo4WDrJ
+         1RkVXVB8y6wRVjtSdRVApSwU8g/tD+18Zyv6Iq8YDQr2/djr9Con8SiKeewRavaIncvd
+         qcbCK1PTXhxGxOY05IRCoB+75XNhAbn/K7hD114JklHdgXl4EzIZWC/4jdwJU2pdLgAb
+         YMEKd05DrxRAkmDEgbN7v1rh4LPITc6SAUt9Jhl75nRBNmvOVFBjb0eDe2EPqz8zRG7U
+         o3SA==
+X-Gm-Message-State: AOJu0Yy4XEkaueR453OCiHnqkHjqDif/G92AtU1whhliWLzgGKgQyUe7
+	UOsUsyNVd4ZxVPu2H+8gCYxIumctOppSFiLh/SJK2PxGhCCbjuPu5FiPIwEwxQOdJGCIpMURyLH
+	J9kDC61CYevLGjyTZinIJ7OPCQGH0sbPk55eTYHmo+nmVWg8fdT7A
+X-Gm-Gg: AZuq6aK4DFk8gkqupxs8RTemTH4LR5vde8MEjP/wFRNDVNDB+JviJok1cIEwKL/I5fx
+	kOpdkI6v7FD+Ge3ptYOb207oGujOIlj/eNtuXaMceClGf/LSUuHmVgGkhQ6PDPGAHaXrIRP4R/B
+	+0FahufD4EuUHu4wCAvf9ynq1hltlf/gjY8bJs5MzdfDXXID3DECSXbkyEzTyoGyYts4+5zcYTa
+	ly76KY06Wv6qrlpBGw33NTa6/iC07bNEhhJQGudwGsi0rym9b6CgwAMk0TTAxlnZ+5/N6gPfYGr
+	4ZzolWBsHWXSlAqTmFc3WY2hYg==
+X-Received: by 2002:a17:907:701:b0:b87:6af7:c186 with SMTP id
+ a640c23a62f3a-b8f8f6b1ed1mr210240266b.54.1770908723015; Thu, 12 Feb 2026
+ 07:05:23 -0800 (PST)
+Received: from 12916233634 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 12 Feb 2026 07:05:22 -0800
+Received: from 12916233634 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 12 Feb 2026 07:05:22 -0800
+X-Ashby-Stage: 94d04493-56d7-4982-a815-4da1dc35c66a
+From: Julia Gottschalk <julia@axle.energy>
+MIME-Version: 1.0
+Date: Thu, 12 Feb 2026 07:05:22 -0800
+X-Gm-Features: AZwV_QhPcD8J1tHtEDEZ4AWsSeqESSpKZGE02wt-4SQSqvLbzaqTZVv_zwVUNQY
+Message-ID: <CANpDT6xGuUbn3bg45aG66QpMK=sLRwG4Tb4uWd+OPCsOnTBuNw@mail.gmail.com>
+Subject: Axle Energy Application Update
+To: tusharlaad2002@gmail.com
+Content-Type: multipart/alternative; boundary="0000000000005d7f86064aa1d1d6"
+
+--0000000000005d7f86064aa1d1d6
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Tushar,
+
+Thank you for your interest in Software Engineer role at Axle Energy. We
+were fortunate to receive many qualified candidates for the role.
+
+After careful consideration, we have decided that we won't be moving
+forward with your application at this time.
+
+Please feel free to stay connected as we continue to grow & further
+opportunities become available.
+
+All the best,
+
+Axle Energy Hiring Team
+
+--0000000000005d7f86064aa1d1d6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">Hi <span>Tushar</span>, <br><br>Thank you for your interest in  <s=
+pan>Software Engineer</span> role at <span>Axle Energy</span>. We were fort=
+unate to receive many qualified candidates for the role. </div><div style=
+=3D"min-height:1.2em;margin-top:0;margin-bottom:0">=C2=A0</div><div style=
+=3D"min-height:1.2em;margin-top:0;margin-bottom:0">After careful considerat=
+ion, we have decided that we won&#39;t be moving forward with your applicat=
+ion at this time.</div><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">=C2=A0</div><div style=3D"min-height:1.2em;margin-top:0;margin-bot=
+tom:0">Please feel free to stay connected as we continue to grow &amp; furt=
+her opportunities become available.</div><div style=3D"min-height:1.2em;mar=
+gin-top:0;margin-bottom:0">=C2=A0</div><div style=3D"min-height:1.2em;margi=
+n-top:0;margin-bottom:0">All the best, <br><br><span>Axle Energy</span> Hir=
+ing Team</div></body></html>
+
+--0000000000005d7f86064aa1d1d6--

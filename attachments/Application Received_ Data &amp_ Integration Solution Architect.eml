@@ -1,0 +1,810 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp682167ecs;
+        Thu, 12 Feb 2026 02:05:17 -0800 (PST)
+X-Received: by 2002:a05:690e:d4c:b0:64a:df24:813a with SMTP id 956f58d0204a3-64c081d2ab2mr947768d50.29.1770890717415;
+        Thu, 12 Feb 2026 02:05:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770890717; cv=none;
+        d=google.com; s=arc-20240605;
+        b=duIzUUGozweYL6ucI/Xj6uPzjb6LVUMS90/8lz9rVl6YkaXxszQVe67sgD+IvZHcr0
+         bnSpWH2m79WtwxIy95gTSOAswWDXMfha63Kod8g3reakurxd6VwMPluAfN30i6G+uyAl
+         1fgS8n2/grpadzHrTmRXL30F6WQM1/ofeNanjjzF36WlwrRaaVCTvJWwWnE4a1bTtvdf
+         3vXTnt0xD/o08sq5jRCifhWneYLRYgwkNowA7z3PZyeCi5wA/u3OBZ05ujARSlOvo4dx
+         nPvAtn1aL2BKIRxFA5uFd6N/ezMuszhy+MRIIum/NFF+Z6Z0074aV6WnHFDf9nB46j0D
+         4CAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:date:message-id:feedback-id:to:subject:from
+         :dkim-signature:dkim-signature;
+        bh=6+Ysd5TiKg/hArMH2WhFux9sQLJs7oiuIE025A8pit4=;
+        fh=nIhAy87qlX6Nxxf593V5b6mMQaTtI6GnWVllQx2WZY0=;
+        b=Fm9JkyUL2tLq6pI/THEJ2HCA6T+fWnjPMAXmgFHBmvEqQs42+IBBOZ12XLtpUtcGF3
+         9j1egdx1Jv4XZ06ZQqgmZuIGXFruGo9gbdiC//20NENZJQYvZYzyrufCczfhYDAjGE3O
+         Zjf5LC+fmvHQ1jal948ZRqdtKHdKPnha3TRDSopi7XEOzvHPAzrhfcSbYoCOwscPG4st
+         ZBANZ5aYd6cqr1IwbSOI832TlBOm/FprB3dkBgjwfyobQCgaM1BxE4vHJFc4WR9RucsB
+         XH9i2t1skqwKzBZcrBDwNayy3VxQ8qJCbl5jD1nbnV2NUFiZqo/wJ3arBE48yPEwUT0+
+         Uy2Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=luo8o7gF;
+       dkim=pass header.i=@user.applygateway.com header.s=mte1 header.b=x1FWlfdx;
+       spf=pass (google.com: domain of bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com designates 198.2.145.31 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+Return-Path: <bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com>
+Received: from mail145-31.atl61.mandrillapp.com (mail145-31.atl61.mandrillapp.com. [198.2.145.31])
+        by mx.google.com with ESMTPS id 956f58d0204a3-64afc9ccb73si3697795d50.155.2026.02.12.02.05.17
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 02:05:17 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com designates 198.2.145.31 as permitted sender) client-ip=198.2.145.31;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=luo8o7gF;
+       dkim=pass header.i=@user.applygateway.com header.s=mte1 header.b=x1FWlfdx;
+       spf=pass (google.com: domain of bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com designates 198.2.145.31 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da5dd.v1-ca02c208683f458bbc84b9c473d7e2ff@return.applygateway.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+	s=mte1; t=1770890717; x=1771160717;
+	bh=6+Ysd5TiKg/hArMH2WhFux9sQLJs7oiuIE025A8pit4=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=luo8o7gFVF8YiX5bumg2eMJg0chxQlf17YArhCmEAE4WWZ2mZFJo0uRky9cx9OvEG
+	 +sSxmzroe+CGz5REvO0HE5ZMBiRYYnVC5u+2xNBqRIzilPPs8VHN8Yko/UiHnv2hZ/
+	 D37OQLXDZJ75TwuO25J/3BIrAsyLrQFnQMKAFCG2hLYZbV75+kmCprj8VBwT3HmR8m
+	 XB82gGCROJ/fb0oM4LqdLDskPsc0OUIeK0uINwqNV3fCgg29vtySOqa4OhHpcstQQm
+	 wtKV1uwSPo2CUAfibH4ket5cUtPiNPCWzUdM/ReUwtmxpwQwLwaDy+9ydL1yPTph2O
+	 YRXpCI3Oh3z0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=user.applygateway.com; s=mte1; t=1770890717; x=1771151217;
+	i=contact@user.applygateway.com;
+	bh=6+Ysd5TiKg/hArMH2WhFux9sQLJs7oiuIE025A8pit4=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=x1FWlfdx6z/xKYasSzV+brFMG9EmOs6i+20RePIG9hMDcpnhsFDsbr+TMjAl0MBP+
+	 01NdCTE5PjU6S9dQjonThLcvEeDIs62vYmz6i4iVLvBXqLw+b6FHNIFDj/v1K3H/nT
+	 hhYQejOy8MS4kpA4iREKsELj69xZrSOQ6KYK/bNS6Lr8lYQFpxtCX+jaRk3Zha4Zuz
+	 D8POtchfQ/b/pPHsbnGhadpPSdjhZ8NvfkWJH4rexPym14axFlZEpINGCJAcND4oLo
+	 RmmSVeQ/ZLwmr0KZQZ5BhTRcHvB4Sr0PKn0Uk/jnBmGiuRjgbafuEg10HpQ5Wm6JlA
+	 YUuS3+Kx0Zwtw==
+Received: from pmta06.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
+	by mail145-31.atl61.mandrillapp.com (Mailchimp) with ESMTP id 4fBWBj1N7vz7lmnRF
+	for <tusharlaad2002@gmail.com>; Thu, 12 Feb 2026 10:05:17 +0000 (GMT)
+From: ApplyGateway <contact@user.applygateway.com>
+Subject: =?utf-8?Q?Application=20Received:=20Data=20&amp;=20Integration=20Solution=20Architect?=
+Received: from [212.38.182.252] by mandrillapp.com id ca02c208683f458bbc84b9c473d7e2ff; Thu, 12 Feb 2026 10:05:17 +0000
+To: "Tushar Laad" <tusharlaad2002@gmail.com>
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30883532.ca02c208683f458bbc84b9c473d7e2ff?=
+X-Mandrill-User: md_30883532
+Feedback-ID: 30883532:30883532.20260212:md
+Message-Id: <30883532.20260212100517.698da5dd23c2c2.98358005@mail145-31.atl61.mandrillapp.com>
+Date: Thu, 12 Feb 2026 10:05:17 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_av-o8b5ATXQFDlI6-v8EpaOBA"
+
+--_av-o8b5ATXQFDlI6-v8EpaOBA
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Thank you for applying via ApplyGateway!
+
+<p>We make applying for jobs easy. No more filling in endless registration forms.</p>
+
+<p>We have received your application for this job:</p>
+<p>
+Title: Data &amp; Integration Solution Architect<br/>
+Location: Dorset<br/>
+Country: United Kingdom
+</p>
+
+<p>We will send this application to the job provider. This process can take a few hours and you will receive email correspondance from them regarding the application and registration.</p>
+
+<p>You can login at <a href="https://www.applygateway.com/account/profile">www.applygateway.com/account/profile</a> at any time to upload a new CV, update your settings or delete your account.</p>
+
+We will send this application to the job provider.
+
+
+We make applying for jobs easy. No more filling in endless registration forms.
+
+We have received your application for this job:
+
+Title: Data &amp; Integration Solution Architect
+Location: Dorset
+Country: United Kingdom
+
+We will send this application to the job provider. This process can take a few hours and you will receive email correspondance from them regarding the application and registration.
+
+You can login at www.applygateway.com at any time to upload a new CV, update your settings or delete your account.
+
+Unsubscribe at https://www.applygateway.com/Account/Unsubscribe
+--_av-o8b5ATXQFDlI6-v8EpaOBA
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+" />
+    <title></title>
+    <style type=3D"text/css">
+        /* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" message */
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .Externa=
+lClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        /* Prevent WebKit and Windows mobile changing default text sizes */
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        /* Remove spacing between tables in Outlook 2007 and up */
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+        /* Allow smoother rendering of resized image in Internet Explorer *=
+/
+
+        /* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body, #bodyTable, #bodyCell {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Page Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D */
+
+        #bodyCell {
+            padding: 20px;
+        }
+
+        #templateContainer {
+            width: 600px;
+        }
+
+
+        body, #bodyTable {
+            background-color: #f1f1f1;
+        }
+
+
+        h1 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        h2 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: bold;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        .headerContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 100%;
+            padding-top: 80px;
+            padding-right: 0;
+            padding-bottom: 80px;
+            padding-left: 0;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+
+            .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail=
+ Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #EB4102;
+                font-weight: normal;
+                text-decoration: underline;
+            }
+
+        #headerImage {
+            height: auto;
+            max-width: 600px;
+        }
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Body Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D */
+
+
+        #templateBody {
+        }
+
+
+        .bodyContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 15px;
+            line-height: 150%;
+            text-align: left;
+        }
+
+
+            .bodyContent p {
+                margin-bottom: 30px;
+            }
+
+
+
+            .bodyContent a:link, .bodyContent a:visited, /* Yahoo! Mail Ove=
+rride */ .bodyContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #24b780;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .bodyContent img {
+                display: inline;
+                height: auto;
+                max-width: 560px;
+            }
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Footer Styles =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D */
+
+
+        #templateFooter {
+            border-top: 1px solid #dcdcdc;
+        }
+
+
+        .footerContent {
+            color: #626262;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 13px;
+            line-height: 150%;
+            padding-top: 20px;
+            text-align: left;
+        }
+
+        .footerRight {
+            text-align: right;
+            color: #231f20;
+        }
+
+
+        .footerContent a:link, .footerContent a:visited, /* Yahoo! Mail Ove=
+rride */ .footerContent a .yshortcuts, .footerContent a span /* Yahoo! Mail=
+ Override */ {
+            color: #231f20;
+            font-weight: normal;
+            text-decoration: underline;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+
+        @media only screen and (max-width: 480px) {
+            /* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+            body, table, td, p, a, li, blockquote {
+                -webkit-text-size-adjust: none !important;
+            }
+            /* Prevent Webkit platforms from changing default text sizes */
+            body {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+            /* Prevent iOS Mail from adding padding to the body */
+
+            #bodyCell {
+                padding: 20px !important;
+            }
+
+            /**************** Header ****************/
+
+            .headerContent img {
+                width: 300px !important;
+            }
+
+            .headerContent {
+                padding-top: 40px !important;
+                padding-bottom: 40px !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Page Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            #templateContainer {
+                max-width: 600px !important;
+                width: 100% !important;
+            }
+
+
+            h1 {
+                font-size: 24px !important;
+                line-height: 130% !important;
+            }
+
+
+            h2 {
+                font-size: 20px !important;
+                line-height: 130% !important;
+            }
+
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Header Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .headerContent {
+                font-size: 20px !important;
+                line-height: 125% !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Body Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .bodyContent {
+                font-size: 15px !important;
+                line-height: 150% !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Footer Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .footerContent {
+                display: block !important;
+                font-size: 14px !important;
+                line-height: 115% !important;
+                text-align: left !important;
+            }
+
+                .footerContent a {
+                    display: block !important;
+                }
+            /* Place footer social and utility links on their own lines, fo=
+r easier access */
+        }
+    </style>
+</head>
+<body leftmargin=3D"0" marginwidth=3D"0" topmargin=3D"0" marginheight=3D"0"=
+ offset=3D"0" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust:=
+ 100%;margin: 0;padding: 0;background-color: #f1f1f1;height: 100% !importan=
+t;width: 100% !important;">
+    <center>
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" height=3D"100%" width=3D"100%" id=3D"bodyTable" style=3D"-webkit-tex=
+t-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-ta=
+ble-rspace: 0pt;margin: 0;padding: 0;background-color: #f1f1f1;border-colla=
+pse: collapse !important;height: 100% !important;width: 100% !important;">
+            <tr>
+                <td align=3D"center" valign=3D"top" id=3D"bodyCell" style=
+=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lsp=
+ace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 20px;height: 100% !import=
+ant;width: 100% !important;">
+                    <!-- BEGIN TEMPLATE // -->
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ id=3D"templateContainer" style=3D"-webkit-text-size-adjust: 100%;-ms-text-=
+size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 600px;=
+border-collapse: collapse !important;">
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN HEADER // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateHeader" style=3D" -webkit-text-si=
+ze-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-=
+rspace: 0pt;border-collapse: collapse !important;">
+                                    <tr>
+                                        <td valign=3D"top" class=3D"headerC=
+ontent" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;=
+mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: 'Op=
+en Sans Bold', arial;font-size: 20px;font-weight: bold;line-height: 100%;pa=
+dding-top: 0px;padding-right: 0;padding-bottom: 18px;padding-left: 0;text-a=
+lign: left;vertical-align: middle;">
+                                            <img src=3D"https://www.applyga=
+teway.com/assets/img/applygateway_logo_mobile.png" width=3D"246" border=3D"=
+0" alt=3D"ApplyGateway.com" style=3D"-ms-interpolation-mode: bicubic;border=
+: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END HEADER -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN BODY // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateBody" style=3D"-webkit-text-size-=
+adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rsp=
+ace: 0pt;border-collapse: collapse !important;">
+                                    <tr>
+                                        <td valign=3D"top" class=3D"bodyCon=
+tent">
+                                            <h1>Thank you for applying via =
+ApplyGateway!</h1>
+                                           
+=09=09=09=09=09=09=09=09=09=09=09<p>We make applying for jobs easy. No more=
+ filling in endless registration forms.</p>
+
+<p>We have received your application for this job:</p>
+<p>
+Title: Data &amp; Integration Solution Architect<br />
+Location: Dorset<br />
+Country: United Kingdom
+</p>
+
+<p>We will send this application to the job provider. This process can take=
+ a few hours and you will receive email correspondance from them regarding =
+the application and registration.</p>
+
+<p>You can login at <a href=3D"http://clicktracking.applygateway.com/track/=
+click/30883532/www.applygateway.com?p=3DeyJzIjoiMDBKUDVqMWRRTHpCZkIzdE85dHE=
+4V3NCUlNVIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodH=
+RwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2FjY291bnRcXFwvcHJvZmlsZVwiL=
+FwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6=
+W1wiMjllZDdmZjZhNzEyMmFhNmZkMjYxYTkxYTZlNDg1MzkxOTNlNjUyZlwiXSxcIm1zZ190c1w=
+iOjE3NzA4OTA3MTd9In0">www.applygateway.com/account/profile</a> at any time =
+to upload a new CV, update your settings or delete your account.</p>
+
+<p>Why not apply for these similar jobs?</p>
+
+<p><a href=3D"http://clicktracking.applygateway.com/track/click/30883532/ww=
+w.applygateway.com?p=3DeyJzIjoiakRiV0dJc1lKaDN0V0dXUHVWN2lJVmZFWGNZIiwidiI6=
+MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d=
+3dy5hcHBseWdhdGV3YXkuY29tXFxcL2FwcGx5P0pvYklkPTE0NjE4MTQzMzcmc3VwcGxpZXJJZD=
+0xXCIsXCJpZFwiOlwiY2EwMmMyMDg2ODNmNDU4YmJjODRiOWM0NzNkN2UyZmZcIixcInVybF9pZ=
+HNcIjpbXCJmOWYzZjg3NTVlY2YyOTFjODAwNmY2ZGI1Mzg5OTY1N2VlYmY2ZTViXCJdLFwibXNn=
+X3RzXCI6MTc3MDg5MDcxN30ifQ">Data & Integration Solution Architect - Dorset,=
+ <br />Up to =C2=A345,000pa + Bens</a></p><p><a href=3D"http://clicktrackin=
+g.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoiNl=
+FzT21OdWs0Y2lNR0k3bWpISVZhelBvd3owIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcI=
+nZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2Fw=
+cGx5P0pvYklkPTE0NjE5NjkyMTQmc3VwcGxpZXJJZD0xXCIsXCJpZFwiOlwiY2EwMmMyMDg2ODN=
+mNDU4YmJjODRiOWM0NzNkN2UyZmZcIixcInVybF9pZHNcIjpbXCJmOWYzZjg3NTVlY2YyOTFjOD=
+AwNmY2ZGI1Mzg5OTY1N2VlYmY2ZTViXCJdLFwibXNnX3RzXCI6MTc3MDg5MDcxN30ifQ">Data =
+& Integration Solution Architect - Portland, Dorset, <br />=C2=A340,000</a>=
+</p><p><a href=3D"http://clicktracking.applygateway.com/track/click/3088353=
+2/www.applygateway.com?p=3DeyJzIjoicXp6akptMnFUT3NwUTFGN29MUXBPNVVqdzRRIiwi=
+diI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFx=
+cL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1Njk2MzUzNFwiLF=
+wiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W=
+1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wi=
+OjE3NzA4OTA3MTd9In0">Architect - Dorchester, <br />=C2=A335000 - =C2=A34500=
+0/annum</a></p><p><a href=3D"http://clicktracking.applygateway.com/track/cl=
+ick/30883532/www.applygateway.com?p=3DeyJzIjoiNVpyOWpSV01YTjRpUkptSmRjQ0VRc=
+UpVdUk0IiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRw=
+czpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1OTk=
+xNjcwM1wiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cm=
+xfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcI=
+m1zZ190c1wiOjE3NzA4OTA3MTd9In0">Architect - Dorchester, <br /></a></p><p><a=
+ href=3D"http://clicktracking.applygateway.com/track/click/30883532/www.app=
+lygateway.com?p=3DeyJzIjoiZTQ4VHQ0MjNEbjhzaVd3UHJyNDNJcXZsQXRzIiwidiI6Miwic=
+CI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5h=
+cHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1OTk3ODQyMVwiLFwiaWRcIjp=
+cImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YT=
+c4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4O=
+TA3MTd9In0">Architect - Dorchester, <br /></a></p><p><a href=3D"http://clic=
+ktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=3Dey=
+JzIjoiMHJHUFgwaUlYWjdWQUdjMXdpVGxBV18zLUdRIiwidiI6MiwicCI6IntcInVcIjozMDg4M=
+zUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29t=
+XFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg3NzUzMVwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ=
+1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOT=
+M3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Security=
+ Architect - Preston, <br /></a></p><p><a href=3D"http://clicktracking.appl=
+ygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoiNXZfNGpm=
+VUVidUVBZkstWExDbEF6WTdCNDZvIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjo=
+yLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdH=
+JhY2tpbmdcXFwvMTM5NDE1ODk0MlwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljN=
+DczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNj=
+NzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Modelling & Simulation=
+ Architect - Belfast, <br /></a></p><p><a href=3D"http://clicktracking.appl=
+ygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoieTZUTlly=
+eHZNOUpmcVRfT29uRERzWnlGZkhBIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjo=
+yLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdH=
+JhY2tpbmdcXFwvMTQwNDM3OTAzNFwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljN=
+DczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNj=
+NzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Senior Lead Architect =
+- BOURNEMOUTH, <br /></a></p><p><a href=3D"http://clicktracking.applygatewa=
+y.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoiT0ZEYW1PbXJXM0p=
+1QWQ1N1JnNmhhbjR5ZDNvIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidX=
+JsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2FwcGx5P0pvYklkP=
+TE0NTQ1MjU5Njcmc3VwcGxpZXJJZD0xXCIsXCJpZFwiOlwiY2EwMmMyMDg2ODNmNDU4YmJjODRi=
+OWM0NzNkN2UyZmZcIixcInVybF9pZHNcIjpbXCJmOWYzZjg3NTVlY2YyOTFjODAwNmY2ZGI1Mzg=
+5OTY1N2VlYmY2ZTViXCJdLFwibXNnX3RzXCI6MTc3MDg5MDcxN30ifQ">Graduate Naval Arc=
+hitect - Poole, <br />=C2=A329079 - =C2=A334210/annum</a></p><p><a href=3D"=
+http://clicktracking.applygateway.com/track/click/30883532/www.applygateway=
+.com?p=3DeyJzIjoieVA5aU8zeUNCV1dNX29EMzY2TDlIakRBc1RzIiwidiI6MiwicCI6IntcIn=
+VcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhd=
+GV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTU3NjkxM1wiLFwiaWRcIjpcImNhMDJj=
+MjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTA=
+zZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In=
+0">Principal Naval Architect - Yeovil, <br /></a></p><p><a href=3D"http://c=
+licktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=
+=3DeyJzIjoiT3NxLVF0bnh6WThYUkstSkJvY0tuQVJ3aGZNIiwidiI6MiwicCI6IntcInVcIjoz=
+MDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXk=
+uY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg0Nzk5NlwiLFwiaWRcIjpcImNhMDJjMjA4Nj=
+gzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwO=
+DZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Sen=
+ior Technical Architect - Preston, <br /></a></p><p><a href=3D"http://click=
+tracking.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJ=
+zIjoiZjY3YlpkMExUMUo3b2dDYTZqNFFWSERGZjBvIiwidiI6MiwicCI6IntcInVcIjozMDg4Mz=
+UzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tX=
+FxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTc4OTQ4N1wiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1=
+OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM=
+3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Principal=
+ Naval Architect - Yeovil, <br /></a></p><p><a href=3D"http://clicktracking=
+.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoiWjB=
+QZU1qOF9Cc09oVFVXOENKaVJuSkNWTnJBIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcIn=
+ZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2Nsa=
+WNrdHJhY2tpbmdcXFwvMTQ2MTg3NDEzNlwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0=
+YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDA=
+zMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Senior Technical =
+Architect - Preston, <br /></a></p><p><a href=3D"http://clicktracking.apply=
+gateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoicmlXSENic=
+zVCLVZZblFERDdkSDJ3Z2ZqSk5FIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoy=
+LFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJ=
+hY2tpbmdcXFwvMTM3OTI0MzgwOVwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljND=
+czZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjN=
+zRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Mechanical Architect / =
+Mechanical Engineer - Templecombe, <br /></a></p><p><a href=3D"http://click=
+tracking.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJ=
+zIjoibDJIMExPMk05OFJ2ZExvNU1UeXpZTnIzWS1zIiwidiI6MiwicCI6IntcInVcIjozMDg4Mz=
+UzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tX=
+FxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg4MTEyM1wiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1=
+OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM=
+3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Senior Cl=
+oud Security & Solutions Architect - Bournemouth, <br /></a></p><p><a href=
+=3D"http://clicktracking.applygateway.com/track/click/30883532/www.applygat=
+eway.com?p=3DeyJzIjoiSjc5WkduUXNoelU4ZDFWYzhQVlplbHJZR0h3IiwidiI6MiwicCI6In=
+tcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBse=
+WdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTU2Njg5NFwiLFwiaWRcIjpcImNh=
+MDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODd=
+hYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MT=
+d9In0">Senior Cloud Security & Solutions Architect - Preston, <br /></a></p=
+><p><a href=3D"http://clicktracking.applygateway.com/track/click/30883532/w=
+ww.applygateway.com?p=3DeyJzIjoiUXJNTlhDS2E3YThDQVcwRXNwSndmTUxVZkdrIiwidiI=
+6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3=
+d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTU2NjI2OVwiLFwia=
+WRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wi=
+YzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE=
+3NzA4OTA3MTd9In0">Integration Engineer - Bournemouth, <br /></a></p><p><a h=
+ref=3D"http://clicktracking.applygateway.com/track/click/30883532/www.apply=
+gateway.com?p=3DeyJzIjoidmRETmI1b3hkY193OVhybmZ0bmlCSWtOOFY0IiwidiI6MiwicCI=
+6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcH=
+BseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ0NzQxMTQxNFwiLFwiaWRcIjpcI=
+mNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4=
+ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA=
+3MTd9In0">Infrastructure Architect III =E2=80=93 TCOPS Team (Technology Con=
+trol Operations) - Bournemouth, <br /></a></p><p><a href=3D"http://clicktra=
+cking.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIj=
+oicndXYURLRXlPaGd2V3pNbDNyU3pIODUwMEhRIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzM=
+ixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxc=
+L2NsaWNrdHJhY2tpbmdcXFwvMTQ1OTUzNTEwMVwiLFwiaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJ=
+iYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MT=
+A5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Painter & De=
+corator - Boscombe, <br />=C2=A320 - =C2=A321/hour</a></p><p><a href=3D"htt=
+p://clicktracking.applygateway.com/track/click/30883532/www.applygateway.co=
+m?p=3DeyJzIjoiVF9lVWZjS25NNFo3V2hIQzF1NE1iNWQ1a1JjIiwidiI6MiwicCI6IntcInVcI=
+jozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3=
+YXkuY29tXFxcL2FwcGx5P0pvYklkPTE0NTg4OTcxMjMmc3VwcGxpZXJJZD0xXCIsXCJpZFwiOlw=
+iY2EwMmMyMDg2ODNmNDU4YmJjODRiOWM0NzNkN2UyZmZcIixcInVybF9pZHNcIjpbXCJmOWYzZj=
+g3NTVlY2YyOTFjODAwNmY2ZGI1Mzg5OTY1N2VlYmY2ZTViXCJdLFwibXNnX3RzXCI6MTc3MDg5M=
+DcxN30ifQ">Technical Architect - , <br />not provided</a></p><p><a href=3D"=
+http://clicktracking.applygateway.com/track/click/30883532/www.applygateway=
+.com?p=3DeyJzIjoiVEVHQUpoSkJRWS1jaklhVmhiNW9IMTNJQnJnIiwidiI6MiwicCI6IntcIn=
+VcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhd=
+GV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1NzY5OTU1MVwiLFwiaWRcIjpcImNhMDJj=
+MjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTA=
+zZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In=
+0">Technical Architect - , <br />not provided</a></p><p><a href=3D"http://c=
+licktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=
+=3DeyJzIjoicUpNUy1tWXRGUUZMcEF0OEJmM0JLdjN3OFRjIiwidiI6MiwicCI6IntcInVcIjoz=
+MDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXk=
+uY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1NTcwODg4N1wiLFwiaWRcIjpcImNhMDJjMjA4Nj=
+gzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZDAwO=
+DZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">Int=
+egration & Partnership Co-ordinator - Preston, <br /></a></p><p><a href=3D"=
+http://clicktracking.applygateway.com/track/click/30883532/www.applygateway=
+.com?p=3DeyJzIjoiZ2RNY2RhOXNDV3R6NHhwSlZpcUpySXVHN3RjIiwidiI6MiwicCI6IntcIn=
+VcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhd=
+GV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1Njc2NDI1MFwiLFwiaWRcIjpcImNhMDJj=
+MjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTA=
+zZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In=
+0">Senior Software Integration Engineer - Preston, <br /></a></p><p><a href=
+=3D"http://clicktracking.applygateway.com/track/click/30883532/www.applygat=
+eway.com?p=3DeyJzIjoibk9DcGJGbDI2T3BhNTJyRVhVMkV1RV8tOUdJIiwidiI6MiwicCI6In=
+tcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBse=
+WdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg0Nzg0NVwiLFwiaWRcIjpcImNh=
+MDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODd=
+hYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MT=
+d9In0">HR Integration Project Manager - Preston, <br /></a></p><p><a href=
+=3D"http://clicktracking.applygateway.com/track/click/30883532/www.applygat=
+eway.com?p=3DeyJzIjoiUjN1LXh4QVhteXBNcUJFd1hSdGR4b0RRRzdzIiwidiI6MiwicCI6In=
+tcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBse=
+WdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg4MDc5OVwiLFwiaWRcIjpcImNh=
+MDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODd=
+hYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MT=
+d9In0">HR Integration Project Manager - Preston, <br /></a></p><p><a href=
+=3D"http://clicktracking.applygateway.com/track/click/30883532/www.applygat=
+eway.com?p=3DeyJzIjoiWTRzbUZyNU1MLUFDdXRjU3lRUDZMY3Q2Y1JNIiwidiI6MiwicCI6In=
+tcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBse=
+WdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ2MTg3NDk0N1wiLFwiaWRcIjpcImNh=
+MDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODd=
+hYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MT=
+d9In0">Deployment and Integration Engineer - Preston, <br /></a></p><p><a h=
+ref=3D"http://clicktracking.applygateway.com/track/click/30883532/www.apply=
+gateway.com?p=3DeyJzIjoicjRDRU05Q1lScGNOY0JkczFwbS0zN2gxbTN3IiwidiI6MiwicCI=
+6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcH=
+BseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1Njg4OTAwOVwiLFwiaWRcIjpcI=
+mNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4=
+ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA=
+3MTd9In0">Senior Software Integration Engineer - Preston, <br /></a></p><p>=
+<a href=3D"http://clicktracking.applygateway.com/track/click/30883532/www.a=
+pplygateway.com?p=3DeyJzIjoiZXFIY3Q0M0RLT3NtNXdXSEswVGVOZlRNbDY4IiwidiI6Miw=
+icCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy=
+5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1MzcxNDI4NVwiLFwiaWRcI=
+jpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3=
+YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA=
+4OTA3MTd9In0">Integration & Partnership Co-ordinator - Preston, <br /></a><=
+/p><p><a href=3D"http://clicktracking.applygateway.com/track/click/30883532=
+/www.applygateway.com?p=3DeyJzIjoiNDFxOWVTRU5lWWZFZ3FwbmhfeEI3b3VTMnA0Iiwid=
+iI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxc=
+L3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1NzM2Mjk1OFwiLFw=
+iaWRcIjpcImNhMDJjMjA4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1=
+wiYzE3YTc4ODdhYTAzZDAwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiO=
+jE3NzA4OTA3MTd9In0">Infrastructure & Security Manager - Poole, <br />=C2=A3=
+45000 - =C2=A350000/annum Bonus + Benefits Package</a></p><p><a href=3D"htt=
+p://clicktracking.applygateway.com/track/click/30883532/www.applygateway.co=
+m?p=3DeyJzIjoiOHQxMWFvUTZDUHdXeW5NX1hUc3g5WDhKYWs4IiwidiI6MiwicCI6IntcInVcI=
+jozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3=
+YXkuY29tXFxcL2NsaWNrdHJhY2tpbmdcXFwvMTQ1NTg3NjU2OVwiLFwiaWRcIjpcImNhMDJjMjA=
+4NjgzZjQ1OGJiYzg0YjljNDczZDdlMmZmXCIsXCJ1cmxfaWRzXCI6W1wiYzE3YTc4ODdhYTAzZD=
+AwODZiOTM3MTA5NDAzMjNjNzRmM2RhNThlMlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTd9In0">=
+Stores Operative & Buyer - Poole, <br />=C2=A328000 - =C2=A330000/annum</a>=
+</p>
+                                                                           =
+         
+                                            <p>                            =
+                  
+                                                <strong>Happy job hunting, =
+<br />The Apply Gateway Team</strong>
+                                            </p>
+                                            <p>To change your preference, l=
+ogin at <a href=3D"http://clicktracking.applygateway.com/track/click/308835=
+32/www.applygateway.com?p=3DeyJzIjoiTXpPcjhQb2J2dHItX2E4ZEJNVUh3YlpxSXhVIiw=
+idiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXF=
+xcL3d3dy5hcHBseWdhdGV3YXkuY29tXCIsXCJpZFwiOlwiY2EwMmMyMDg2ODNmNDU4YmJjODRiO=
+WM0NzNkN2UyZmZcIixcInVybF9pZHNcIjpbXCI1NGY5YWY1NGFkMWM3ZTBiY2VjNmFkNjU4Mzdk=
+NWY3NTUzYTE5MmNlXCJdLFwibXNnX3RzXCI6MTc3MDg5MDcxN30ifQ">www.applygateway.co=
+m</a>.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END BODY -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN FOOTER // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateFooter" style=3D"-webkit-text-siz=
+e-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-r=
+space: 0pt;border-top: 1px solid #dcdcdc;border-collapse: collapse !importa=
+nt;">
+
+                                    <tr>
+                                        <td valign=3D"top" class=3D"footerC=
+ontent footerLeft" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-ad=
+just: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #626262;font-=
+family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-t=
+op: 20px;text-align: left;">
+                                            Copyright &#169; Apply Gateway =
+Ltd, All rights reserved.
+                                        </td>
+                                        <td valign=3D"top" class=3D"footerC=
+ontent footerRight" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-a=
+djust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #231f20;font=
+-family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-=
+top: 20px;text-align: right;">
+                                            <a href=3D"http://clicktracking=
+.applygateway.com/track/click/30883532/www.applygateway.com?p=3DeyJzIjoiM1I=
+tcHo4anMxR1IyWWNNdkxJMUNld051SkVVIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcIn=
+ZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL0FjY=
+291bnRcXFwvVW5zdWJzY3JpYmVcIixcImlkXCI6XCJjYTAyYzIwODY4M2Y0NThiYmM4NGI5YzQ3=
+M2Q3ZTJmZlwiLFwidXJsX2lkc1wiOltcIjk5M2ZhZDlhMjliZmIxODg2NDFjODIwODE2Y2JlYzJ=
+iMmE3NzEzYzhcIl0sXCJtc2dfdHNcIjoxNzcwODkwNzE3fSJ9" style=3D"-webkit-text-si=
+ze-adjust: 100%;-ms-text-size-adjust: 100%;color: #231f20;font-weight: norm=
+al;text-decoration: underline;">Unsubscribe from these emails</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=3D"2" valign=3D"top" cl=
+ass=3D"footerContent footerLeft" style=3D"-webkit-text-size-adjust: 100%;-m=
+s-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color:=
+ #626262;font-family: 'Open Sans Bold', arial;font-size: 13px;line-height: =
+150%;padding-top: 20px;text-align: left;">
+                                            ApplyGateway.com is part of App=
+ly Gateway Ltd <br> Registered address - 125-135 Preston Road, Brighton, BN=
+1 6AF
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END FOOTER -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- // END TEMPLATE -->
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
+
+--_av-o8b5ATXQFDlI6-v8EpaOBA--
+

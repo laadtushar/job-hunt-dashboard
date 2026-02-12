@@ -1,0 +1,97 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp665285ecs;
+        Thu, 12 Feb 2026 01:28:03 -0800 (PST)
+X-Received: by 2002:a05:620a:19a5:b0:8c9:fa4b:1269 with SMTP id af79cd13be357-8cb330823d2mr259299485a.27.1770888483200;
+        Thu, 12 Feb 2026 01:28:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770888483; cv=none;
+        d=google.com; s=arc-20240605;
+        b=A17f+WPCRMJ1SfRF+NUZvg/Cw4ZulBY+I0i7rt3xNwV30KUxf/erT3vP4y0L2o0Jmr
+         3zu48SJzNlRoMxuCRPA9WtTuNba6jih+j9jnrqa/GuhvznVM6Tl3UNHuLMALwzZbkjTj
+         XSULHuMiubQNVbaIh2GxVzTFkKdnppjJofthzTUHnabYXsMRJQJFDYPPgzVVfB+D6ACl
+         TI/OeVztGHjpSBgv1VrQRAk54GCCgLK04KKr3Ieh7TmME64LPfFStoYH1BpaL4MC4O8Z
+         FHMxUU3kXRTy3AfJOhtejVLr4Wf/B+Orb1GRLUzTR5IO412gFz28+3i92R+6apr45KeZ
+         L9+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=Ow4rHm9eL7spV9Ay3CEgt8pHEqhgPXqhu+YbQiHhyyY=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=FR8D50vSsp3CIrPHlCoKQOZVGcnSAj3uW7iY9IqlZfNVkcgSz7eBCVSnPZ3r5n/F7S
+         K+5nUakpF6AvGaIK9tDW4iWAuvAJ0lAIpVONNWoJNOIXaG5bd8aDQagBTNy5kBXp4Y1O
+         q/VoDjEIXGfQ6bD4gLn7CAF/CaAt7L0AVLL6UGOVwepKRZS9Y4EkZsu6KuqOgTSZT6RF
+         OKGteTR6qwytsnFiILOdCkAOi5E541lCDzk8vI/JnbyJJbzux8heFM/StAwqhHJIA87p
+         uCOs9ou0a+nDZdTjaHX95nysdyvIqJD0F8aiMJSs1r8NSSejlTlUoem78RtB7czy4pj7
+         5Kbw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.qube-rt.com header.s=smtp header.b=DjCNROsI;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=mrjX38Ky;
+       spf=pass (google.com: domain of postmaster@gh-mail.qube-rt.com designates 69.72.40.95 as permitted sender) smtp.mailfrom=postmaster@gh-mail.qube-rt.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=qube-rt.com
+Return-Path: <postmaster@gh-mail.qube-rt.com>
+Received: from mail-40-95.greenhouse.io (mail-40-95.greenhouse.io. [69.72.40.95])
+        by mx.google.com with UTF8SMTPS id af79cd13be357-8cb2b1b6894si461799985a.207.2026.02.12.01.28.02
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:28:03 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.qube-rt.com designates 69.72.40.95 as permitted sender) client-ip=69.72.40.95;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.qube-rt.com header.s=smtp header.b=DjCNROsI;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=mrjX38Ky;
+       spf=pass (google.com: domain of postmaster@gh-mail.qube-rt.com designates 69.72.40.95 as permitted sender) smtp.mailfrom=postmaster@gh-mail.qube-rt.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=qube-rt.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.qube-rt.com; q=dns/txt; s=smtp; t=1770888482; x=1770895682;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=Ow4rHm9eL7spV9Ay3CEgt8pHEqhgPXqhu+YbQiHhyyY=;
+ b=DjCNROsIGUi06IeNyQVUg23RtXfCv05nb/wTNHhoTp3CblrDR0ttadOed+/aafXXkGVYp7pPw7z7hebHCscSKAicZ9TGUvC4KoS6EoizYnLUWeXp1uSR8ERf30beg/e75PG+7DOm1vvCgyAVOjvLve9GHDBMrwrkMqtmr/olGLQ=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770888482; x=1770895682;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=Ow4rHm9eL7spV9Ay3CEgt8pHEqhgPXqhu+YbQiHhyyY=;
+ b=mrjX38KydpLv1LbAcRowFqfegr6ezfK9Cc1upOn1N89h+lO0J163eWG7KDA5mwA7xW2hp76FP3p3UYsYYMz2aSfHeBZMwKlvnPXRVRhi4b/ek0OdpqWsdP2KTvsfR0P7y/qJ834/JRjEb9iX+NQyiUzJYXDW51wvu/9ris3kmeE=
+X-Mailgun-Sid: WyIwNDdhNCIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjVlZTZlMSJd
+X-Feedback-Id: postmaster@gh-mail.qube-rt.com:CandidateAutoReply:5b5f6a4caa3de60001bcb5e4:mailgun
+Received: by 30a5c745f335f507796fe13fbffc2c3d8d05946278bc3567007b9199c060a8f9 with HTTP
+ id 698d9d225561252d49a77637; Thu, 12 Feb 2026 09:28:02 GMT
+X-Mailgun-Sending-Ip: 69.72.40.95
+Date: Thu, 12 Feb 2026 09:28:02 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="28625696dd2390165e49b529f3a21521b74a25940c40755cb6fb3054e671"
+Subject: QRT | Application Received
+From: global-recruitment@qube-rt.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001349002", "person_id": "261810938002", "silo_id": "2",
+ "user_id": ""}
+Message-Id: <20260212092802.aa7bf9e9a5051725@gh-mail.qube-rt.com>
+
+--28625696dd2390165e49b529f3a21521b74a25940c40755cb6fb3054e671
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hello Tushar,
+
+Thank you for submitting your application and showing interest in Qube Research & Technologies (QRT).
+
+We are currently evaluating your application. Should we find a role that aligns with your qualifications, we will contact you.
+
+If you do not receive a response from us within the next four weeks, please consider that we have not moved forward with your application at this time.
+
+We appreciate your interest in joining our team.
+
+Warm regards,
+QRT Talent Team
+--28625696dd2390165e49b529f3a21521b74a25940c40755cb6fb3054e671
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p><!--StartFragment--></p>
+<p>Hello <!--StartFragment-->Tushar<!--EndFragment-->,</p>
+<p>Thank you for submitting your application and showing interest in Qube Research &amp; Technologies (QRT).</p>
+<p>We are currently evaluating your application. Should we find a role that aligns with your qualifications, we will contact you.</p>
+<p>If you do not receive a response from us within the next four weeks, please consider that we have not moved forward with your application at this time.</p>
+<p>We appreciate your interest in joining our team.</p>
+<p>Warm regards,<br>QRT Talent Team<!--EndFragment--></p>
+--28625696dd2390165e49b529f3a21521b74a25940c40755cb6fb3054e671--

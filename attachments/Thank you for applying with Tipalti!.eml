@@ -1,0 +1,97 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp658358ecs;
+        Thu, 12 Feb 2026 01:13:02 -0800 (PST)
+X-Received: by 2002:a05:6a20:6f8d:b0:38d:fde5:249e with SMTP id adf61e73a8af0-3944882a2f8mr1880624637.68.1770887581739;
+        Thu, 12 Feb 2026 01:13:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770887581; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T2m8hXPRfkL8WmKfZjEdqxwg9IdaxRJxFetM31BPQgbLBkx0f92JEoXkS5mk1Ab7kn
+         pfaqH1432CfAWygALCT16vkll1MlHWhmG6iFgvNFclfa7FcBd7uWXwTqyB3+xkk/tMob
+         Gy24+CEFrK24J4HO41sDnyIxhrUFQxsBNltEEbTfG0k+H1RGBSTXVUBZT7ePb7iswg4e
+         HyAROirIMVe6CesNqolmXGWb1MXdu+F06eBQL8oROGNOw7kAoshF/6PT5rOKPlH/hvDB
+         oApjrjqkMAiSlX114zcoYfvjScdbv8Kg/9QwEFXUICKACGLf3/CShZskmpZtCd3AIAKS
+         9Gqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=p9DswGzANG04IHHYGViBDzHdPZ1e0pwPqe13YawFIBM=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=T5OdiT6EdoZsdCE1/D80X4FJy9hMV8m8klbweRHpJgkmL9NIIkgyFuDgMNeGJPszGG
+         EU8rdhq2yRS1dgNInOgGMSJM5zDOz2li51Amw3xj58zQqH/YFKUXfemyK/7I9Luok7ng
+         TNghb1vJhKNuuxqeMvbKy6/phvxX5KNClrg1B+E5AzylfaDhqAI4KxQPfARswLQQ0wDk
+         ny1izzTj/tLIPKJfoP+6BD307/asF9T03AXhg5XEMI9Uv/ST6BPkYamZEMAomoZJP+RA
+         3V8GNNmV2eNtmaTyr1kystz8Qat59MQ+hPso2l5Y01rc8xweTPXhVJVlfdUwIYdCTziU
+         M6DQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=cZUBR4lU;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=fvVW6wyM;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id 41be03b00d2f7-c6e195c30d6si7161466a12.73.2026.02.12.01.13.01
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:13:01 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=cZUBR4lU;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=fvVW6wyM;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770887581; x=1770894781;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=p9DswGzANG04IHHYGViBDzHdPZ1e0pwPqe13YawFIBM=;
+ b=cZUBR4lUUFPywZIDhT9nmk9jgLi+NM0aIrWLohhzbnkcyErUlKpdlOetE7FAskehafAh/Xh3l9eGTA1UoOLmVgKPMF3uWabBEAHOii8h7N+AIcmGIPPbP7l4TCa5F4Ki7YQrqsBx8jN0rMSBB884jvPYkl4VmdHkesTK+2me4Qo=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770887581; x=1770894781;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=p9DswGzANG04IHHYGViBDzHdPZ1e0pwPqe13YawFIBM=;
+ b=fvVW6wyMriZ5eGqOo55eeQm8GWbskjzrmwvPKQJs3W8JW+WfFUrqFDqj3lN2reds/y1CWP4E8OL1Cj4FSUP6+ZLwkS7ZyuQnAkS08K528NmbXtDl6yoFg9oc/taq0VhTjYVm0ObaW+ecCHzr2yQk9o/eNTifLVy4N10ruRmQm2s=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:CandidateAutoReply:5ff5c19deab70c1acacf09a2:mailgun
+Received: by 5fbcd912b738ef6d0b343ad2d95ab6cf197356025725b7d030f419ec848516c9 with HTTP
+ id 698d999d0c212bca01305847; Thu, 12 Feb 2026 09:13:01 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:13:01 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="3a6e0ee0cb97713d2338369a3128c5b647d01d29e46488b41cf7820ae910"
+Subject: Thank you for applying with Tipalti!
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001230004", "person_id": "144141303004", "silo_id": "4",
+ "user_id": ""}
+Message-Id: <20260212091301.30d964b3104585f1@us.greenhouse-mail.io>
+
+--3a6e0ee0cb97713d2338369a3128c5b647d01d29e46488b41cf7820ae910
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Dear Tushar,
+
+Thank you for your recent application to Tipalti for the position of Software Engineer. We are delighted to learn that you are interested in opportunities with us. Our team will be reviewing your application materials and we are looking forward to learning more about your skills and experiences.
+
+We will get back to you as soon as possible with an update on your application. In the meantime, if you would like to find out more about Tipalti, please take a moment to read some of our recent press releases in the Tipalti Newsroom ( https://tipalti.com/newsroom/ ).
+
+Best wishes,
+
+Team Tipalti
+
+** Please note: This email is sent from an unattended mailbox. Replies will not be read.**
+--3a6e0ee0cb97713d2338369a3128c5b647d01d29e46488b41cf7820ae910
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p><!--StartFragment--></p>
+<p>Dear <!--StartFragment-->Tushar<!--EndFragment-->,</p>
+<p>Thank you for your recent application to Tipalti for the position of <!--StartFragment-->Software Engineer.&nbsp;We are delighted to learn that you are interested in opportunities with us. Our team will be reviewing your application materials and we are looking forward to learning more about your skills and experiences.&nbsp;&nbsp;</p>
+<p>We will get back to you as soon as possible with an update on your application. In the meantime, if you would like to find out more about Tipalti, please take a moment to read some of our recent press releases in the <a href="https://tipalti.com/newsroom/">Tipalti Newsroom</a>.</p>
+<p>Best wishes,</p>
+<p>Team Tipalti</p>
+<p>** Please note: This email is sent from an unattended mailbox. Replies will not be read.**</p>
+<p><!--EndFragment--></p>
+--3a6e0ee0cb97713d2338369a3128c5b647d01d29e46488b41cf7820ae910--

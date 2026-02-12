@@ -1,0 +1,134 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp686705ecs;
+        Thu, 12 Feb 2026 02:14:47 -0800 (PST)
+X-Received: by 2002:a05:620a:1a1d:b0:88e:1be9:cf65 with SMTP id af79cd13be357-8cb33d70cc3mr224656085a.39.1770891287449;
+        Thu, 12 Feb 2026 02:14:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770891287; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dM66f/Yp+Q6jMqQ0x6fCYVENsrlvIw5YUheKS9LfWdj1IlJ5tnVTVpIWFyLdXJ0g+n
+         mctMVcd5MTfF4YLXlvFuq3L64UqhFkmc+ADr9g8HBpJED27PZx6B7XyetbUzLnLH2BdW
+         T2XaBWsCQckcRRRSARfZpDGCD3CXShd3FhnPO/Mi09Ug+wrbx9rwpy7R+6G0f5VLCKTM
+         gQ0pOqm5Vu9Z0MtMFlHXGjtEl8UycC3W9uccm5ozaji59oXDZLG+4yQfG5uZytL2IrSl
+         EUrxIlzIsD6yVkgO4/ivRsksG8hQm5rnkD7tGPZdx5GfKl/6c2SpsEXsmYzmaiXt3LTC
+         Eg6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:date:mime-version:message-id:tribepad-originator
+         :subject:to:from:dkim-signature:dkim-signature;
+        bh=9fYUp/vzoZcX23kXISjw4UtzylKcEb0JYROl97p8bB4=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=ZuFXo0eaKv01w/J9SNtMPfzR6/Cq1EG8hjmpkVcyAKGOVhe9IQGhWf5xVGpriLR/48
+         zEYd/OrclzzopyCKNOgx/x+PJ7Q7T07Kyk9OXq/KJcWGUQmYaS+2sPbc18yRkBMxcuNW
+         /CaJ+A7Km9Koj4wudL+6auu6Sfwu3S859U91/lwN93tYu8TKJUiYpRLh2qcIdePzEFuw
+         fIG7+AF4nDbPBqbESs/Tl7CbUJpNxopWb9I1bFSs4omniD5uiWwaBwPJND6i2KaCjVuw
+         eI5OzeLeTig9FBb23ItaYhcfPOGF/1hhQKuyTxhNQMYRmVwVKeKNpLiRyNnCFBCceQhR
+         WH3Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@agincare.com header.s=m5rjvjje7dby5qewnd6schnuug7sgywp header.b=HgMQYHFN;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=SbFaeA4M;
+       spf=pass (google.com: domain of 0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com designates 54.240.30.198 as permitted sender) smtp.mailfrom=0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=agincare.com
+Return-Path: <0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com>
+Received: from a30-198.smtp-out.amazonses.com (a30-198.smtp-out.amazonses.com. [54.240.30.198])
+        by mx.google.com with ESMTPS id 6a1803df08f44-8971ce24c0esi53892946d6.712.2026.02.12.02.14.47
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 02:14:47 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com designates 54.240.30.198 as permitted sender) client-ip=54.240.30.198;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@agincare.com header.s=m5rjvjje7dby5qewnd6schnuug7sgywp header.b=HgMQYHFN;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=SbFaeA4M;
+       spf=pass (google.com: domain of 0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com designates 54.240.30.198 as permitted sender) smtp.mailfrom=0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=agincare.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=m5rjvjje7dby5qewnd6schnuug7sgywp; d=agincare.com; t=1770891287;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type;
+	bh=zQoJpgT5roR6rf0RpIYCC2kBjq8y8PT2DwxMIGwgZ6o=;
+	b=HgMQYHFNBWwNwSLL2k55que6jR4rbUvaZiWZV6v5oLAG0YSx6ig4R/DGJeSCgROj
+	Ndc+Cxo1R3z6nSvLATHxKlbFUrlxzQCgaRZWtQ/vlpfMrFkzP3Ng9ootsdCVcWBmrPp
+	43YYAtTdAjvkgeJlxZx7EPob9mydkuw9RA5ZVpdw=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1770891287;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type:Feedback-ID;
+	bh=zQoJpgT5roR6rf0RpIYCC2kBjq8y8PT2DwxMIGwgZ6o=;
+	b=SbFaeA4MFIWDRZBZ6AynjNxM4+L2phbzzelPll6AehF4QFA9CfOFRf5VkqepnMSX
+	v3NAN25FeyfETfsEzViGANqV1oLRrOIuI+2vTU5nvghzF13LoryHpYchDWbMM9D/F+B
+	Q2R7i98NjPOtcJwZWufhf4NnNtFdW+4pXirNAZrI=
+From: The Recruitment Team <noreply@agincare.com>
+To: tusharlaad2002@gmail.com
+Subject: Your application with may still need action!
+TribePad-Originator: eyJpdiI6Im40QkNWU2ozTU9iS01BVVBYKzRoYXc9PSIsInZhbHVlIjoiODA4VXI3RTJhMjcvZEExU3lFa0x3ZzdEYzRtYVpKWjZET0xEMHUyalR0az0iLCJtYWMiOiI1OTRmMmFkZDBiMjgyZTQ5MmMzNjg4YzMzYmRjOGJkMWVjYWIxOWI4M2Q4ODY0MTEwYTUzMGU3YTY0NTg3OWIwIiwidGFnIjoiIn0=
+Message-ID: <0100019c515899bc-1cc65ece-424c-4781-971c-0e4933776e81-000000@email.amazonses.com>
+MIME-Version: 1.0
+Date: Thu, 12 Feb 2026 10:14:46 +0000
+Content-Type: multipart/alternative; boundary=bG__84pj
+Feedback-ID: ::1.us-east-1.Sp76RtACQstuY9aP2lPHVU6HjAOpylOWzClhcuNypLc=:AmazonSES
+X-SES-Outgoing: 2026.02.12-54.240.30.198
+
+--bG__84pj
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+--bG__84pj
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head>
+=09<title>email</title>
+</head>
+<body data-gr-ext-installed=3D"" data-new-gr-c-s-check-loaded=3D"14.1221.0"=
+ data-new-gr-c-s-loaded=3D"14.1221.0" style=3D"padding: 10px 0; color:#3333=
+33; background: #f1f1f1;">
+<center>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+=09<tbody>
+=09=09<tr>
+=09=09=09<td></td>
+=09=09=09<td bgcolor=3D"#fff" style=3D" background:#fff; color:#333;" width=
+=3D"794">
+=09=09=09<div style=3D" text-align: left; padding:10px"><img alt=3D"" src=
+=3D"https://www.agincare.com/wp-content/themes/agincare/resources/img/aginc=
+are-logo.svg" style=3D"width: 191px; height: 89px;" /></div>
+=09=09=09</td>
+=09=09=09<td></td>
+=09=09</tr>
+=09=09<tr>
+=09=09=09<td></td>
+=09=09=09<td bgcolor=3D"#FFFFFF">
+=09=09=09<table border=3D"0" cellpadding=3D"10" cellspacing=3D"0" style=3D"=
+background: #fff;" width=3D"100%">
+=09=09=09=09<tbody>
+=09=09=09=09=09<tr align=3D"left" valign=3D"top">
+=09=09=09=09=09=09<td style=3D"font-family:Arial, Helvetica, sans-serif; co=
+lor:#231f20;">
+=09=09=09=09=09=09<p></p>
+
+=09=09=09=09=09=09<p>Hi Tushar,<br><br>
+Thank you for starting your appli=
+cation with us.<br><br>
+We have now created an account for you on our Car=
+eers centre.  If you haven't already then you'll need to complete your appl=
+ication and also set your account's password. Please click <a href=3D"https=
+://careershub.agincare.com/app/user/register-invite/9c98a782-b08c-4312-a83c=
+-67fc40686ad1">https://careershub.agincare.com/app/user/register-invite/9c9=
+8a782-b08c-4312-a83c-67fc40686ad1</a> to complete this now.<br><br>
+Thank=
+s,<br><br>
+Resourcing Team</p>
+=09=09=09=09=09=09</td>
+=09=09=09=09=09</tr>
+=09=09=09=09</tbody>
+=09=09=09</table>
+=09=09=09</td>
+=09=09=09<td></td>
+=09=09</tr>
+=09</tbody>
+</table>
+</center>
+<grammarly-desktop-integration data-grammarly-shadow-root=3D"true"></gramma=
+rly-desktop-integration></body>
+</html>
+--bG__84pj--

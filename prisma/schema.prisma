@@ -70,6 +70,7 @@ model JobApplication {
   
   company   String
   role      String
+  jobId     String?  // External Job ID / Reference Number
   status    String   // APPLIED, SCREEN, INTERVIEW, OFFER, REJECTED, GHOSTED
   source    String   // GMAIL, MANUAL, LINKEDIN
   

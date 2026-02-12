@@ -1,0 +1,110 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp673055ecs;
+        Thu, 12 Feb 2026 01:46:07 -0800 (PST)
+X-Received: by 2002:a05:6000:2913:b0:437:69c0:9619 with SMTP id ffacd0b85a97d-4378f165b68mr2960442f8f.29.1770889567121;
+        Thu, 12 Feb 2026 01:46:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770889567; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FBhc1X8vcPKhqMhjSqSJwYB0lvc7Dorz1YdHZ+vixdEkU0v+NXIUg2fogrkqeuPaU+
+         h4BhVtLt5k0fwRT19xu9NE3R8wzGUEG6E33o8s2B0Q3rdCIhI4r5psIjUEkLXtp9aa1m
+         Xx2XqGuqbHNqWwxiw+LJLy6ZoG2iMXRRlueH1xNk+nQztFz0CcW3p71iGsruU75OUPw/
+         pv6PlIQaBabggbzq7FE17k2VngRw3uPT/5xi2MEm1iuaKdFVWLLTSfU0XnT7qq5ajiDO
+         TUd9JYYEK/k7F/Un1f4az6wY7NAta+9W8HR/W55Kve9pSXDoD5ZLEs785qtkgaXieLKZ
+         3OJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=xYOVtKUiIWqbj7eI/lvnFoLZv3C5ePD8VLU8GIAwziQ=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=FyWi10SBnXPoS3u1+0Q6ZJ3lm6bqWFDjTspKRA+cMuVZJeDA7u5+UrUGKqJ9C3F/HK
+         6ArG0BzWwvBMxxQgOANN5WqmipY6DzbM0B5RTdFhBk7V3r5A2RgaSg1hH3QI+JI/6GcX
+         9KwEyi8nqAJqIjfM6LjR+Q2V4XdcmszBMq1pQU5D3Eh6CEnSv7RXU2zBXj+2KA/ogPhk
+         GMQEByNlqUYYHFny7wv//lAySfyF0QIWieNDPXv6tA4T+HmW6qZdWM7B951gRyljDTay
+         3Z0rWUjO8ENGni6Yy8ZtPZI6nPcEXTaPOaKzaGc6Xm55RLRP9UNDfSBpZUGos1g5B4O5
+         vTYg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.copper.co header.s=mta header.b="C9L5R9/b";
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=LKe0CZhO;
+       spf=pass (google.com: domain of postmaster@gh-mail.copper.co designates 185.250.239.148 as permitted sender) smtp.mailfrom=postmaster@gh-mail.copper.co;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=copper.co
+Return-Path: <postmaster@gh-mail.copper.co>
+Received: from mail-239-148.greenhouse.io (mail-239-148.greenhouse.io. [185.250.239.148])
+        by mx.google.com with UTF8SMTPS id ffacd0b85a97d-43783e0f9f6si9475667f8f.248.2026.02.12.01.46.07
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:46:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.copper.co designates 185.250.239.148 as permitted sender) client-ip=185.250.239.148;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.copper.co header.s=mta header.b="C9L5R9/b";
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=LKe0CZhO;
+       spf=pass (google.com: domain of postmaster@gh-mail.copper.co designates 185.250.239.148 as permitted sender) smtp.mailfrom=postmaster@gh-mail.copper.co;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=copper.co
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.copper.co; q=dns/txt; s=mta; t=1770889566; x=1770896766;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=xYOVtKUiIWqbj7eI/lvnFoLZv3C5ePD8VLU8GIAwziQ=;
+ b=C9L5R9/b2BNX3Zsn3nR5b92NcKR40qOeVxrEc3YCBcOkK6UD9GMaxLi1xylGq2aIUF2rmipcOP3w1+EW7hMHWbDM8KGEsY2z5WHTObUbmb2eXX3pdlrDLWerj79WF4nhsBiOOrj4j52oZ++wWEvz49jqfpRHgBpophQqcpbygcJYyL0vlde/cCUTtwXyJNHJtYETyXFMEl2Vu1zjEj/npmAn6d26wneMvwZl2URP4VBXs8EoC5KuGfrx8D3xeGq8d2BOjg1gi97fMYEdSEh4BN2nzOhNvCqHAaw7dWpB+D9LLMqZLHISsx1q3nPJSR50JKA/z2DsXUeJwxMXBSpEnQ==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.mailgun.org; q=dns/txt; s=krs2; t=1770889566; x=1770896766;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=xYOVtKUiIWqbj7eI/lvnFoLZv3C5ePD8VLU8GIAwziQ=;
+ b=LKe0CZhOzCpijlv3WgplSpEIBf6JoYeo1z+ujkDmbel+cBo56QBs2szvGpEl1k8kLGl1+VHfLiqZzhPn0rKnD5WmuSJ+w15ejmz1TwjXFEBXehs48cCZD7oVcRudbc/g2qmiBHUMpeHQ1igkZx/gMACVonFhDgLjAeeBeAFqlJo=
+X-Mailgun-Sid: WyJkMmU5ZiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjg4ZGRjNyJd
+X-Feedback-Id: postmaster@gh-mail.copper.co:CandidateAutoReply:62d903026b527c2ba4aab3e7:mailgun
+Received: by c2c7b48d8263bc5f18eca99667c9eb6d0700cc749c4c51a468c4d8e040c52967 with HTTP
+ id 698da15e943b7c59012f4907; Thu, 12 Feb 2026 09:46:06 GMT
+X-Mailgun-Sending-Ip: 185.250.239.148
+Date: Thu, 12 Feb 2026 09:46:06 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="a50007ce4ad9fa0ab7f815dbe634fa2d5eff483272e6742f753dd2d8569f"
+Subject: Thank you for your application
+From: no-reply@copper.co
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4000528101", "person_id": "59380697101", "silo_id": "101",
+ "user_id": ""}
+Message-Id: <20260212094606.7ef804c795b8491e@gh-mail.copper.co>
+
+--a50007ce4ad9fa0ab7f815dbe634fa2d5eff483272e6742f753dd2d8569f
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hi Tushar,
+
+Thank you for applying for the position of Associate Software Engineer  at Copper.co.
+
+We are currently reviewing all applications and a member of the Talent team will be in contact with you in the next 7 working days to let you know if you will be progressing to a telephone screening.
+
+In the meantime, please feel free to visit our Company website ( https://copper.co/ ) or our LinkedIn Page ( https://www.linkedin.com/company/copperco/life ) to read more about our latest news and to get a better feel for what it is like to work for Copper.
+
+We look forward to speaking with you soon.
+
+Thank you
+
+Copper Talent Team
+--a50007ce4ad9fa0ab7f815dbe634fa2d5eff483272e6742f753dd2d8569f
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Hi Tushar,</p>
+<p><br>Thank you for applying for the position of Associate Software Engine=
+er  at Copper.co.</p>
+<p>We are currently reviewing all applications and a member of the Talent t=
+eam will be in contact with you in the next 7 working days to let you know =
+if you will be progressing to a telephone screening.</p>
+<p>In the meantime, please feel free to visit our <a href=3D"https://copper=
+=2Eco/" target=3D"_blank" rel=3D"noopener=
+">Company website</a> or our <a href=
+=3D"https://www.linkedin.com/company/copperco/life">LinkedIn Page</a>&nbsp;=
+to read more about our latest news and to get a better feel for what it is =
+like to work for Copper.</p>
+<p>We look forward to speaking with you soon.</p>
+<p>Thank you</p>
+<p>Copper Talent Team</p><img width=3D"1" height=3D"1" alt=3D"" src=3D"http=
+://email.gh-mail.copper.co/o/eJwsjE1qxSAURldTZw2fN_5cBw5Kd9ANFKM3L0LeM5ik0N=
+0XodPDOadE5lKyVxK192AO1jm1RVnXMNPsPS2L5aJhRHgR2Dm7rC1UjQRyIE0IxsFNXlaGyT7Yh=
+U3Q8mbw2N6fqe5TbschfcpNtf74riUaAJZYQ6tD-tleA9owM1zwg_Z43eeW-p5SIYDG7H_1VGfd=
+2wiGeMXP9Cq1pEs-7qt9ybH_qvuUPgT1E-kvAAD__5tJQuI">
+--a50007ce4ad9fa0ab7f815dbe634fa2d5eff483272e6742f753dd2d8569f--
