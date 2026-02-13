@@ -1,9 +1,10 @@
 import Navbar from "@/components/Navbar"
 import DashboardClient from "@/components/dashboard/DashboardClient"
 import prisma from "@/lib/prisma"
-import { auth, signIn } from "@/auth"
+import { auth } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { Compass, Mail, Sparkles, Clock } from "lucide-react"
+import { loginAction } from "@/lib/actions"
 
 export default async function Home() {
   const session = await auth()
@@ -42,12 +43,7 @@ export default async function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-              <form
-                action={async () => {
-                  "use server"
-                  await signIn("google")
-                }}
-              >
+              <form action={loginAction}>
                 <Button size="lg" className="h-16 px-10 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-lg font-bold transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-slate-900/20 dark:shadow-white/10 group">
                   Get Started Free
                   <Compass className="ml-3 h-5 w-5 transition-transform group-hover:rotate-45" />

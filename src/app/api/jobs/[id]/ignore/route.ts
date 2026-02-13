@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 
 export async function POST(
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     const session = await auth();
     if (!session || !session.user || !session.user.id) {
@@ -13,7 +13,7 @@ export async function POST(
     }
 
     try {
-        const jobId = params.id;
+        const { id: jobId } = await params;
 
         const job = await prisma.jobApplication.findUnique({
             where: { id: jobId },
