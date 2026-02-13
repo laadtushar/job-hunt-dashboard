@@ -333,10 +333,14 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                             </TabsContent>
 
                             {/* RAW DATA TAB */}
-                            <TabsContent value="raw" className="h-full m-0 overflow-y-auto p-6 bg-slate-950 custom-scrollbar">
-                                <div className="text-slate-50 text-xs font-mono h-full">
-                                    <pre className="whitespace-pre-wrap break-all">{JSON.stringify(job, null, 2)}</pre>
-                                </div>
+                            <TabsContent value="raw" className="flex-1 overflow-hidden h-full">
+                                <ScrollArea className="h-full">
+                                    <div className="text-slate-50 text-xs font-mono p-6">
+                                        <pre className="whitespace-pre-wrap break-all bg-slate-900 p-4 rounded-lg border border-slate-800">
+                                            {JSON.stringify(job, null, 2)}
+                                        </pre>
+                                    </div>
+                                </ScrollArea>
                             </TabsContent>
                         </div>
                     </Tabs>

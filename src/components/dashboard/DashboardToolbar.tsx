@@ -37,21 +37,21 @@ export function DashboardToolbar({
     handleSync
 }: DashboardToolbarProps) {
     return (
-        <div className="flex flex-col gap-4 bg-card p-4 rounded-xl border shadow-sm">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="flex flex-col gap-6 bg-card p-6 rounded-xl border shadow-sm">
+            <div className="flex flex-col xl:flex-row gap-6 items-center justify-between">
                 {/* Search & Filter Group */}
-                <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-                    <div className="relative w-full md:w-64">
-                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+                    <div className="relative w-full sm:w-80">
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                         <Input
                             placeholder="Search companies or roles..."
-                            className="pl-8"
+                            className="pl-10 h-10"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
-                        <SelectTrigger className="w-full sm:w-[140px]">
+                        <SelectTrigger className="w-full sm:w-[160px] h-10">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -65,7 +65,7 @@ export function DashboardToolbar({
                         </SelectContent>
                     </Select>
                     <Select value={sortOrder} onValueChange={setSortOrder}>
-                        <SelectTrigger className="w-full sm:w-[140px]">
+                        <SelectTrigger className="w-full sm:w-[160px] h-10">
                             <SelectValue placeholder="Sort By" />
                         </SelectTrigger>
                         <SelectContent>
@@ -78,28 +78,30 @@ export function DashboardToolbar({
                 </div>
 
                 {/* Sync & Maintenance Actions */}
-                <div className="flex flex-col sm:flex-row gap-2 items-center w-full md:w-auto">
-                    <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                        <span className="text-sm text-muted-foreground whitespace-nowrap">Limit:</span>
+                <div className="flex flex-col sm:flex-row gap-4 items-center w-full xl:w-auto">
+                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                        <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">Sync Limit:</span>
                         <Input
                             type="number"
-                            className="w-20"
+                            className="w-24 h-10"
                             value={syncLimit}
                             onChange={(e) => setSyncLimit(Number(e.target.value))}
                             min={1}
                             max={500}
                         />
                     </div>
-                    <Button
-                        onClick={handleSync}
-                        disabled={isSyncing}
-                        className={`w-full sm:w-auto ${isSyncing ? "opacity-80" : ""}`}
-                    >
-                        <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
-                        {isSyncing ? 'Syncing...' : 'Sync Emails'}
-                    </Button>
-                    <div className="w-full sm:w-auto flex justify-end">
-                        <MaintenanceControls />
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <Button
+                            onClick={handleSync}
+                            disabled={isSyncing}
+                            className={`flex-1 sm:w-auto h-10 px-6 ${isSyncing ? "opacity-80" : ""}`}
+                        >
+                            <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+                            {isSyncing ? 'Syncing...' : 'Sync Emails'}
+                        </Button>
+                        <div className="sm:w-auto">
+                            <MaintenanceControls />
+                        </div>
                     </div>
                 </div>
             </div>
