@@ -131,57 +131,67 @@ export function MaintenanceControls() {
                             <ScrollArea className="h-full">
                                 <div className="p-0">
                                     <table className="w-full text-sm text-left">
-                                        <thead className="text-xs text-gray-500 bg-gray-50 uppercase sticky top-0 border-b">
+                                        <thead className="text-[11px] text-muted-foreground bg-slate-50 uppercase sticky top-0 border-b font-semibold tracking-wider">
                                             <tr>
-                                                <th className="px-4 py-3">Date</th>
-                                                <th className="px-4 py-3">Email Context</th>
-                                                <th className="px-4 py-3">AI Prediction</th>
-                                                <th className="px-4 py-3 text-right">Action</th>
+                                                <th className="px-6 py-4">Status</th>
+                                                <th className="px-6 py-4">Email Interaction</th>
+                                                <th className="px-6 py-4">AI Prediction</th>
+                                                <th className="px-6 py-4 text-right">Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="divide-y divide-gray-100">
-                                            {isLoadingAudit && <tr><td colSpan={4} className="p-4 text-center text-gray-500">Loading logs...</td></tr>}
-                                            {!isLoadingAudit && auditLogs.length === 0 && <tr><td colSpan={4} className="p-4 text-center text-gray-500">No logs found.</td></tr>}
+                                        <tbody className="divide-y divide-slate-100">
+                                            {isLoadingAudit && <tr><td colSpan={4} className="p-8 text-center text-muted-foreground animate-pulse">Fetching system logs...</td></tr>}
+                                            {!isLoadingAudit && auditLogs.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-muted-foreground italic">No logs found in this period.</td></tr>}
 
                                             {!isLoadingAudit && auditLogs.map((log) => (
-                                                <tr key={log.id} className="hover:bg-gray-50 group">
-                                                    <td className="px-4 py-3 whitespace-nowrap text-gray-500 text-xs align-top">
-                                                        {log.receivedDate ? formatDistanceToNow(new Date(log.receivedDate), { addSuffix: true }) : "Unknown"}
+                                                <tr key={log.id} className="hover:bg-slate-50/50 group transition-colors">
+                                                    <td className="px-6 py-4 whitespace-nowrap align-top">
+                                                        <div className="flex flex-col">
+                                                            <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">
+                                                                {log.receivedDate ? formatDistanceToNow(new Date(log.receivedDate), { addSuffix: true }) : "Unknown"}
+                                                            </div>
+                                                            <Badge variant="outline" className={`mt-1 text-[10px] w-fit font-normal ${log.isIgnored ? 'border-red-200 text-red-600' : 'border-slate-200'}`}>
+                                                                {log.isIgnored ? 'Ignored' : 'Processed'}
+                                                            </Badge>
+                                                        </div>
                                                     </td>
-                                                    <td className="px-4 py-3 max-w-[300px] align-top">
-                                                        <div className="font-medium truncate" title={log.subject}>{log.subject}</div>
-                                                        <div className="text-xs text-gray-400 truncate" title={log.sender}>{log.sender}</div>
+                                                    <td className="px-6 py-4 max-w-[300px] align-top">
+                                                        <div className="font-semibold text-slate-900 truncate" title={log.subject}>{log.subject}</div>
+                                                        <div className="text-xs text-muted-foreground truncate flex items-center gap-1 mt-0.5" title={log.sender}>
+                                                            <Mail className="h-3 w-3 opacity-60" /> {log.sender?.split('<')[0].replace(/"/g, '').trim()}
+                                                        </div>
                                                     </td>
-                                                    <td className="px-4 py-3 align-top">
+                                                    <td className="px-6 py-4 align-top">
                                                         {log.isIgnored ? (
-                                                            <Badge variant="outline" className="text-red-600 bg-red-50 border-red-200">Ignored (False Positive)</Badge>
+                                                            <div className="text-xs text-red-500 font-medium">Marked as Spam/False Positive</div>
                                                         ) : log.application ? (
                                                             <div className="flex flex-col gap-1">
-                                                                <Badge variant="outline" className="w-fit border-green-200 bg-green-50 text-green-700">
-                                                                    Matched: {log.application.company || "Unknown"}
-                                                                </Badge>
-                                                                <span className="text-xs text-gray-500">{log.application.role}</span>
+                                                                <div className="flex items-center gap-1.5 font-medium text-slate-900">
+                                                                    <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+                                                                    {log.application.company}
+                                                                </div>
+                                                                <span className="text-[10px] text-muted-foreground bg-slate-100 px-1.5 py-0.5 rounded-sm w-fit uppercase font-semibold">{log.application.role}</span>
                                                             </div>
                                                         ) : (
-                                                            <div className="flex flex-col gap-1">
-                                                                <Badge variant="secondary" className="w-fit">Unlinked / Skipped</Badge>
+                                                            <div className="flex flex-col gap-1.5">
+                                                                <div className="text-xs font-medium text-slate-500 italic">Unlinked Activity</div>
                                                                 {log.aiSummary && (
-                                                                    <span className="text-xs text-gray-400">
-                                                                        AI thought: {log.aiSummary.company} ({log.aiSummary.role})
-                                                                    </span>
+                                                                    <div className="text-[10px] text-slate-400 bg-slate-50 p-1 rounded-sm border border-slate-100">
+                                                                        AI Suggestion: {log.aiSummary.company}
+                                                                    </div>
                                                                 )}
                                                             </div>
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3 text-right align-top">
+                                                    <td className="px-6 py-4 text-right align-top">
                                                         {!log.isIgnored && log.applicationId && (
                                                             <Button
-                                                                variant="ghost"
+                                                                variant="outline"
                                                                 size="sm"
-                                                                className="text-red-500 hover:text-red-700 hover:bg-red-50 h-6 px-2 text-xs"
+                                                                className="text-red-500 border-red-100 hover:text-red-700 hover:bg-red-50 hover:border-red-200 h-8 px-3 text-xs bg-red-50/30"
                                                                 onClick={() => handleIgnore(log)}
                                                             >
-                                                                Mark False Positive
+                                                                Mark as Junk
                                                             </Button>
                                                         )}
                                                     </td>

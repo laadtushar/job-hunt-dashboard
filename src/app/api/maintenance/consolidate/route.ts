@@ -91,7 +91,8 @@ export async function POST(req: Request) {
                             isJobRelated: true,
                             company: app.company,
                             role: app.role,
-                            status: app.status
+                            status: app.status,
+                            receivedDate: app.appliedDate.toISOString()
                         };
 
                         // Use AI Judge
@@ -107,7 +108,17 @@ export async function POST(req: Request) {
                                 data: { applicationId: matchId }
                             });
 
-                            // 2. Delete the duplicate application
+                            // 2. Update the master application with latest status/date if needed
+                            // Since we iterate oldest -> newest, 'app' is NEWER than 'matchId'
+                            await prisma.jobApplication.update({
+                                where: { id: matchId },
+                                data: {
+                                    status: app.status, // Update status to latest (e.g., REJECTED)
+                                    updatedAt: new Date() // Bump updated time
+                                }
+                            });
+
+                            // 3. Delete the duplicate application
                             await prisma.jobApplication.delete({
                                 where: { id: app.id }
                             });
