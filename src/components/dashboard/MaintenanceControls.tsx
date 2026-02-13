@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { ShieldAlert, Terminal, Merge, CheckCircle2, RefreshCw, Mail, Settings2 } from "lucide-react"
+import { ShieldAlert, Terminal, Merge, CheckCircle2, RefreshCw, Mail, Settings2, UserPlus, Trash2 } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
@@ -22,6 +22,40 @@ export function MaintenanceControls() {
     const [isConsolidating, setIsConsolidating] = useState(false)
     const [logs, setLogs] = useState<string[]>([])
     const [isOpen, setIsOpen] = useState(false)
+
+    // Invite State
+    const [inviteEmail, setInviteEmail] = useState("")
+    const [allowedUsers, setAllowedUsers] = useState<any[]>([])
+    const [isInviting, setIsInviting] = useState(false)
+
+    const fetchAllowedUsers = async () => {
+        try {
+            const res = await fetch('/api/invite');
+            const data = await res.json();
+            setAllowedUsers(data.allowedUsers || []);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleInvite = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!inviteEmail) return;
+        setIsInviting(true);
+        try {
+            await fetch('/api/invite', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: inviteEmail })
+            });
+            setInviteEmail("");
+            fetchAllowedUsers();
+        } catch (e) {
+            alert("Failed to invite");
+        } finally {
+            setIsInviting(false);
+        }
+    };
 
     // Audit State
     const [auditLogs, setAuditLogs] = useState<any[]>([])
@@ -131,12 +165,15 @@ export function MaintenanceControls() {
 
                 <Tabs defaultValue="audit" className="flex-1 flex flex-col overflow-hidden">
                     <div className="px-8 pt-4">
-                        <TabsList className="bg-slate-100 dark:bg-slate-900 p-1 rounded-2xl grid w-full grid-cols-2">
+                        <TabsList className="bg-slate-100 dark:bg-slate-900 p-1 rounded-2xl grid w-full grid-cols-3">
                             <TabsTrigger value="audit" onClick={fetchAuditLogs} className="rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm font-bold text-xs uppercase tracking-wider">
                                 System Audit Logs
                             </TabsTrigger>
                             <TabsTrigger value="consolidate" className="rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm font-bold text-xs uppercase tracking-wider">
                                 Smart Consolidation
+                            </TabsTrigger>
+                            <TabsTrigger value="invite" onClick={fetchAllowedUsers} className="rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm font-bold text-xs uppercase tracking-wider">
+                                Invite System
                             </TabsTrigger>
                         </TabsList>
                     </div>
@@ -293,6 +330,62 @@ export function MaintenanceControls() {
                                         </div>
                                     ))}
                                     {isConsolidating && <div className="animate-pulse text-blue-500 ml-7">_</div>}
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="invite" className="flex-1 overflow-hidden flex flex-col p-8 pt-4 focus-visible:ring-0">
+                        <div className="space-y-8 max-w-2xl mx-auto w-full">
+                            <div className="bg-slate-50 dark:bg-slate-900/30 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-6">
+                                <div className="space-y-2 text-center">
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2">
+                                        <UserPlus className="h-5 w-5 text-blue-500" />
+                                        Trust List Management
+                                    </h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Add emails to the whitelist to allow dashboard access.</p>
+                                </div>
+
+                                <form onSubmit={handleInvite} className="flex gap-3">
+                                    <input
+                                        type="email"
+                                        placeholder="user@example.com"
+                                        className="flex-1 h-12 px-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        value={inviteEmail}
+                                        onChange={(e) => setInviteEmail(e.target.value)}
+                                        required
+                                    />
+                                    <Button disabled={isInviting} type="submit" className="h-12 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 font-black text-xs uppercase tracking-widest text-white shadow-lg shadow-blue-500/20">
+                                        {isInviting ? "Adding..." : "Authorize"}
+                                    </Button>
+                                </form>
+                            </div>
+
+                            <div className="space-y-4">
+                                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2 text-center">Authorized Access Control List</h4>
+                                <div className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-900/10 shadow-inner">
+                                    <ScrollArea className="h-48">
+                                        {allowedUsers.length === 0 ? (
+                                            <div className="p-8 text-center text-slate-400 italic text-sm">No users whitelisted yet.</div>
+                                        ) : (
+                                            <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                                                {allowedUsers.map((user: any) => (
+                                                    <div key={user.id} className="px-6 py-4 flex items-center justify-between group hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-500">
+                                                                {user.email[0].toUpperCase()}
+                                                            </div>
+                                                            <div>
+                                                                <div className="text-sm font-bold text-slate-900 dark:text-white">{user.email}</div>
+                                                                <div className="text-[10px] text-slate-400 font-medium tracking-tight">Access granted {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}</div>
+                                                            </div>
+                                                        </div>
+                                                        <Badge variant="outline" className="text-[9px] font-black uppercase tracking-tighter bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-none px-2 rounded-md">Verified</Badge>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </ScrollArea>
                                 </div>
                             </div>
                         </div>
