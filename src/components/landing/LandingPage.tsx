@@ -62,7 +62,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         <form action={loginAction}>
-                            <Button size="lg" className="h-16 px-10 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 text-lg font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-blue-500/30 group">
+                            <Button size="lg" className="h-16 px-10 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 text-lg font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-blue-500/30 group cursor-pointer">
                                 Launch Your Dashboard
                                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
                             </Button>
@@ -71,7 +71,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                             variant="outline"
                             size="lg"
                             onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="h-16 px-10 rounded-2xl border-2 font-bold hover:bg-slate-50 dark:hover:bg-slate-900"
+                            className="h-16 px-10 rounded-2xl border-2 font-bold hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer"
                         >
                             View Demo
                         </Button>
@@ -331,7 +331,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                                 <p className="text-blue-100 font-medium">Join 500+ professionals using Meridian to land their next big opportunity.</p>
                             </div>
                             <form action={loginAction} className="relative mt-12">
-                                <Button size="lg" className="w-full h-14 bg-white text-blue-600 hover:bg-slate-100 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl">
+                                <Button size="lg" className="w-full h-14 bg-white text-blue-600 hover:bg-slate-100 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl cursor-pointer">
                                     Get Started Now
                                 </Button>
                             </form>
@@ -381,8 +381,8 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                     <div>
                         <h5 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-6">Connect</h5>
                         <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-400">
-                            <li><a href="https://github.com/laadtushar" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">GitHub</a></li>
-                            <li><a href="https://www.linkedin.com/in/tusharlaad2002/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">LinkedIn</a></li>
+                            <li><a href="https://github.com/laadtushar" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors cursor-pointer">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/tusharlaad2002/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors cursor-pointer">LinkedIn</a></li>
                         </ul>
                     </div>
                 </div>
