@@ -91,8 +91,14 @@ export async function POST(req: Request) {
 
                             if (extractedData.isJobRelated) {
                                 const savedJob = await jobService.createOrUpdateApplication(userId, extractedData, fullMsg.threadId!, aiService);
-                                await prisma.emailLog.create({
-                                    data: {
+                                await prisma.emailLog.upsert({
+                                    where: { gmailId: msgId },
+                                    update: {
+                                        applicationId: savedJob.id,
+                                        aiOutput: JSON.stringify(extractedData),
+                                        receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
+                                    },
+                                    create: {
                                         gmailId: msgId,
                                         threadId: fullMsg.threadId!,
                                         receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
@@ -109,8 +115,13 @@ export async function POST(req: Request) {
                                 newJobsCount++;
                                 sendLog(`✨ Found: ${extractedData.company}`, "success");
                             } else {
-                                await prisma.emailLog.create({
-                                    data: {
+                                await prisma.emailLog.upsert({
+                                    where: { gmailId: msgId },
+                                    update: {
+                                        aiOutput: JSON.stringify(extractedData),
+                                        isIgnored: true
+                                    },
+                                    create: {
                                         gmailId: msgId,
                                         threadId: fullMsg.threadId!,
                                         receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
