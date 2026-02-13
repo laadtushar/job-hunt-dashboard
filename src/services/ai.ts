@@ -18,6 +18,7 @@ export interface ExtractedJobData {
     sentiment?: string; // positive, negative, neutral
     sentimentScore?: number; // 0-1
     feedback?: string;
+    thoughtProcess?: string; // Explain your critique and correction (Reflexion)
     receivedDate?: string; // ISO Date of the email
     _meta?: {
         model: string;
@@ -307,8 +308,25 @@ export class AIService {
     }
 
     // REFLEXION PATTERN: Re-evaluate based on user signal
-    async reanalyzeEmail(body: string, subject: string, sender: string, previousOutput: any): Promise<ExtractedJobData> {
+    async reanalyzeEmail(
+        body: string,
+        subject: string,
+        sender: string,
+        previousOutput: any,
+        additionalEmails: { subject: string, body: string, sender: string, date: string }[] = [],
+        userFeedbackInput: string = ""
+    ): Promise<ExtractedJobData> {
         let feedbackContext = "";
+
+        // 1. Incorporate Direct User Instructions (highest priority)
+        if (userFeedbackInput) {
+            feedbackContext += `
+            USER DIRECTIVE (GROUND TRUTH):
+            The user explicitly stated: "${userFeedbackInput}"
+            You MUST trust this feedback. If they say "It's an interview", it IS an interview.
+            `;
+        }
+
         try {
             // Fetch relevant false positive patterns to avoid making the same mistake twice if it matches a known pattern
             // @ts-ignore - Prisma client regeneration sometimes lags in older VSCode sessions
@@ -324,44 +342,62 @@ export class AIService {
                     } catch (e) { return ""; }
                 }).filter((s: string) => s).join("\n");
                 if (examples) {
-                    feedbackContext = `
-                    KNOWN FALSE POSITIVES:
+                    feedbackContext += `
+                    KNOWN FALSE POSITIVES (System Knowledge):
                     ${examples}
                     `;
                 }
             }
         } catch (e) { }
 
+        // 2. Prepare Additional Email Context
+        let additionalContext = "";
+        if (additionalEmails.length > 0) {
+            additionalContext = `
+            ADDITIONAL RELATED EMAILS FOUND (Chronological Order):
+            ${additionalEmails.map((email, i) => `
+            --- EMAIL #${i + 1} ---
+            Date: ${email.date}
+            From: ${email.sender}
+            Subject: ${email.subject}
+            Body: ${(email.body || "").substring(0, 5000)}
+            `).join("\n")}
+            `;
+        }
 
         const prompt = `
         You are an expert HR Data Auditor. 
         
         CRITICAL TASK: FIX A PREVIOUS ERROR
-        The user has flagged a previous extraction as INCORRECT. You need to re-examine the email and correct the data.
+        The user has flagged a previous extraction as INCORRECT. You need to re-examine the email(s) and correct the data.
         
+        ${feedbackContext}
+
         --------------------------------------------------
-        EMAIL CONTEXT:
+        ORIGINAL EMAIL CONTEXT:
         Subject: "${subject}"
         Sender: "${sender}"
         Body:
-        ${body.substring(0, 15000)}
+        ${(body || "").substring(0, 10000)}
+        
+        ${additionalContext}
         --------------------------------------------------
         
         PREVIOUS (INCORRECT) EXTRACTION:
         ${JSON.stringify(previousOutput, null, 2)}
         
-        ${feedbackContext}
-
         --------------------------------------------------
         YOUR INSTRUCTION:
-        1.  Critique the Previous Extraction: Why might the user have flagged this? (e.g. wrong company, missed rejection status, wrong role).
-        2.  Re-process the email with a "Fresh Eyes" approach.
+        1.  Critique the Previous Extraction: Why might the user have flagged this?
+        2.  Analyze ALL emails provided (Original + Additional). 
+            - Look for "hidden" updates in the thread (e.g. a reply causing a status change).
+            - Note dates: A later email overrides an earlier one.
         3.  Strictly follow these rules:
             - STATUS HIERARCHY: OFFER > INTERVIEW > SCREEN > APPLIED > REJECTED.
-            - If it mentions "scheduling a chat", it is SCREEN or INTERVIEW.
-            - If it says "not moving forward", it is REJECTED.
-            - If it's a generic "Thanks for applying", it is APPLIED.
-            - MARKETING vs STATUS: If it's a newsletter or generic spam, set "isJobRelated": false.
+            - "Scheduling a chat" = SCREEN or INTERVIEW.
+            - "Not moving forward" = REJECTED.
+            - "Thanks for applying" = APPLIED.
+            - IF User Directive says "Status is X", then Status IS X.
             
         4.  Return the CORRECTED JSON.
         

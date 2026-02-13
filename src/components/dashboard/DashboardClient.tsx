@@ -100,10 +100,10 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
             <DashboardHeader stats={stats} />
 
-            <div className="space-y-4">
+            <div className="space-y-6">
                 <DashboardToolbar
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}

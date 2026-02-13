@@ -5,9 +5,9 @@ export default async function Navbar() {
     const session = await auth()
 
     return (
-        <nav className="border-b bg-background p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <h1 className="text-xl font-bold">Job Hunt Dashboard</h1>
+        <nav className="border-b bg-background px-6 py-4 shadow-sm">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
+                <h1 className="text-xl font-bold tracking-tight">Job Hunt Dashboard</h1>
                 <div>
                     {session ? (
                         <div className="flex items-center gap-4">
