@@ -45,6 +45,7 @@ export function JobCard({ job }: JobCardProps) {
     }
 
     const handleIgnore = async (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         if (!confirm("Are you sure this is not a job? This will delete the entry and mark emails as invalid.")) return;
         try {
@@ -62,6 +63,7 @@ export function JobCard({ job }: JobCardProps) {
     };
 
     const handleIgnoreOffer = async (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         if (!confirm("Ignore this offer? It will be hidden from your active list.")) return;
         try {
@@ -76,15 +78,20 @@ export function JobCard({ job }: JobCardProps) {
         }
     };
 
-    const handleReanalyze = async () => {
+    const handleReanalyze = async (e?: React.MouseEvent) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         try {
             setIsReanalyzing(true);
-            setIsFeedbackOpen(false);
+            // Don't close immediately so user sees "Scanning..." if we have a state for it
             await fetch(`/api/jobs/${job.id}/reanalyze`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ feedback })
             });
+            setIsFeedbackOpen(false);
             router.refresh();
         } catch (err) {
             console.error(err);
@@ -92,6 +99,12 @@ export function JobCard({ job }: JobCardProps) {
             setIsReanalyzing(false);
             setFeedback("");
         }
+    };
+
+    const onOpenFeedback = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsFeedbackOpen(true);
     };
 
     if (isIgnored) return null;
@@ -257,7 +270,7 @@ export function JobCard({ job }: JobCardProps) {
                                                 variant="ghost"
                                                 size="icon"
                                                 className="h-8 w-8 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
-                                                onClick={handleReanalyze}
+                                                onClick={onOpenFeedback}
                                             >
                                                 <Sparkles className="h-4 w-4" />
                                             </Button>
