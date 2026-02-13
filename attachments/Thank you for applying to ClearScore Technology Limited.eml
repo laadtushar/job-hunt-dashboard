@@ -1,0 +1,93 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp661311ecs;
+        Thu, 12 Feb 2026 01:19:05 -0800 (PST)
+X-Received: by 2002:a05:600c:19c6:b0:477:a9e:859a with SMTP id 5b1f17b1804b1-48367165be0mr19154905e9.22.1770887945288;
+        Thu, 12 Feb 2026 01:19:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770887945; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UygnzIVGkRZ98M68K7uzfk3y1/qOOqoNeSBCtV6AfQmtqYP7wYz2BJhSc/9qAJehcp
+         dPIj2mRVoEKhnVBp1EozQlCU531CZSFJ2TXLufgMkjJsYedceS3vcmUKqqnPEEff8PPZ
+         32BpIzrWDKU/He31OjlqB133w68PoI6HNHs0s1+SOycRhubTRRyu8PNfBsTPTy8JJjG1
+         nh2vnsZZiHKKU7WGzADyNQQfjLyfa8dhvtekFCCGf4/Aaesnj4W08x9XGSpZD+UB4dnW
+         RrkYVo/D26ymrj5URMNQgwDtjPI2dGNtVVJfpJP+xs1MVj+7fNR+WUfv1CwZDqGYWGiy
+         ZoXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=6PWewFkoCjGwI+KdVkKJHTLBUqp6cfA9mEdNKERtVdw=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=fW+W6hwwFoDHgknS98u2NIzCOVjAzbhsROpzKAfQHXYYiFVdaHd0BiQYURk/1TMtut
+         zG3N6HVQe5zdzbDla2vNNjVuJqRgastIjG0U9aW/070LgLCJ8KH9StFyQaOoiHzERNnT
+         Mev1G544Gg1Qug9JbdIjHgKNzGVlDn74rnH4hOtgEqDZ3JjBwdCc6wdoAHtwKpInqKuS
+         h25TUKaHVCNoK5f6ocRij85q9S1jDRQP8G0tVE5na3b4VBKss7MfGxFzI2uHlhIXeJOi
+         cr6s6tpKSa1dvEAZDlDHFMx8hf5fImZsQmrcDZ42H+C3IYxzh3s6DV9mXHkJkBPSeHSK
+         NU7g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@eu.greenhouse-mail.io header.s=mailgun header.b=GErmIQdO;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=hkPBAoJZ;
+       spf=pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) smtp.mailfrom="bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eu.greenhouse-mail.io
+Return-Path: <bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io>
+Received: from mail-239-148.greenhouse.io (mail-239-148.greenhouse.io. [185.250.239.148])
+        by mx.google.com with UTF8SMTPS id ffacd0b85a97d-43783e65b1esi9033842f8f.301.2026.02.12.01.19.05
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:19:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) client-ip=185.250.239.148;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@eu.greenhouse-mail.io header.s=mailgun header.b=GErmIQdO;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=hkPBAoJZ;
+       spf=pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) smtp.mailfrom="bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eu.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770887945; x=1770895145;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=6PWewFkoCjGwI+KdVkKJHTLBUqp6cfA9mEdNKERtVdw=;
+ b=GErmIQdOfC/yF7uMwc+VAPL9g59OKC4GAuZO75F9m6C7uIsVDtjRay2NjCna+6Qn7A4MF7tk33WwJW5Kuq2D/gkbIraFzvlGlTtippTd99n5YvFDi4VKqpbT1eAPA7UiAMUqb1yd5sv4+ChP/hgmqdb8/fYHK1kOdJ9rPZqhGRY=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.mailgun.org; q=dns/txt; s=krs2; t=1770887945; x=1770895145;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=6PWewFkoCjGwI+KdVkKJHTLBUqp6cfA9mEdNKERtVdw=;
+ b=hkPBAoJZWSD1UAvuiXTbdphUeGMVgCAjQpEFK936s08FMSdeqW84lo1HRyRNaEx4Wj2HfMnmF7ZmWcNJd0wOc4TlKPq+XLfxUfY4+FOufrboCkYvVT8Y18uVfgfZPfeLyvsBq+HThjy5wilVkLIIFBq4zsa7eKF/b1MjlLuAaO4=
+X-Mailgun-Sid: WyIyNDk0YSIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjNjNWVmIl0=
+X-Feedback-Id: no-reply@eu.greenhouse-mail.io:CandidateAutoReply:6019b5a1aca131cc76614ef2:mailgun
+Received: by 2eb0f786e6b85edcf2b781b337981988e4b2c12d82fe919a513f12bdfcea88b1 with HTTP
+ id 698d9b09366706be3ea8233e; Thu, 12 Feb 2026 09:19:05 GMT
+X-Mailgun-Sending-Ip: 185.250.239.148
+Sender: no-reply@eu.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:19:05 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="a139d23e9882c51635830b68cefa0e5ac4d5a81259ac600c685c60af4610"
+Subject: Thank you for applying to ClearScore Technology Limited
+From: no-reply@eu.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4000621101", "person_id": "59379101101", "silo_id": "101",
+ "user_id": ""}
+Message-Id: <20260212091905.ee38315c2e9005d1@eu.greenhouse-mail.io>
+
+--a139d23e9882c51635830b68cefa0e5ac4d5a81259ac600c685c60af4610
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hi Tushar,
+
+Thanks for applying to join ClearScore Technology Limited. There are many great companies to work for out there and we are grateful for your interest to join us. Your application has been received and we will review it as soon as possible.
+
+Please note that due to a high number of applicants, we are usually not able to offer customised feedback for each candidate, but you should receive notice of the result of your application as soon as we are able to process it.
+
+Regards,
+ClearScore Technology Limited
+
+** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.
+--a139d23e9882c51635830b68cefa0e5ac4d5a81259ac600c685c60af4610
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p>Hi Tushar,</p>
+<p>Thanks for applying to join ClearScore Technology Limited. There are many great companies to work for out there and we are grateful for your interest to join us. Your application has been received and we will review it as soon as possible.</p>
+<p>Please note that due to a high number of applicants, we are usually not able to offer customised feedback for each candidate, but you should receive notice of the result of your application as soon as we are able to process it.</p>
+<p>Regards,<br />ClearScore Technology Limited</p>
+<p>** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.</p>
+--a139d23e9882c51635830b68cefa0e5ac4d5a81259ac600c685c60af4610--

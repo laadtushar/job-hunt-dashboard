@@ -1,0 +1,318 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp728239ecs;
+        Thu, 12 Feb 2026 03:41:08 -0800 (PST)
+X-Received: by 2002:a05:6a00:1592:b0:81f:43fe:988c with SMTP id d2e1a72fcca58-824b2da4e0dmr1647829b3a.6.1770896467987;
+        Thu, 12 Feb 2026 03:41:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770896467; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gEzp6CElvWrpUOmMYLGsQG+62eTVS/bEOsHxLTnNB6Bz1D7duL+G00SCF2UGhaPaKp
+         83Ebq6FBAZvnQEeH+3gOHv7lW0Nvn8xRdmL0+jZhIP1ZQJAA6y/u6eBcP6Y0LVIUIifL
+         q65ZI2VWXy3rfn8g3uqLhXNf6rE3HPMDFoTia8E378ttmYu8Upiu6FVR1imlqAmY/3vL
+         1V2mCdehHcxy6Z4FRxgiAJ2VdCJdw7J+LR1ZX+Mzt5klePP/3zyBwGSXOECrSrc7dlU1
+         2JSLQO05XWMtOPx2XNxEVdeR5HKktDhjENuxlTu+EBHQqeEmx40wjTHte6Lyw1rbVB/F
+         eDXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=fKbR5nhrTL8HbSbanr25tyVLIP77AZUkO7QF3tHYIWk=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=cgJ4x+/PoGnsVWPB2H7UYSsFxoFwb8dmvwuFxkHfBsvJIl67ZD6roBWVJYap6LNzbF
+         mF5m04Qn/fo/rqjIux93Fljdhz8HGbFYPyiBQoPlCu9FrVoX5jMPtT7HlI5osaPBkJQd
+         EN7NC/lb01ln9ul8sE0pVD9xoEG/iRbC0DOdaL2TrpmIk2/nayaEzuuINiWC0VF+CHYI
+         IN/H9gqREV8gEJI8INFK+lrnZcSwFVA6b5XxCGzzHuIs1mViXHeN0rqAqRyphZxjPLmn
+         1Tv4AMbdrmZZ6HwjKZhSD2ydkUhZE4JjRFw8cV4E9FzaX0bP8QsLxpjtbK+8KOoxJ81G
+         7Q7g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.optiver.com header.s=krs header.b=PS+XuvBN;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=koPX0djT;
+       spf=pass (google.com: domain of postmaster@gh-mail.optiver.com designates 198.244.59.30 as permitted sender) smtp.mailfrom=postmaster@gh-mail.optiver.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=optiver.com
+Return-Path: <postmaster@gh-mail.optiver.com>
+Received: from c30.c09224bb.usw1.send.mailgun.net (c30.c09224bb.usw1.send.mailgun.net. [198.244.59.30])
+        by mx.google.com with UTF8SMTPS id d2e1a72fcca58-8249e8cede3si7979143b3a.171.2026.02.12.03.41.07
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:41:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.optiver.com designates 198.244.59.30 as permitted sender) client-ip=198.244.59.30;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.optiver.com header.s=krs header.b=PS+XuvBN;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=koPX0djT;
+       spf=pass (google.com: domain of postmaster@gh-mail.optiver.com designates 198.244.59.30 as permitted sender) smtp.mailfrom=postmaster@gh-mail.optiver.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=optiver.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.optiver.com; q=dns/txt; s=krs; t=1770896466; x=1770903666;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=fKbR5nhrTL8HbSbanr25tyVLIP77AZUkO7QF3tHYIWk=;
+ b=PS+XuvBNUuJ7VOB7F9Hv6hsHNEizuTejA8O4h2zIHLtWKTrQJrNhh/LvmHYbC5FZXDXvsU7F9p/ilI3Yj1BeW8Yun038jan/EXAjlM18DygklfInaWUA5jr0+DJdAaKG4NN05NV9/7kTKyxWyPQm0rNlOQxB+pw8eB4UORXoKBAdIbywW9mONA0jwXhYBozW8CQpyZ2580jMqzIF14WJ6ZT8Au9S8xeLDPHNXbrMKLXWMQfGqGC3BBkRZgYzqsWVDn53YG3Ujb0hpBFoGdEp8MBuvVVAL4Z0V1OkiOkUFJegHWQa3t7E2seb6ujT2qmFq72c12RN6p8SKTyLyp9OcA==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770896466; x=1770903666;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=fKbR5nhrTL8HbSbanr25tyVLIP77AZUkO7QF3tHYIWk=;
+ b=koPX0djTX1BIaz7PAVe3DA3FziQ6ndJkMLeBf7zLwy7jc7O2e2blvH0Mtr1Uqu//RyHfidlSmQMYpZWOhZjwltdtwFgJPyGnIaclzZOsAgG76Y2Hxubpo0BoYpTdb2pLkEwhR2I7raGalI2hQZKoxemTpOYMUGQQQ+xzyi4V2r4=
+X-Mailgun-Sid: WyJhYTZiNyIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImVlMTllMGEiXQ==
+X-Feedback-Id: postmaster@gh-mail.optiver.com:EmailCandidate-Automated:61c3467fb65f9daae734d85b:mailgun
+Received: by 54aabc621f4f87369a09d8030805e6166a5ea0bf6235f05944a99876b8438001 with HTTP
+ id 698dbc52f47733397c231be1; Thu, 12 Feb 2026 11:41:06 GMT
+X-Mailgun-Sending-Ip: 198.244.59.30
+Date: Thu, 12 Feb 2026 11:41:06 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="a3d639569bbe5eed45c180398956e483bbd13ceb08e03c898c96b2c6bddd"
+Subject: Optiver - Assessment invitation coming soon
+From: no-reply@optiver.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: EmailCandidate
+X-Mailgun-Tag: Automated
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001650002", "person_id": "261818663002", "silo_id": "2",
+ "user_id": "5423844002"}
+Message-Id: <20260212114106.46c6b248b8700ff5@gh-mail.optiver.com>
+
+--a3d639569bbe5eed45c180398956e483bbd13ceb08e03c898c96b2c6bddd
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Hi Tushar,
+
+Thank you for applying to Optiver. We=E2=80=99ve checked that you meet the =
+eligibility requirements for the Graduate Software Engineer role. The next =
+step is completing online assessments.
+
+You=E2=80=99ll soon receive a separate email with the assessment invitation=
+ from the no-reply@optiver.com ( no-reply@optiver.com ) address. This email=
+ can sometimes end up in your spam, junk, or promotions folders - please ch=
+eck those if you don=E2=80=99t see it by tomorrow. If it's missing, feel fr=
+ee to reach out via the contact form ( https://optiver.com/contact-eu-recru=
+itment ).
+
+A few important points:
+
+* You=E2=80=99ll have 7 days to complete the assessments, but since we hire=
+ on a rolling basis, we encourage you to complete them as soon as possible.
+* The assessments can only be completed once every 8 months for the same ro=
+le. If you've already completed the full assessment for this role within th=
+at timeframe - we won=E2=80=99t be able to consider your application. If yo=
+u only completed part of the assessments for a different role, we=E2=80=99l=
+l carry over any relevant results and invite you to complete the remaining =
+ones.
+
+In the meantime, stay connected on Linkedin ( https://www.linkedin.com/comp=
+any/optiver ), or learn more about us through our Career blog ( https://opt=
+iver.com/working-at-optiver/career-hub/ ) or News ( https://optiver.com/new=
+s/ ) section.
+
+Best,
+
+Optiver Recruitment
+--a3d639569bbe5eed45c180398956e483bbd13ceb08e03c898c96b2c6bddd
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Hi Tushar,</p>
+<p><!--StartFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><span id=3D"732d64fd-6b3=
+d-4611-a307-07f1f03378d6" data-mark-type=3D"annotation" data-mark-annotatio=
+n-type=3D"inlineComment" data-id=3D"732d64fd-6b3d-4611-a307-07f1f03378d6" d=
+ata-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annotat=
+ion">Thank you for applying to Optiver. We&rsquo;ve checked that you meet t=
+he eligibility requirements for the </span><strong data-prosemirror-content=
+-type=3D"mark" data-prosemirror-mark-name=3D"strong"><span id=3D"732d64fd-6=
+b3d-4611-a307-07f1f03378d6" data-mark-type=3D"annotation" data-mark-annotat=
+ion-type=3D"inlineComment" data-id=3D"732d64fd-6b3d-4611-a307-07f1f03378d6"=
+ data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annot=
+ation">Graduate Software Engineer</span></strong><span data-mark-type=3D"an=
+notation" data-mark-annotation-type=3D"inlineComment" data-id=3D"732d64fd-6=
+b3d-4611-a307-07f1f03378d6" data-prosemirror-content-type=3D"mark" data-pro=
+semirror-mark-name=3D"annotation"> role. The next step is completing online=
+ assessments.<!--StartFragment--></span></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]">Y<span id=3D"0f52eab0-ca=
+ae-457c-882e-ebc49198eebb" data-mark-type=3D"annotation" data-mark-annotati=
+on-type=3D"inlineComment" data-id=3D"0f52eab0-caae-457c-882e-ebc49198eebb" =
+data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annota=
+tion">ou&rsquo;ll soon receive a separate email with the assessment invitat=
+ion from the </span><a href=3D"mailto:no-reply@optiver.com" data-prosemirro=
+r-content-type=3D"mark" data-prosemirror-mark-name=3D"link"><span id=3D"0f5=
+2eab0-caae-457c-882e-ebc49198eebb" data-mark-type=3D"annotation" data-mark-=
+annotation-type=3D"inlineComment" data-id=3D"0f52eab0-caae-457c-882e-ebc491=
+98eebb" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=
+=3D"annotation">no-reply@optiver.com</span></a><span id=3D"0f52eab0-caae-45=
+7c-882e-ebc49198eebb" data-mark-type=3D"annotation" data-mark-annotation-ty=
+pe=3D"inlineComment" data-id=3D"0f52eab0-caae-457c-882e-ebc49198eebb" data-=
+prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annotation"=
+> address. This email can sometimes end up in your spam, junk,</span> or pr=
+omotions folders - please check those if you don&rsquo;t see it <span id=3D=
+"629a3810-9f5e-44dc-9c24-289c2b689174" data-mark-type=3D"annotation" data-m=
+ark-annotation-type=3D"inlineComment" data-id=3D"629a3810-9f5e-44dc-9c24-28=
+9c2b689174" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-na=
+me=3D"annotation">by tomorrow</span>. If it's missing, feel free to <span i=
+d=3D"b7ea9d7a-6332-4026-872f-fa69000cfc0c" data-mark-type=3D"annotation" da=
+ta-mark-annotation-type=3D"inlineComment" data-id=3D"b7ea9d7a-6332-4026-872=
+f-fa69000cfc0c" data-prosemirror-content-type=3D"mark" data-prosemirror-mar=
+k-name=3D"annotation">reach out </span><span class=3D"fabric-background-col=
+or-mark" data-background-custom-color=3D"#fdd0ec" data-prosemirror-content-=
+type=3D"mark" data-prosemirror-mark-name=3D"backgroundColor"><span id=3D"b7=
+ea9d7a-6332-4026-872f-fa69000cfc0c" data-mark-type=3D"annotation" data-mark=
+-annotation-type=3D"inlineComment" data-id=3D"b7ea9d7a-6332-4026-872f-fa690=
+00cfc0c" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=
+=3D"annotation">via the <a href=3D"https://optiver.com/contact-eu-recruitme=
+nt">contact form</a></span></span>.</p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--StartFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]">A few important points:<=
+/p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--StartFragment--></p>
+<ul>
+<li data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"pa=
+ragraph" data-prosemirror-node-block=3D"true">You&rsquo;ll have <strong dat=
+a-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"strong"><=
+span id=3D"1274ef57-208c-4128-be2b-0d9391f007cd" data-mark-type=3D"annotati=
+on" data-mark-annotation-type=3D"inlineComment" data-id=3D"1274ef57-208c-41=
+28-be2b-0d9391f007cd" data-prosemirror-content-type=3D"mark" data-prosemirr=
+or-mark-name=3D"annotation">7 days</span></strong> to complete the assessme=
+nts, but since we hire on a rolling basis, we encourage you to complete the=
+m as soon as possible.</li>
+<li data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"pa=
+ragraph" data-prosemirror-node-block=3D"true"><span id=3D"40edc0b2-cd7f-428=
+7-aa69-57ec6c9279c0" data-mark-type=3D"annotation" data-mark-annotation-typ=
+e=3D"inlineComment" data-id=3D"40edc0b2-cd7f-4287-aa69-57ec6c9279c0" data-p=
+rosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annotation">=
+The assessments can only be completed once every 8 months for the same role=
+=2E If you've already completed the ful=
+l assessment for this role within that=
+ timeframe - we won&rsquo;t be able to consider your application. If you on=
+ly completed part of the assessments for a different role, we&rsquo;ll carr=
+y over any relevant results and invite you to complete the remaining ones.<=
+/span></li>
+</ul>
+<p><span data-mark-type=3D"annotation" data-mark-annotation-type=3D"inlineC=
+omment" data-id=3D"40edc0b2-cd7f-4287-aa69-57ec6c9279c0" data-prosemirror-c=
+ontent-type=3D"mark" data-prosemirror-mark-name=3D"annotation"><!--StartFra=
+gment--></span></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]">In the meantime, stay co=
+nnected on <a href=3D"https://www.linkedin.com/company/optiver" data-prosem=
+irror-content-type=3D"mark" data-prosemirror-mark-name=3D"link">Linkedin</a=
+>, or learn more about us through our <a href=3D"https://optiver.com/workin=
+g-at-optiver/career-hub/" data-prosemirror-content-type=3D"mark" data-prose=
+mirror-mark-name=3D"link">Career blog</a> or <a href=3D"https://optiver.com=
+/news/" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=
+=3D"link"><span id=3D"a49b3bae-56fa-4e2e-965e-1d25be901999" data-mark-type=
+=3D"annotation" data-mark-annotation-type=3D"inlineComment" data-id=3D"a49b=
+3bae-56fa-4e2e-965e-1d25be901999" data-prosemirror-content-type=3D"mark" da=
+ta-prosemirror-mark-name=3D"annotation">News</span></a><span id=3D"a49b3bae=
+-56fa-4e2e-965e-1d25be901999" data-mark-type=3D"annotation" data-mark-annot=
+ation-type=3D"inlineComment" data-id=3D"a49b3bae-56fa-4e2e-965e-1d25be90199=
+9" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"ann=
+otation"> section.</span><span data-mark-type=3D"annotation" data-mark-anno=
+tation-type=3D"inlineComment" data-id=3D"40edc0b2-cd7f-4287-aa69-57ec6c9279=
+c0" data-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"an=
+notation"><!--EndFragment--></span></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--EndFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--EndFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--StartFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><!--EndFragment--></p>
+<p data-prosemirror-content-type=3D"node" data-prosemirror-node-name=3D"par=
+agraph" data-prosemirror-node-block=3D"true" data-pm-slice=3D"1 1 [&quot;ex=
+pand&quot;,{&quot;title&quot;:&quot;Progression emails - SWE Roles&quot;,&q=
+uot;__expanded&quot;:true},&quot;table&quot;,{&quot;displayMode&quot;:null,=
+&quot;isNumberColumnEnabled&quot;:false,&quot;layout&quot;:&quot;center&quo=
+t;,&quot;localId&quot;:&quot;8e481564-1274-46ee-b5bc-114ffd4c6fe2&quot;,&qu=
+ot;width&quot;:1800,&quot;__autoSize&quot;:false},&quot;tableRow&quot;,null=
+,&quot;tableCell&quot;,{&quot;colspan&quot;:1,&quot;rowspan&quot;:1,&quot;c=
+olwidth&quot;:[450],&quot;background&quot;:null}]"><span id=3D"732d64fd-6b3=
+d-4611-a307-07f1f03378d6" data-mark-type=3D"annotation" data-mark-annotatio=
+n-type=3D"inlineComment" data-id=3D"732d64fd-6b3d-4611-a307-07f1f03378d6" d=
+ata-prosemirror-content-type=3D"mark" data-prosemirror-mark-name=3D"annotat=
+ion"><!--EndFragment--></span></p>
+<p><!--StartFragment--></p>
+<div><span style=3D"font-size: 16px; color: #1c3255; font-family: georgia;"=
+>Best,</span></div>
+<div><span style=3D"font-size: 16px; color: #1c3255; font-family: georgia;"=
+>Optiver Recruitment</span><span style=3D"font-size: 12px; color: black; fo=
+nt-family: arial;"><br></span><br><a href=3D"https://optiver.com/"><img src=
+=3D"https://optiver.com/wp-content/uploads/2022/12/Optiver-logo-150x37px.pn=
+g" alt=3D"" width=3D"150" height=3D"37"></a></div>
+<p><!--EndFragment--></p><img width=3D"1" height=3D"1" alt=3D"" src=3D"http=
+://email.gh-mail.optiver.com/o/eJwczEFuwyAQheHTlF2tx3g84AWLquo5KmLGMZIdIoxz=
+_ohsf733paBqZ0U0Gqxz8LOwiNmCJyim0S3CPAtWnWdi53SBjys7MTkQSECWrGULGVgWuRH7m3f=
+Auk5fjPv2fcS8D-XZ8kvrsJTDlHr_zykwYGUCQOap9SyPHkmst15k7LmGdp1brHuMiQDq3kfryp=
+n38nmYFv56_Y2PlFNsalr4uVo5YtNkrlNrn01Mo2fu7CvQOwAA__-cUEfn">
+--a3d639569bbe5eed45c180398956e483bbd13ceb08e03c898c96b2c6bddd--

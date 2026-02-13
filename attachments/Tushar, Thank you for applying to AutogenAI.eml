@@ -1,0 +1,108 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp659313ecs;
+        Thu, 12 Feb 2026 01:15:02 -0800 (PST)
+X-Received: by 2002:ac8:5a13:0:b0:4f1:df6f:6399 with SMTP id d75a77b69052e-506919e9738mr27875771cf.14.1770887702423;
+        Thu, 12 Feb 2026 01:15:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770887702; cv=none;
+        d=google.com; s=arc-20240605;
+        b=A9IlPfc3FfHAvIbst/Z2bF9ArUw4o83OiCmHcshjdiGao9K9INxNpPjNHD7oXpBmpH
+         DBPgDrgzSsYjIZTR0hwVa70o8POlsTk9Z8p5Vu+4n86NlSMuaCqFyVt811Z9Iq+sFIuJ
+         xH9LrXUBCKk+3veOjesNAtorCeC2a1hB135OeFzBWO5nicowXIwhOw8d4qwe2sIOlBcD
+         ka7opBPXU4Ne1qKJmOhKloXhO/5UWI/kLkexq1rD4hYuz7AU7e5IDcu2t7yVaCEdCxGT
+         m8ZFI14o+1SYAXC2yYoV6+6sE5zY0T/6QgHVaZmP1kmeF5uIlSFnRnrpFukDMM8uxQnB
+         ZeSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=ihDdb4Mltm+nGpIwHG+ri8PKKeLw9KTgIdTDjXe3t3Y=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=LbRTMP53G9xgwpcXgBAv7JL38XKrnehUjPxwFd2Zp4XplPurjw/KR/2npiMvlY4Bdi
+         AF+7Rj+0u6CrlUhVJV1sdHmUfpC/FKcDVqosDIvcWwF8BMnkrs3w0gGCU/ErzRWdEH/X
+         MZrj2I00blZMvAxBcX1D3dq39vYsMPfgoBZaB5Go0WJHw9KNLgsGGuIsRvMKWmy2+vKY
+         ivWib7SCygfQcsWu+r3BdfellALeyUh7Pw5m+9K7JS+J3lMBpVpeQfQiZVjEfzlgs1An
+         78p0iVo9RhvturQdtirkGwv8pxP54V5eq15xRUGnK29GKfxQeYqu5zMapfrtu2+sVkmk
+         ec3Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.autogenai.com header.s=smtp header.b=BB5Py4QB;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=EOa9Iq9r;
+       spf=pass (google.com: domain of postmaster@gh-mail.autogenai.com designates 69.72.40.96 as permitted sender) smtp.mailfrom=postmaster@gh-mail.autogenai.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=autogenai.com
+Return-Path: <postmaster@gh-mail.autogenai.com>
+Received: from mail-40-96.greenhouse.io (mail-40-96.greenhouse.io. [69.72.40.96])
+        by mx.google.com with UTF8SMTPS id d75a77b69052e-50684c4e655si40064821cf.352.2026.02.12.01.15.01
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:15:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.autogenai.com designates 69.72.40.96 as permitted sender) client-ip=69.72.40.96;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.autogenai.com header.s=smtp header.b=BB5Py4QB;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=EOa9Iq9r;
+       spf=pass (google.com: domain of postmaster@gh-mail.autogenai.com designates 69.72.40.96 as permitted sender) smtp.mailfrom=postmaster@gh-mail.autogenai.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=autogenai.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.autogenai.com; q=dns/txt; s=smtp; t=1770887701; x=1770894901;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=ihDdb4Mltm+nGpIwHG+ri8PKKeLw9KTgIdTDjXe3t3Y=;
+ b=BB5Py4QBQ5fSqr857Gcxa/RxhRG+PeXtR4AknEGjPfoLTLqaCQoluLOEfTqtbQV4YawruMNlnpCtlHDvoKau39/kq7YZ7RryZQoMmlm4fzqZQkPg0MLrEDlgLk518osb71sthzWbvffbe7Tcef+J1Qb0pq2YjiRGeQMzO7RVC28LDzI8voFlDE1r8zw40MN9BplnYrMkIc1VulKEcaHXerFNQgfp3hfG3EQc6qKRVbESnLjZexUqFdMEfh3rbVlc8F2t06MT7lyEl0h7Wy/0gYIA+rQ6lpmrfWLIhuN9jsVJReMUvptQttBTz2V2AFtOjd4N4cqYSE8wkx+e/cdD/w==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770887701; x=1770894901;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=ihDdb4Mltm+nGpIwHG+ri8PKKeLw9KTgIdTDjXe3t3Y=;
+ b=EOa9Iq9rLzS7sXvd12ABSEe5ZlUlslYvQTThSSi4wPcqW/Sgd3SuMOU25Klps+J3DJDUv88hLVaiG4x1tgLmwsjZWfz/6VM0Fbh5z8Gg3+0zKY/fT+53gY7erCtksoM49wGALuITlqgxg6CE33ECdnKXjMi85KUvlhe+lh/opL0=
+X-Mailgun-Sid: WyI3Yzg2OSIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjZjYWI4ZmIiXQ==
+X-Feedback-Id: postmaster@gh-mail.autogenai.com:CandidateAutoReply:677d2e8d5934153529cf9724:mailgun
+Received: by 3a43f3841d7a604b9a9788c389ed99720bc872680d6c6284c9586f16789386bc with HTTP
+ id 698d9a15301762327101484d; Thu, 12 Feb 2026 09:15:01 GMT
+X-Mailgun-Sending-Ip: 69.72.40.96
+Date: Thu, 12 Feb 2026 09:15:01 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="8d3eb8816270be9937448efb79f09e36afaec02afe03d9cd21a7abc99d61"
+Subject: Tushar, Thank you for applying to AutogenAI
+From: no-reply@autogenai.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4002234008", "person_id": "55791277008", "silo_id": "8",
+ "user_id": ""}
+Message-Id: <20260212091501.bf721eca01d33c39@gh-mail.autogenai.com>
+
+--8d3eb8816270be9937448efb79f09e36afaec02afe03d9cd21a7abc99d61
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Tushar,
+
+Thank you for applying for the role of Junior/Mid-level Software Engineer (Platform) at AutogenAI. We appreciate your interest in joining our team and the time you've taken to submit your application.
+
+We will review all applications and will be in touch with you as soon as possible with feedback or regarding next steps in the process.
+
+Thank you once again for your interest in AutogenAI, and we'll be in touch as soon as we're able.
+
+Kind regards,
+
+The AutogenAI Talent Team
+
+** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.
+--8d3eb8816270be9937448efb79f09e36afaec02afe03d9cd21a7abc99d61
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Tushar,</p>
+<p>Thank you for applying for the role of Junior/Mid-level Software Enginee=
+r (Platform)&nbsp;at AutogenAI. We appreciate your interest in joining our =
+team and the time you've taken to submit your application.</p>
+<p>We will review all applications and will be in touch with you as soon as=
+ possible with feedback or regarding next steps in the process.&nbsp;</p>
+<p>Thank you once again for your interest in AutogenAI, and we'll be in tou=
+ch as soon as we're able.&nbsp;</p>
+<p>Kind regards,&nbsp;</p>
+<p>The AutogenAI Talent Team</p>
+<p>** Please note: Do not reply to this email. This email is sent from an u=
+nattended mailbox. Replies will not be read.</p><img width=3D"1" height=3D"=
+1" alt=3D"" src=3D"http://email.gh-mail.autogenai.com/o/eJwczEFuhSAUheHVlFl=
+fzr2IFwcMmu6gG2iugkrikxfEJt19Q6f_yfliGBed_TqbFEgE3ouAzB5YVyhNPs4WQjKKs46IKQ=
+GcmJ3JgcEjmBgTOdBjXoUpLQqK1i52ehuw7e9PzcdD71a2dGp-LOVpSt2-cwwDwGwHwJtXqlc5e=
+3ROJmKRXmto97VrPVQjA9zBf64jVz5KP3jTwqeeMUdt6eNu5Su9jl9zX6n22fwE_gsAAP__K7JD=
+3g">
+--8d3eb8816270be9937448efb79f09e36afaec02afe03d9cd21a7abc99d61--

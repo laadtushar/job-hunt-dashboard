@@ -1,0 +1,99 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp843671ecs;
+        Thu, 12 Feb 2026 06:45:47 -0800 (PST)
+X-Received: by 2002:a05:6000:230d:b0:436:8058:45a with SMTP id ffacd0b85a97d-4378ad95accmr5593443f8f.39.1770907546651;
+        Thu, 12 Feb 2026 06:45:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770907546; cv=none;
+        d=google.com; s=arc-20240605;
+        b=W7vPOnR6RRmCB1Ag5R320wBUVWiljJF3sPmUwS/vXJE1t8BD/+qYGkcZGSTJW1QTYq
+         82ywuxc7BrkTVy53Jgj+L6QjD4rnGDKH1PEEPjOUN+Xp8VsmtbaAhbWklTAbxj9nAWyk
+         8Oh17CyQVugTGicHV8PHkpSvgS1YG5Bzf8YYLh8y/sDufIOYNNnD8ctVmlw4ynTAqbZP
+         7IkW93Q5m2vNHLvKGzECV5813Ge/6Tjg17GsElc5LaXQ9ps0T4kF9cz6JVtnSqtb5KXZ
+         wlz5IxM/DyreBXnfaOaAK2e+4/NsO6X2b8ZRTn11uEWj5GjDpk2qjjaj+w98yEPRCbfq
+         /GIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:to:from:subject:mime-version:date:sender:dkim-signature
+         :dkim-signature;
+        bh=NDpihH5o82czwpPZ2gey5eWlBVvQRx2wXnduCWmrLPE=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=Wh5bjTpAEg6rsrePwjRF55PTxXB/ZJKpCuswtECYTZZeNNoPAD8GxPL4fsTiSjqebM
+         Anok4JVcVNxHpsSlRwu4+5YlNem28S8e6acxJTEpm2Ewn3iZyR4UIJIR4xlw3lZYkMNE
+         1+GVBSXcyKZAJhdFRq1mbLcrPXIGPdkw+aqiCZDjuJ1Bn6qqaFzDLRrhyKQgt6yensRN
+         5QefD8+R4C7VHFjvifLM0sT99JahykzNdfUti4zL/iuVcV2QA8ONscScpK9QBgy8THl9
+         Lupo6rF41dRs+xKQ+NmgbQQKMPCxRWe/vASE5EMSdTsArRQCN+umbpx9G46SapXo4sd5
+         QJRQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@hire.eu.lever.co header.s=mailo header.b=DdZMiOVw;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=Qv9S+SqO;
+       spf=pass (google.com: domain of bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co designates 141.193.32.3 as permitted sender) smtp.mailfrom="bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co";
+       dmarc=pass (p=QUARANTINE sp=REJECT dis=NONE) header.from=lever.co
+Return-Path: <bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co>
+Received: from m32-3.eu.mailgun.net (v53.v5ed9ac7d.euw1.send.eu.mailgun.net. [141.193.32.3])
+        by mx.google.com with UTF8SMTPS id ffacd0b85a97d-43783e0fab8si10890329f8f.238.2026.02.12.06.45.46
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 06:45:46 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co designates 141.193.32.3 as permitted sender) client-ip=141.193.32.3;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@hire.eu.lever.co header.s=mailo header.b=DdZMiOVw;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=Qv9S+SqO;
+       spf=pass (google.com: domain of bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co designates 141.193.32.3 as permitted sender) smtp.mailfrom="bounce+01afe4.92eb8-tusharlaad2002=gmail.com@hire.eu.lever.co";
+       dmarc=pass (p=QUARANTINE sp=REJECT dis=NONE) header.from=lever.co
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=hire.eu.lever.co; q=dns/txt; s=mailo; t=1770907546; x=1770914746;
+ h=Message-Id: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=NDpihH5o82czwpPZ2gey5eWlBVvQRx2wXnduCWmrLPE=;
+ b=DdZMiOVw0dmnczsiS9ML+cvc7/XycOkvWcapC53HtC9B9scAQA31yYHfQKWwNA38fPQWzOe+acu1egsAOztGyZFC+gDzGLWRRrooibu80a/Bbgs2o1zySR1GNfxkDj3IbmmmfCuhkN66eYp5AYnmGjGcGOlUlCOTtIQaolVAG/w=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.mailgun.org; q=dns/txt; s=krs2; t=1770907546; x=1770914746;
+ h=Message-Id: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=NDpihH5o82czwpPZ2gey5eWlBVvQRx2wXnduCWmrLPE=;
+ b=Qv9S+SqOdkaRhLyFPuk1aoKqGa5JVV3hlesVIu0f1xj3yOuUwxtqXyAECzpNe+YJTLnNrNHTyEOYNf7WOhl150cR0NhF5nmp8ZZbkyxTrC+83cKnVYZi7kD9WRLUz63n1KS7umfkUyAxSagAEV8Z9KyaIRxkR6+Jkicxh87KT5k=
+X-Mailgun-Sid: WyIyMWJlZiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjkyZWI4Il0=
+X-Feedback-Id: no-reply@hire.eu.lever.co::5e840c1f4bf3886cb685a1d7:mailgun
+Received: by d860968554fcf7690db4d11d5b83d4c4d4d6df7918973916a31acf678c989f58 with HTTP
+ id 698de79ad9fa5747e02568af; Thu, 12 Feb 2026 14:45:46 GMT
+X-Mailgun-Sending-Ip: 141.193.32.3
+Sender: no-reply@hire.eu.lever.co
+Date: Thu, 12 Feb 2026 14:45:46 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="6067d035f1d6b332858c94dee0fa5e2f7f26264c0259bc2f98a327bcd208"
+Subject: PRIMA - Feedback on your Python Software Engineer application
+From: Prima <no-reply@hire.eu.lever.co>
+To: tusharlaad2002@gmail.com
+Message-Id: <20260212144546.81734a27ca02b587@hire.eu.lever.co>
+
+--6067d035f1d6b332858c94dee0fa5e2f7f26264c0259bc2f98a327bcd208
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Dear Tushar,
+
+
+
+Thank you for your interest in our job as Python Software Engineer. We have=
+ reviewed your application and we regret to inform you that it has not been=
+ selected for further consideration.
+
+We wish you every success with your job search and thank you for your inter=
+est in our company.
+
+
+
+Sincerely,
+
+The Talent Acquisition Team=C2=A0
+--6067d035f1d6b332858c94dee0fa5e2f7f26264c0259bc2f98a327bcd208
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<div>
+<p>Dear Tushar,</p>
+<p>&nbsp;</p>
+<p>Thank you for your interest in our job as Python Software Engineer. We have reviewed your application and we regret to inform you that it has not been selected for further consideration.</p>
+<p>We wish you every success with your job search and thank you for your interest in our company.</p>
+<p>&nbsp;</p>
+<p>Sincerely,</p>
+<p>The Talent Acquisition Team&nbsp;</p>
+</div>
+--6067d035f1d6b332858c94dee0fa5e2f7f26264c0259bc2f98a327bcd208--

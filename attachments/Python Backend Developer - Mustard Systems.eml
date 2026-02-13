@@ -1,0 +1,142 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp718936ecs;
+        Thu, 12 Feb 2026 03:21:57 -0800 (PST)
+X-Received: by 2002:a17:907:3f14:b0:b88:5ccf:5656 with SMTP id a640c23a62f3a-b8f8f7d06e5mr145062066b.31.1770895317025;
+        Thu, 12 Feb 2026 03:21:57 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1770895317; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=eS40dDdlVjLlcOYVmCQ3InnfLZznmDKohviiMPwkzCxEMnpg0l8SPtkpIQvi75HyU9
+         ZWvvqXH0OMV7KcGzpZi4u3qlMI3C/D7wM82A3OVZ05DMVw7w0ud0PQiRZj9SaSEbjsJK
+         5EkhgWeCIxq5hUQuBF6A5ES9xB97EDcgqaII5EWloX7udrlyJy+isP4CwDEVPneL0G1n
+         7JdktOk/78wBlcSw0F93f//NfCCEJ37DyIsvf0+O6/DpdeN5pss5hPptxHBFj2/FoGWH
+         aEP32dpfNEr+z+VUuvhzhZfLQyPOqc8PBGSbDgvf94w5XiFe6KtlpF+9xwh88LVQ70zj
+         xRVA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:from:dkim-signature;
+        bh=mi8J2yQBxNAjryKGU4a/Ac5n1ugX2JQz2m1eQ5ZtRdw=;
+        fh=3iRG9iz0NQEMxy7OM9INuXaThxZPQsvf5CaRdS+9Zk8=;
+        b=J7/6XuoJjiiN9C+epa8qp7u1sAe451nKd3mTx2fVALqPySUQOPOkU+rFjHndHNTApn
+         dsxESN/YJqnidINvB2fPdaqIBCcDlVob4JD06wGR9RIWKA4JgHag2pJcpGlW+lsz88/1
+         klJvZ1GZZgvhhfpMPSq7CTtXFHjLS00yypGe2z6E60rSWKIxvBkyN2bwl/G3AWaY2b2M
+         F49utsMfzhqdAsuz4J1Me2+QWwLo3d5s74Xvqx506Jx4fdNhw8BYfpG0I416lIXKSa5r
+         8uUJW8l1i61IJ3S7gU0nFTo3y/kTe1+sBRurlXoTlfncmmVfPLiYC16QpUBo2DEB3eC5
+         +8Lg==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@mustardsystems.com header.s=google header.b=a82eWhN4;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of stefanos@mustardsystems.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=stefanos@mustardsystems.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=mustardsystems.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <stefanos@mustardsystems.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-b8f6f6d73fdsor107112766b.14.2026.02.12.03.21.56
+        for <tusharlaad2002@gmail.com>
+        (Google Transport Security);
+        Thu, 12 Feb 2026 03:21:57 -0800 (PST)
+Received-SPF: pass (google.com: domain of stefanos@mustardsystems.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mustardsystems.com header.s=google header.b=a82eWhN4;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of stefanos@mustardsystems.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=stefanos@mustardsystems.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=mustardsystems.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1770895316; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Rgi1LbhgPSwgLQCAvnBeDE0WmEZApL1fRg9oBKpdwIjzLjOmcK41gQXcKcH6LDvRfu
+         ZiXW7G9FP/+9JCcLtfpsdOnRo1qQAJIFUAeNIEQhhvARdVRHgTzrjIBTPr23wpngkEl5
+         89MyTMJGOOPu+PXWLX7fu8L9888q8lzNdSIX09o2c1hC+w9m2D2HmOYxNXxrN/DPTkXb
+         IPn8WZdqHJ0dnc9amGNaIAhB+8GNNFpMWmXaWUgcSW7HyOfS4Ju+8HcndMSCB+ff/JPB
+         M0nfk/NwxA2CLjzSVCT6042K7QD31LznAaCwBgnOXjk4haSG/yq8gTfzRFyIog/mwO0R
+         N30w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:from:dkim-signature;
+        bh=mi8J2yQBxNAjryKGU4a/Ac5n1ugX2JQz2m1eQ5ZtRdw=;
+        fh=3iRG9iz0NQEMxy7OM9INuXaThxZPQsvf5CaRdS+9Zk8=;
+        b=PdpfmuWaONQQ89BTwHwmCYbpNCq3BbKY4KXzsQdU3Mw/2fNR2BV1Z1j0ZTBwie29yr
+         JGjjvv9Fk3sOJBs06y9Uc80mGpKiKUG1qU9Q4cc0DxG7ZSwsZHf105zb4fsRsubcxm9Q
+         kpYELUEtCAoSEyM/fi5sT6Ld/svNIJn7GZUsuaJ7RYZReu6e6AZwkRkF8cYbwtjN5CTC
+         sRgoL7UFupgLyeBDsOPIJZ2iWZeW+5srJBHc24UFJR37MMHpSjBmhRoxhuPkB+GVGq/6
+         Pbp7RTQZ+0Di6xUErB6jW3PCYS+lc9gTH8Xgs5D9dFKYwcYizLQW7GefcFtb+QO3M5z6
+         x6Ww==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mustardsystems.com; s=google; t=1770895316; x=1771500116; dara=google.com;
+        h=to:subject:message-id:date:mime-version:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mi8J2yQBxNAjryKGU4a/Ac5n1ugX2JQz2m1eQ5ZtRdw=;
+        b=a82eWhN43PG1sR9ZyhtsPZpu3A103A87VBakOXHAAlzoSIHo5vE/avjyJn+oHCe/LW
+         /go+ZXg8aKWxufSitdP1ixbyVNwaHOX60o5ESwTxW48bU5k36gzNyrvyVmXNypx5hoNJ
+         6oO7XC2g4ytEB9aZFAJgY0qpQm6JWykGJYDYQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770895316; x=1771500116;
+        h=to:subject:message-id:date:mime-version:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mi8J2yQBxNAjryKGU4a/Ac5n1ugX2JQz2m1eQ5ZtRdw=;
+        b=GhsZe4EG9ikpDO+BRuzidD/XIpzD3JB5pBvYoV9Ly70mAj1Vzdy81biPc+F7nRptl2
+         Hve9UmA82j8LlJMhSHYDEBvr9n4ZAN5J2Vv9aDSaUUR+Dz2X1/NpvF/CeyPVHKl0YXBE
+         QVl2fdeaU4vNZ7qjGWE62t1AMZWFrCWOArgz3TgNm1rv0g5SlJscVxycoYJhBPzHbJgM
+         pnsZhzOpbxgimCT0NVc4l+WvnFO+H3KcN3HcIRdqy2y2pU/S+fyVoS+FVTvBRVBK9lO1
+         Bj33FWj7iHBx51O9k0JQRro6KoS46nnKKdc/1Vklozx+OBlvqQJ230MY39CsTSjcD8Jg
+         cnOw==
+X-Gm-Message-State: AOJu0YzrH3dmhxudYqi+qJhPWaU/xo/pTKN2XXE70AlQ12d5E9tpdGag
+	Tyu92Iqi78Rbw2xggq4lzwaSvqW9G8aihLbltSHpGi22y56jc4uoQcfZrGjCi8SlvW594YLnAeL
+	n3D/vk+Guuqr3w9s9/WN5b7++ssg+Tl67jpn/qxqRRuUUw6+BJypH
+X-Gm-Gg: AZuq6aLHwC6oZgd2T2N0qLHSPRs0IhchXwgn6L6dsBRY5WyJtbONxP3w15yC/q8bfxm
+	1duvSpPEpYnNvejZ2ZjhK1A7rDrhJmub0DhH+jeFVapQ07P7VPS51LeX0xzwpq/If6dHPP7ndNo
+	d9COZEYp5L8RgwZVT84Xxlki6dgv9U+jkHtSTzYajvCqrU/Blzdkd3m6at+m4Klbn4os7Fxi5zM
+	SDKT8tEIhIIPcc9Bqex7toxwgyJM7naqSAC+IQv5xqt3XB/E0iWS9j1tq6oxkPKTstlluXwAp1x
+	oiBHmsPqV2BXY09ulO9XoeGhl5LDni/w
+X-Received: by 2002:a17:907:86a7:b0:b86:ef1f:6d19 with SMTP id
+ a640c23a62f3a-b8f8f84a315mr128423766b.59.1770895316563; Thu, 12 Feb 2026
+ 03:21:56 -0800 (PST)
+Received: from 371208450237 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 12 Feb 2026 03:21:56 -0800
+Received: from 371208450237 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 12 Feb 2026 03:21:56 -0800
+From: Stefano Sablone <stefanos@mustardsystems.com>
+Mime-Version: 1.0
+Date: Thu, 12 Feb 2026 03:21:56 -0800
+X-Gm-Features: AZwV_QhPt0e-XDe3AeyeGrOe_miEdGclCicMaekE8MVVH4TV1JHj1hwm33O9AAU
+Message-ID: <CA+0oc++UCdynsm1jbWJ+sBoA8H8KK93O6mkQkKwFqkPQtvhTSQ@mail.gmail.com>
+Subject: Python Backend Developer - Mustard Systems
+To: Tushar Laad <tusharlaad2002@gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000047479f064a9eb28a"
+
+--00000000000047479f064a9eb28a
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Tushar,
+
+Thank you for applying to the Python Backend Developer role at Mustard
+Systems. We appreciate your time and interest in the role.
+
+After careful consideration, we regret to inform you that we won't be
+progressing with your application at this stage.
+
+Due to the high volume of applications, we are unable to provide individual
+feedback at this time. However, we will keep your information on file for
+future opportunities that may align with your skills and experience.
+
+We wish you every success in your job search.
+
+Thank you,
+
+Stefano Sablone
+
+--00000000000047479f064a9eb28a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Hi Tushar,</p><p>Thank you for applying to the Python Backend Developer =
+role at Mustard Systems. We appreciate your time and interest in the role.<=
+/p><p>After careful consideration, we regret to inform you that we won&#39;=
+t be progressing with your application at this stage. </p><p>Due to the hig=
+h volume of applications, we are unable to provide individual feedback at t=
+his time. However, we will keep your information on file for future opportu=
+nities that may align with your skills and experience.</p><p>We wish you ev=
+ery success in your job search.</p><p>Thank you,</p><p>Stefano Sablone<br><=
+/p>
+
+--00000000000047479f064a9eb28a--

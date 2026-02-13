@@ -1,0 +1,190 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp668045ecs;
+        Thu, 12 Feb 2026 01:34:02 -0800 (PST)
+X-Received: by 2002:ac8:7ee9:0:b0:506:9ad2:8d4a with SMTP id d75a77b69052e-5069ad2a7f5mr3496711cf.75.1770888842742;
+        Thu, 12 Feb 2026 01:34:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770888842; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NShjDIA7aDgSSb73chajayzprrJdkh+R8GDII/0daT4xruiYCm4wszgzdTQo4h5nJ0
+         Z345PcTw7At8Q1lIhv/aIP0PEvFbQNibOzbblpF1rhomGFMx366S64qGpVJtBHW730Ax
+         k5tKoAcYy75flVyehzpE/wWfNNopUSDElB2+GayAtkKK8h3eLrFdfswBhk/n2vx6Vg+u
+         OxdNV3YFMBDdrImGvwpXOS8Nonb2NsLtJSuBqtH8gnjOTXaJA8ev2IxOGI1QDL06e9og
+         dLUeFO8EMdSI7nJdozlPulq5Kg4aPWUIQ6ViGnOiJQ/wkB2vyRJVYncEv+DPvMSNVXp7
+         FW5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=bHdXHdvfkutXKur+gKYaH4jRqhSzVgX5QxOhLw03wig=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=YiN+gCZ/690yPpAVAYMF1xvXO2+Pi54A88tUpyM91beE3ocx4zvZCBzVhTEc7CQLLu
+         QhxsJ1PjmtTGxmj08/pWvn5pqBqYuqZrNQh+j3GU622g6Bd60rkGhm35Rzxli/gK84na
+         cH8pS+8zdigU2RcvMfBMbcpo1uy0ayBKYTW9nSJrwPwASsCYfGWtxceQNVE9xJjCYVUY
+         nEVZznIpzmm15nUFaMWnJkV7sn7ZGytgsLiy/R8ZdvhGatxnwd9HbBPQ+W2H+Bzm+ciJ
+         hb921B1tEjy9u57mok7WPs69eIzwXmdPgY/Gn8hM+RBxceLoGv8UbxM8cbNxl5LmJZB/
+         wJjA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@fanduel.com header.s=krs header.b=2LXxjoEw;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=lf2tyRqY;
+       spf=pass (google.com: domain of postmaster@gh-mail.fanduel.com designates 69.72.40.96 as permitted sender) smtp.mailfrom=postmaster@gh-mail.fanduel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=fanduel.com
+Return-Path: <postmaster@gh-mail.fanduel.com>
+Received: from mail-40-96.greenhouse.io (mail-40-96.greenhouse.io. [69.72.40.96])
+        by mx.google.com with UTF8SMTPS id d75a77b69052e-50684c30837si41107231cf.316.2026.02.12.01.34.02
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:34:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.fanduel.com designates 69.72.40.96 as permitted sender) client-ip=69.72.40.96;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@fanduel.com header.s=krs header.b=2LXxjoEw;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=lf2tyRqY;
+       spf=pass (google.com: domain of postmaster@gh-mail.fanduel.com designates 69.72.40.96 as permitted sender) smtp.mailfrom=postmaster@gh-mail.fanduel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=fanduel.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=fanduel.com; q=dns/txt; s=krs; t=1770888841; x=1770896041;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=bHdXHdvfkutXKur+gKYaH4jRqhSzVgX5QxOhLw03wig=;
+ b=2LXxjoEwYJybLpHnf2uClE/U+ZIBSvaGIZrh/FtxWp2zNp5tO1Umi5NLyLspOMnnTlI51yGOO7NdLwNvL6vxEj4gwBLn/Eumq25pxcedqgW9+0G7I0BBq7XAPtoA/kRA3NZicZik3VOFqXslxV3SnDZ7aIt/OA2OmaTna9dJovM=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770888841; x=1770896041;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=bHdXHdvfkutXKur+gKYaH4jRqhSzVgX5QxOhLw03wig=;
+ b=lf2tyRqYNq6ahjJVNoGzn81Pw95x+5YR6K4PBWV5l74ERcvyimnXgcrQrBb1de4qxse7lKrDd4OrJjUfENSPm3dPzo38LyVqAeQuhufl5Mj2DR+kqYhk3ZBDAckPJC+TDsknUY4ztHhxNK+stV+rrldU7aRLPVu2+OKds+1JyLE=
+X-Mailgun-Sid: WyJkNTQ5ZCIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjIxMGJjIl0=
+X-Feedback-Id: postmaster@gh-mail.fanduel.com:CandidateAutoReply:5bf309d8aa3de600011fc86a:mailgun
+Received: by f362cf272b69ad63930d98096702a83a261f0768093e7bcbbf1740752678f163 with HTTP
+ id 698d9e8985a42752f3eb5464; Thu, 12 Feb 2026 09:34:01 GMT
+X-Mailgun-Sending-Ip: 69.72.40.96
+Date: Thu, 12 Feb 2026 09:34:01 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="6542b3af73f8c8ffd1c53826a730ad0a8f76f6a8080211ceadf5f6733995"
+Subject: Thank you for applying to FanDuel
+From: no-reply@fanduel.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "3728", "person_id": "455895602", "silo_id": "1", "user_id": ""}
+Message-Id: <20260212093401.38f965123a38ea4e@gh-mail.fanduel.com>
+
+--6542b3af73f8c8ffd1c53826a730ad0a8f76f6a8080211ceadf5f6733995
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hi Tushar
+
+Thank you for your interest in FanDuel and for your application to our Data Engineer role.
+
+Our Talent Acquisition team will review your details and will come back to you soon if your skills are a good match to the position.
+
+In the meantime, please feel free to keep up to date with what's going on at FanDuel Group by following some of our social engagement channels:
+
+U.K.
+
+* Careers site - https://www.fanduel.co.uk/
+
+U.S.
+
+* Careers site - https://www.fanduel.com/careers ( https://www.fanduel.com/careers )
+
+* LinkedIn - https://www.linkedin.com/company/fanduel/ ( https://www.linkedin.com/company/fanduel/ )
+
+Thanks again for applying!
+
+FanDuel Group Talent Acquisition Team
+
+** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.
+
+Visit our LinkedIn ( https://www.linkedin.com/company/fanduel/ ) | Visit our Career Site ( https://www.fanduel.careers/ )
+--6542b3af73f8c8ffd1c53826a730ad0a8f76f6a8080211ceadf5f6733995
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<table class="emailWrapper" style="background-color: #ffffff; margin: 0; padding: 0; width: 100%; height: 100%; border-collapse: collapse;" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="border-collapse: collapse;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="padding: 0;" valign="top">
+<table class="mobile" style="width: 600px; max-width: 100%; border-collapse: separate; margin: 0 auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#ffffff">
+<tbody>
+<tr>
+<td valign="top">
+<table style="width: 600px;" border="0" width="600" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="font-size: 0px; line-height: 0px;" valign="top"><img style="width: 600px; height: auto; display: block; border: none; margin: 0px;" src="https://s3.amazonaws.com/cdn.fanduel.com/images/2024/greenhouse/email-templates/header.png" width="600" height="auto"></td>
+</tr>
+</tbody>
+</table>
+<table style="width: 600px;" border="0" width="600" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 600px; height: 60px;" width="600" height="60">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table style="width: 600px;" border="0" width="600" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 40px;" width="40">&nbsp;</td>
+<td>
+<p style="font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 15px;">Hi Tushar</p>
+<p style="font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 15px;">Thank you for your interest in FanDuel and for your application to our Data Engineer role.&nbsp;<br><br>Our Talent Acquisition team will review your details and will come back to you soon if your skills are a good match to the position.<br><br>In the meantime, please feel free to keep up to date with what's going on at FanDuel Group by following some of our social engagement channels:<br><br>U.K.</p>
+<ul>
+<li>Careers site -<span class="Apple-converted-space">&nbsp;</span><a class="ms-outlook-linkify" href="https://www.fanduel.co.uk/">https://www.fanduel.co.uk/</a></li>
+</ul>
+<p style="font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 15px;">U.S.</p>
+<ul>
+<li>Careers site - <a href="https://www.fanduel.com/careers">https://www.fanduel.com/careers&nbsp;</a></li>
+<li>LinkedIn - <a href="https://www.linkedin.com/company/fanduel/">https://www.linkedin.com/company/fanduel/&nbsp;</a></li>
+</ul>
+<p style="font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 15px;">Thanks again for applying!<br><br>FanDuel Group Talent Acquisition Team</p>
+<p style="font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 15px;">** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.</p>
+</td>
+<td style="font-size: 0px; line-height: 0px; width: 40px;" width="40">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table style="width: 600px;" border="0" width="600" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 600px; height: 60px;" width="600" height="60">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table style="width: 600px; background: linear-gradient(90deg, #001c55 0%, #0078ff 100%);" border="0" width="600" cellspacing="0" cellpadding="0" bgcolor="#0061d5">
+<tbody>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 0; height: 0;" width="0" height="0">&nbsp;</td>
+<td style="font-size: 0px; line-height: 0px; width: 600px; height: 60px;" width="600" height="60">&nbsp;</td>
+<td style="font-size: 0px; line-height: 0px; width: 0; height: 0;" width="0" height="0">&nbsp;</td>
+</tr>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 40px;" valign="top" width="40">&nbsp;</td>
+<td><img style="width: 390px; height: auto; display: block; border: none; margin: 0 auto 30px;" src="https://s3.amazonaws.com/cdn.fanduel.com/images/2024/greenhouse/email-templates/icons.png" width="390" height="auto">
+<p style="color: #fff; font-family: sans-serif; line-height: 1.6; font-size: 16px; margin-top: 0; margin-bottom: 0; text-align: center;"><a style="color: #fff !important;" href="https://www.linkedin.com/company/fanduel/" target="_blank" rel="noopener">Visit our LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #fff !important;" href="https://www.fanduel.careers/" target="_blank" rel="noopener">Visit our Career Site</a></p>
+</td>
+<td style="font-size: 0px; line-height: 0px; width: 40px;" valign="top" width="40">&nbsp;</td>
+</tr>
+<tr>
+<td style="font-size: 0px; line-height: 0px; width: 0; height: 0;" width="0" height="0">&nbsp;</td>
+<td style="font-size: 0px; line-height: 0px; width: 600px; height: 60px;" width="600" height="60">&nbsp;</td>
+<td style="font-size: 0px; line-height: 0px; width: 0; height: 0;" width="0" height="0">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+--6542b3af73f8c8ffd1c53826a730ad0a8f76f6a8080211ceadf5f6733995--

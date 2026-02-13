@@ -1,0 +1,463 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp682143ecs;
+        Thu, 12 Feb 2026 02:05:14 -0800 (PST)
+X-Received: by 2002:a05:690c:86:b0:795:905:c047 with SMTP id 00721157ae682-7976bdbced2mr15788697b3.3.1770890714281;
+        Thu, 12 Feb 2026 02:05:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770890714; cv=none;
+        d=google.com; s=arc-20240605;
+        b=e8Zz/OukcmkHcQJj2X3wwrY6qR2bAjX9E7jKBOP8BjCViwfKchiN4ag6nOFLIDll0a
+         BTmYxrzxScH3dqSnBts3/3cQds0JOdT/1xLOOodyoh/CH8di7TDc9vt3n8fauEMJnX7x
+         OvGPIdleQphBEq9Y+01FtusQVk02qC2T1sy0oXk2ePjFQgp1WOxzY50ksiYIF1oaldyA
+         odVujZNGQ9HoM7DpcCIbj35/uCZWQP1618fwHp2jhkQkoEMZ3jkBN8Y9kfo3Fcv8ve7+
+         YhfAS1fyYX4p0Koyk2m+O8dLNFKt2qDtPwfhPB1NmKHUPcib4QmkeUYOFTwbhpWMXb33
+         cjWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:date:message-id:feedback-id:to:subject:from
+         :dkim-signature:dkim-signature;
+        bh=K/PNJRLtKjmP84+lHIiKNXQHO6XRraVc56kPX1ySeBg=;
+        fh=nIhAy87qlX6Nxxf593V5b6mMQaTtI6GnWVllQx2WZY0=;
+        b=EpdTaePi1ivahXaFT3/Kx/55aQhXWkn4hYl9l4GOaPQZt5dPJkR9RB008luraYeXnz
+         K+yt5X+FQYzn7ozwyKKFDR7Mh2mB26DSnJuAtv+bZYlJCC+wXtRFlRJ7ynZ+efAKcXYW
+         ZCZv2ZWv1sF8gnotwMETCLcYe83YgM1fOtkA4G89fWQSTpyGKV9aQDBNgCvl9rqq5DOH
+         wIcusXz8P/T0U5vTdij9pZnFyDifH2/fz/qyXqx2YjhhYpa6x3nThuagBYRJHRQGPJot
+         nfjTjUqGtHC/6GVstdaBzAykvyg8JMMltv9T20tOIbItXI2DKWpCZIgABArzyidenCjZ
+         xL9A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=FlY4weMY;
+       dkim=pass header.i=@user.applygateway.com header.s=mte1 header.b=BiHEbe0a;
+       spf=pass (google.com: domain of bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com designates 198.2.186.2 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+Return-Path: <bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com>
+Received: from mail186-2.suw21.mandrillapp.com (mail186-2.suw21.mandrillapp.com. [198.2.186.2])
+        by mx.google.com with ESMTPS id 00721157ae682-7966c272391si43803617b3.131.2026.02.12.02.05.14
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 02:05:14 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com designates 198.2.186.2 as permitted sender) client-ip=198.2.186.2;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=FlY4weMY;
+       dkim=pass header.i=@user.applygateway.com header.s=mte1 header.b=BiHEbe0a;
+       spf=pass (google.com: domain of bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com designates 198.2.186.2 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da5d9.v1-5bfb221f397e41ba89bc98ab3ea2d31d@return.applygateway.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+	s=mte1; t=1770890714; x=1771160714;
+	bh=K/PNJRLtKjmP84+lHIiKNXQHO6XRraVc56kPX1ySeBg=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=FlY4weMYustI0rcNee+PUXbecWT+bmM/M7wAAMr3fXTv+4k8SqhCtrbPap7dR8fB7
+	 1yanjlgrR/8GUJb9OdNgXs7FiM6Qk9Vw4tp9EWVTXk4phcVn/nVIVsGeFd1tRgMdn7
+	 wI3tKpzu5DMT3U7ojHxVOl1Jc3R5vA4SSJ/WlNIGn9KaXsoV/jPO5QtkPFGVsBmSvK
+	 ev8zwUbeMDkosvZg3Jib244Xhs+Ef1bpCXRv1TFlr5VkwV7qD+HW28kzfDuhwWfrZ+
+	 i+y5KbjfULCbG//XV981E/j1XoV6qPr7kwR7IKIwpEu4wYCoiLVWG80DFhYcxvgdRk
+	 HWdWXvzHNmTQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=user.applygateway.com; s=mte1; t=1770890714; x=1771151214;
+	i=contact@user.applygateway.com;
+	bh=K/PNJRLtKjmP84+lHIiKNXQHO6XRraVc56kPX1ySeBg=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=BiHEbe0akys0lqeaO1qUtvDMAuCwHFGidP5SuUIhiOBfzCGT/CSAE9GNwptIgXBN1
+	 y24I9oY3+eR0Yprw3ukPzEWF5B3Bsb0FKAkM3XH7d67NfPdUeTnAqWoIa0y9mDs/yP
+	 C0pcnB10fjztZXi1Kem0d7veMi5BXY9g7CLxqPIYbtIzjK2Lb890HGNJRoX5HlEkRV
+	 ZEvCOsNH6JdievZPpVI5X23YYc6Y/Bs48IeKcAsfPLYtDLxnU9AxTSxiXXleif2ZyM
+	 3PrwiqpP0KsYF5296rCAXBT3Y9xFs6tGBIqt4kfBuKcf8YmXvIrVpXzla1ioGI2dPA
+	 8Rjn+TK0pdKAw==
+Received: from pmta10.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
+	by mail186-2.suw21.mandrillapp.com (Mailchimp) with ESMTP id 4fBWBf0DwKzS65sJS
+	for <tusharlaad2002@gmail.com>; Thu, 12 Feb 2026 10:05:14 +0000 (GMT)
+From: ApplyGateway <contact@user.applygateway.com>
+Subject: =?utf-8?Q?Welcome=20to=20ApplyGateway?=
+Received: from [212.38.182.252] by mandrillapp.com id 5bfb221f397e41ba89bc98ab3ea2d31d; Thu, 12 Feb 2026 10:05:13 +0000
+To: "Tushar Laad" <tusharlaad2002@gmail.com>
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30883532.5bfb221f397e41ba89bc98ab3ea2d31d?=
+X-Mandrill-User: md_30883532
+Feedback-ID: 30883532:30883532.20260212:md
+Message-Id: <30883532.20260212100513.698da5d9de7b57.63079744@mail186-2.suw21.mandrillapp.com>
+Date: Thu, 12 Feb 2026 10:05:13 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_av-2obg3ihHFFariE2sRA6nZQ"
+
+--_av-2obg3ihHFFariE2sRA6nZQ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Thank you for registering on ApplyGateway.
+
+We make applying for jobs easy. No more filling in endless registration forms.
+
+Please visit https://www.applygateway.com/account/confirmEmail?userId=61ddeba5-0da8-46d3-a27b-5b768ae7e171&code=M0wVyxAbViQmSr6fMFe/6XTGeLveZrLvQXLKhgp/SmHb1ou4+IbxUBikNctiS/aXp933tg82rlG2zBlCjJMgNWCLli4ARPz8nzGnqK6RkBSmkhd2+6UxLjDrqWvrfMQFC4z/xM+/824y4UxUVVTuWgMolCoVmvLp9IVr/acR3mTgihz7 to confirm your email address
+
+You can login at www.applygateway.com at any time to upload a new CV, update your settings or delete your account.
+
+Unsubscribe at https://www.applygateway.com/Account/Unsubscribe
+--_av-2obg3ihHFFariE2sRA6nZQ
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <style type="text/css">
+        /* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" message */
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        /* Prevent WebKit and Windows mobile changing default text sizes */
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        /* Remove spacing between tables in Outlook 2007 and up */
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+        /* Allow smoother rendering of resized image in Internet Explorer */
+
+        /* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body, #bodyTable, #bodyCell {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+        /* ========== Page Styles ========== */
+
+        #bodyCell {
+            padding: 20px;
+        }
+
+        #templateContainer {
+            width: 600px;
+        }
+
+
+        body, #bodyTable {
+            background-color: #f1f1f1;
+        }
+
+
+        h1 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        h2 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: bold;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        .headerContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 100%;
+            padding-top: 80px;
+            padding-right: 0;
+            padding-bottom: 80px;
+            padding-left: 0;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+
+            .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #EB4102;
+                font-weight: normal;
+                text-decoration: underline;
+            }
+
+        #headerImage {
+            height: auto;
+            max-width: 600px;
+        }
+
+        /* ========== Body Styles ========== */
+
+
+        #templateBody {
+        }
+
+
+        .bodyContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 15px;
+            line-height: 150%;
+            text-align: left;
+        }
+
+
+            .bodyContent p {
+                margin-bottom: 30px;
+            }
+
+
+
+            .bodyContent a:link, .bodyContent a:visited, /* Yahoo! Mail Override */ .bodyContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #24b780;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .bodyContent img {
+                display: inline;
+                height: auto;
+                max-width: 560px;
+            }
+
+        /* ========== Footer Styles ========== */
+
+
+        #templateFooter {
+            border-top: 1px solid #dcdcdc;
+        }
+
+
+        .footerContent {
+            color: #626262;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 13px;
+            line-height: 150%;
+            padding-top: 20px;
+            text-align: left;
+        }
+
+        .footerRight {
+            text-align: right;
+            color: #231f20;
+        }
+
+
+        .footerContent a:link, .footerContent a:visited, /* Yahoo! Mail Override */ .footerContent a .yshortcuts, .footerContent a span /* Yahoo! Mail Override */ {
+            color: #231f20;
+            font-weight: normal;
+            text-decoration: underline;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+
+        @media only screen and (max-width: 480px) {
+            /* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+            body, table, td, p, a, li, blockquote {
+                -webkit-text-size-adjust: none !important;
+            }
+            /* Prevent Webkit platforms from changing default text sizes */
+            body {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+            /* Prevent iOS Mail from adding padding to the body */
+
+            #bodyCell {
+                padding: 20px !important;
+            }
+
+            /**************** Header ****************/
+
+            .headerContent img {
+                width: 300px !important;
+            }
+
+            .headerContent {
+                padding-top: 40px !important;
+                padding-bottom: 40px !important;
+            }
+
+            /* ======== Page Styles ======== */
+
+
+            #templateContainer {
+                max-width: 600px !important;
+                width: 100% !important;
+            }
+
+
+            h1 {
+                font-size: 24px !important;
+                line-height: 130% !important;
+            }
+
+
+            h2 {
+                font-size: 20px !important;
+                line-height: 130% !important;
+            }
+
+
+            /* ======== Header Styles ======== */
+
+
+            .headerContent {
+                font-size: 20px !important;
+                line-height: 125% !important;
+            }
+
+            /* ======== Body Styles ======== */
+
+
+            .bodyContent {
+                font-size: 15px !important;
+                line-height: 150% !important;
+            }
+
+            /* ======== Footer Styles ======== */
+
+
+            .footerContent {
+                display: block !important;
+                font-size: 14px !important;
+                line-height: 115% !important;
+                text-align: left !important;
+            }
+
+                .footerContent a {
+                    display: block !important;
+                }
+            /* Place footer social and utility links on their own lines, for easier access */
+        }
+    </style>
+</head>
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;background-color: #f1f1f1;height: 100% !important;width: 100% !important;">
+    <center>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;background-color: #f1f1f1;border-collapse: collapse !important;height: 100% !important;width: 100% !important;">
+            <tr>
+                <td align="center" valign="top" id="bodyCell" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 20px;height: 100% !important;width: 100% !important;">
+                    <!-- BEGIN TEMPLATE // -->
+                    <table border="0" cellpadding="0" cellspacing="0" id="templateContainer" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 600px;border-collapse: collapse !important;">
+                        <tr>
+                            <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN HEADER // -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader" style=" -webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                                    <tr>
+                                        <td valign="top" class="headerContent" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: 'Open Sans Bold', arial;font-size: 20px;font-weight: bold;line-height: 100%;padding-top: 0px;padding-right: 0;padding-bottom: 18px;padding-left: 0;text-align: left;vertical-align: middle;">
+                                            <img src="https://www.applygateway.com/assets/img/applygateway_logo_mobile.png" width="246" border="0" alt="ApplyGateway.com" style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END HEADER -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN BODY // -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                                    <tr>
+                                        <td valign="top" class="bodyContent">
+                                            <h1>Thank you for registering on ApplyGateway.</h1>
+                                           
+											<p>We make applying for jobs easy. No more filling in endless registration forms.</p>
+<p>Please click this <a href="https://www.applygateway.com/account/confirmEmail?userId=61ddeba5-0da8-46d3-a27b-5b768ae7e171&code=M0wVyxAbViQmSr6fMFe/6XTGeLveZrLvQXLKhgp/SmHb1ou4+IbxUBikNctiS/aXp933tg82rlG2zBlCjJMgNWCLli4ARPz8nzGnqK6RkBSmkhd2+6UxLjDrqWvrfMQFC4z/xM+/824y4UxUVVTuWgMolCoVmvLp9IVr/acR3mTgihz7">link</a> to confirm your email address.</p>
+<p>You can login at <a href="http://clicktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=eyJzIjoicFBfSm1EVmkxczV1YXRYMmdiYmpJcW1IdVU0IiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL2FjY291bnRcXFwvcHJvZmlsZVwiLFwiaWRcIjpcIjViZmIyMjFmMzk3ZTQxYmE4OWJjOThhYjNlYTJkMzFkXCIsXCJ1cmxfaWRzXCI6W1wiMjllZDdmZjZhNzEyMmFhNmZkMjYxYTkxYTZlNDg1MzkxOTNlNjUyZlwiXSxcIm1zZ190c1wiOjE3NzA4OTA3MTN9In0">www.applygateway.com/account/profile</a> at any time to upload a new CV, update your settings or delete your account.</p>
+                                                                                    
+                                            <p>                                              
+                                                <strong>Happy job hunting, <br />The Apply Gateway Team</strong>
+                                            </p>
+                                            <p>To change your preference, login at <a href="http://clicktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=eyJzIjoiWWlhMVNJLUVtcy1NSkk3V24xdlZjMnBjWXE0IiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXCIsXCJpZFwiOlwiNWJmYjIyMWYzOTdlNDFiYTg5YmM5OGFiM2VhMmQzMWRcIixcInVybF9pZHNcIjpbXCI1NGY5YWY1NGFkMWM3ZTBiY2VjNmFkNjU4MzdkNWY3NTUzYTE5MmNlXCJdLFwibXNnX3RzXCI6MTc3MDg5MDcxM30ifQ">www.applygateway.com</a>.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END BODY -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN FOOTER // -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-top: 1px solid #dcdcdc;border-collapse: collapse !important;">
+
+                                    <tr>
+                                        <td valign="top" class="footerContent footerLeft" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #626262;font-family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-top: 20px;text-align: left;">
+                                            Copyright &#169; Apply Gateway Ltd, All rights reserved.
+                                        </td>
+                                        <td valign="top" class="footerContent footerRight" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #231f20;font-family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-top: 20px;text-align: right;">
+                                            <a href="http://clicktracking.applygateway.com/track/click/30883532/www.applygateway.com?p=eyJzIjoicjFCVFRrOVJpRVZtMWJsUnFNYkVZdnVlRDdvIiwidiI6MiwicCI6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3d3dy5hcHBseWdhdGV3YXkuY29tXFxcL0FjY291bnRcXFwvVW5zdWJzY3JpYmVcIixcImlkXCI6XCI1YmZiMjIxZjM5N2U0MWJhODliYzk4YWIzZWEyZDMxZFwiLFwidXJsX2lkc1wiOltcIjk5M2ZhZDlhMjliZmIxODg2NDFjODIwODE2Y2JlYzJiMmE3NzEzYzhcIl0sXCJtc2dfdHNcIjoxNzcwODkwNzEzfSJ9" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #231f20;font-weight: normal;text-decoration: underline;">Unsubscribe from these emails</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" valign="top" class="footerContent footerLeft" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #626262;font-family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-top: 20px;text-align: left;">
+                                            ApplyGateway.com is part of Apply Gateway Ltd <br> Registered address - 125-135 Preston Road, Brighton, BN1 6AF
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END FOOTER -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- // END TEMPLATE -->
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
+--_av-2obg3ihHFFariE2sRA6nZQ--
+

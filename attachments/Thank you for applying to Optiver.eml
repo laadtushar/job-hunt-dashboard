@@ -1,0 +1,165 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp728238ecs;
+        Thu, 12 Feb 2026 03:41:08 -0800 (PST)
+X-Received: by 2002:a05:622a:1790:b0:4f1:b9ec:f6a4 with SMTP id d75a77b69052e-50691e37101mr33346961cf.33.1770896467949;
+        Thu, 12 Feb 2026 03:41:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770896467; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lgCr6DNq+8vCkj4tk2AXMKmGkwn/VMkRp6bP2lh6tyYeE3FUkXAA/Bsciy1nAv+cij
+         Yd5L0acvZ6oqX03nN/IAfpJodQWy6+MUtozfYUHkQ7tifWbHDO3kG79vgwoXGf5zBSzS
+         CySZLiNZXM83pGD4lQHBEKUHCb75mLyAdScgeDOFBS7tA9N81itAOQONfoxy6Aeq+m4M
+         h5iWgFmUoAqa1rMtDcWhxID9eYZLcljEC6Nwr9EcKRJqGqk82eTGX/+wiQfwO5BiKWP+
+         +RVTsnWh+YM0CX3WiWsB12Sahtm/9mO81dnkzHeDWum+/8DHKibEp5Pgo6ibt31+xaAz
+         rp3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=l1tEtXE9sbUXSc4FgGJtKEVtK8+JLuqwCYJIieJe0fY=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=ldBcCA7jD2BHATRTp8cGuBR7Y6waFpfpoYfQhjTp9H4/aqUZrOaKLKsPtx3Koy4+R2
+         hgZWksMp9DwP0u1rUmOhVuRQWHUmvhU10eUED+0SR48N2+2C6PqfSh9/n8uIRdaYy35u
+         sqCMW8GpoXbT+TmgTWPDij+QwXiMPH82iEJ43fjbTavovmado0nsBH3MzcV2D+Br6FCf
+         zBl/W0NRpcjRVoPfHG5KdvEbFk/bKqsseB08C32TTTbE1rgqugxT9IxLDtn72NUIjXsM
+         Bk5+QN2MC4z8sUsXeD+dkuBelRzXHkppbSF7VE3VvC/72ZDuzTerXi6SxliMpB8Tna1N
+         T53Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.optiver.com header.s=krs header.b=mxlU249b;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=bqjQI6xY;
+       spf=pass (google.com: domain of postmaster@gh-mail.optiver.com designates 69.72.40.94 as permitted sender) smtp.mailfrom=postmaster@gh-mail.optiver.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=optiver.com
+Return-Path: <postmaster@gh-mail.optiver.com>
+Received: from mail-40-94.greenhouse.io (mail-40-94.greenhouse.io. [69.72.40.94])
+        by mx.google.com with UTF8SMTPS id d75a77b69052e-50684c763a4si44899721cf.393.2026.02.12.03.41.07
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:41:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.optiver.com designates 69.72.40.94 as permitted sender) client-ip=69.72.40.94;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.optiver.com header.s=krs header.b=mxlU249b;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=bqjQI6xY;
+       spf=pass (google.com: domain of postmaster@gh-mail.optiver.com designates 69.72.40.94 as permitted sender) smtp.mailfrom=postmaster@gh-mail.optiver.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=optiver.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.optiver.com; q=dns/txt; s=krs; t=1770896467; x=1770903667;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=l1tEtXE9sbUXSc4FgGJtKEVtK8+JLuqwCYJIieJe0fY=;
+ b=mxlU249bGgMy1x/oW5ahb/rK2DcudW/gLNvbWsYi03la94NBf3aCt8DO5DDh/o4JCCq6LUP3qK/850Z3441qL9H6owKzA/9OvtTlbBH7m56IkIcw/wxYsQ97+Y49a80LJWDGA9i0XLvY3NdJjNbPE1+pkZwuQmvXCdf3rujCneyc3AOW1H55FIhBBEozvrezI8GTta1fcEchc8OwyPzP99Mkjk2JJxFCPOVGtzOe/w9cCEkO67nGxUew5/Kqhm2TE6Q/J+PNHTcuNUoLY5bAAECTuQAtopF2XA9oMcqT+7akspdkKa1Y131KgXDVXWcSAdTKu9VOaVD23Spbcmh9Kg==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770896467; x=1770903667;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=l1tEtXE9sbUXSc4FgGJtKEVtK8+JLuqwCYJIieJe0fY=;
+ b=bqjQI6xYYif2i9zzOWuNEOQz2Rm7al0MGaJeF9zTRCQ9e0/psHQNdht8CmVntpeFAj45niUiaqelvBt4qKxxZyLVfLulNthNKohqePr+SEv8A7EgQYb/bx2iurni4NBm2Dup2ChDyBWhgNUluQVyxlth17IIC980IO5rLs4NJF4=
+X-Mailgun-Sid: WyJhYTZiNyIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImVlMTllMGEiXQ==
+X-Feedback-Id: postmaster@gh-mail.optiver.com:CandidateAutoReply:61c3467fb65f9daae734d85b:mailgun
+Received: by c66abac0525b79bd235b5cfb8c3e1564bb42aaacbdcf8b3d5bba43cfa91244f9 with HTTP
+ id 698dbc53064eedcf2fc330d3; Thu, 12 Feb 2026 11:41:07 GMT
+X-Mailgun-Sending-Ip: 69.72.40.94
+Date: Thu, 12 Feb 2026 11:41:07 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="061e55a64bc60005b5d98ae1c935de973c57d545653ac9c9304ec42c7467"
+Subject: Thank you for applying to Optiver
+From: no-reply@optiver.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001650002", "person_id": "261818663002", "silo_id": "2",
+ "user_id": ""}
+Message-Id: <20260212114107.3a10fec7fdf0f4dd@gh-mail.optiver.com>
+
+--061e55a64bc60005b5d98ae1c935de973c57d545653ac9c9304ec42c7467
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Hi Tushar,
+
+Thank you for your interest in Optiver. We=E2=80=99re glad to see your inte=
+rest in contributing to our mission to improve financial markets around the=
+ world. We=E2=80=99ve successfully received your application for the Gradua=
+te Software Engineer role.
+
+What happens next?
+
+Our team will review your application and get back to you with an update as=
+ soon as possible.
+
+To make sure you receive our updates:
+
+* Mark this email address as a safe sender: no-reply@optiver.com
+* Check your spam, junk, or promotions folders in the next few days
+
+Questions?
+
+You can find answers to some of the most common questions we get here ( htt=
+ps://optiverus.box.com/s/sihr3h9ngsia6io91dmebkk03xc979uh ).
+
+If your question is not covered in the FAQ, don=E2=80=99t hesitate to fill =
+out this contact form ( https://optiver.com/contact-eu-recruitment ). We on=
+ly process questions submitted through the form, and we aim to respond with=
+in 1-2 business days if the question is urgent, and 5 days for other inquir=
+ies.
+
+If your question is covered in the FAQ document shared above, we won't be a=
+ble to respond individually due to high volumes - thank you for your unders=
+tanding.
+
+Best,
+
+Optiver Recruitment
+--061e55a64bc60005b5d98ae1c935de973c57d545653ac9c9304ec42c7467
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p><!--StartFragment--></p>
+<div>Hi Tushar,</div>
+<div><!--StartFragment-->
+<p data-renderer-start-pos=3D"1565">Thank you for your interest in Optiver.=
+ We&rsquo;re glad to see your interest in contributing to our mission to im=
+prove financial markets around the world. We&rsquo;ve successfully received=
+ your application for the&nbsp;<strong data-renderer-mark=3D"true">Graduate=
+ Software Engineer</strong> role.</p>
+<p data-renderer-start-pos=3D"1788"><strong data-renderer-mark=3D"true">Wha=
+t happens next?</strong></p>
+<p data-renderer-start-pos=3D"1788">Our team will review your application a=
+nd get back to you with an update as soon as possible.</p>
+<p data-renderer-start-pos=3D"1902">To make sure you receive our updates:</=
+p>
+<ul>
+<li data-renderer-start-pos=3D"1943">Mark this email address as a safe send=
+er: no-reply@optiver.com&nbsp;&nbsp;</li>
+<li data-renderer-start-pos=3D"2010">Check your spam, junk, or promotions f=
+olders in the next few days</li>
+</ul>
+<p data-renderer-start-pos=3D"2079"><strong data-renderer-mark=3D"true">Que=
+stions?</strong></p>
+<p data-renderer-start-pos=3D"2165">You can find answers to some of the mos=
+t common questions we get <a href=3D"https://optiverus.box.com/s/sihr3h9ngs=
+ia6io91dmebkk03xc979uh">here</a>.&nbsp;</p>
+<p data-renderer-start-pos=3D"2165">If your question is not covered in the =
+FAQ, don&rsquo;t hesitate to&nbsp;<a href=3D"https://optiver.com/contact-eu=
+-recruitment"><span class=3D"fabric-background-color-mark" data-renderer-ma=
+rk=3D"true" data-background-custom-color=3D"#fdd0ec">fill out this contact =
+form</span></a>. We only process questions submitted through the form, and =
+we aim to respond within 1-2 business days if the question is urgent, and 5=
+ days for other inquiries.</p>
+<p data-renderer-start-pos=3D"2165">If your question is covered in the FAQ =
+document shared above, we won't be able to respond individually due to high=
+ volumes - thank you for your understanding.</p>
+<!--EndFragment--></div>
+<div><span style=3D"font-size: 16px; color: #1c3255; font-family: georgia;"=
+>Best,</span></div>
+<div><span style=3D"font-size: 16px; color: #1c3255; font-family: georgia;"=
+>Optiver Recruitment</span><span style=3D"font-size: 12px; color: black; fo=
+nt-family: arial;"><br></span><br><a href=3D"https://optiver.com/"><img src=
+=3D"https://optiver.com/wp-content/uploads/2022/12/Optiver-logo-150x37px.pn=
+g" alt=3D"" width=3D"150" height=3D"37"></a></div>
+<div>&nbsp;</div>
+<div>
+<p>&nbsp;</p>
+</div>
+<p><!--EndFragment--></p><img width=3D"1" height=3D"1" alt=3D"" src=3D"http=
+://email.gh-mail.optiver.com/o/eJwczEFuwyAQheHTlF2jmTEZ8IJF1Rv0AtXEM8RITrAw=
+jtTbV2T7P71PkxnOBuIsYQgQZ_Yc3JquqsYSdWFYblNGmG5RcCbMHCB770oiIAZCQvQI4TIJQrY=
+lZM2QveqHh_v6-ZCyXerey8vaZakPV9v9t2jyAMhXACC3Wzvqc0RijBiZp5Fb6uexSttElABoeG=
+9tKEfZ6vvhevqWpxaVbl9nrz-2b3_uPKyN2b0S_QcAAP__3l9E5A">
+--061e55a64bc60005b5d98ae1c935de973c57d545653ac9c9304ec42c7467--

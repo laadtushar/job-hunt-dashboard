@@ -1,0 +1,130 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp670121ecs;
+        Thu, 12 Feb 2026 01:39:06 -0800 (PST)
+X-Received: by 2002:a05:6000:1883:b0:431:808:2d50 with SMTP id ffacd0b85a97d-4378aa021b7mr3376996f8f.13.1770889146012;
+        Thu, 12 Feb 2026 01:39:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770889146; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OK+++BrLxwzn9Xk1jLPrGGOP26aD7TVYFI25DoCrpCzHnHw5muzb5nlNsfsZeYdfAN
+         q6TPiMpkcNTShVcfIrJpcpmWZvPvFD9P5um+NQXjSIdy1/Lw+J4Pl4SeZE70DwsYIZwC
+         60C+Cxk5xP2/oMeakzipG1lXUo6wOZnMkMTfczRJTuWdUi4eIIIEuXCXwJoLeRHuGnb7
+         MMJ/Aj/gpkJSzbesDVfDMLCavKPHjEjIfSYHUQOSQGjuUEjh7GJ8v9Igg/GeFktzRD+P
+         efsRwm4pmrrnCNjBkVNsbsgNkUp8KbkoKYBUBbYPu/2aU1RoLeGxHoKlzu1iW7q/OcB0
+         E48w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=EbuwBR7fwhCWgakOn99SHoRdUrbrHPoUpPJdj6UuAe8=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=E3QwACBBIctOLyM9+l3eYJGoyBMrvuTJUelsL96GBHIIvOGSoK1N2rEj/6ZFyhvWqK
+         gkdyNTLyJjBENMmnz4Ued4l2hfDQ0hSvLYZYyWJewxByi2oIL8F3L0o103vZzpe+WYLF
+         8dBp5CNh69IfDWCyEyQX1QBeZoDXC9gQ5ay4m5TGU2sLCEQNXzI9qDc1r3mD1qW6kVvw
+         JjjVOmbQ/uhscch1bEdqR9iTljboFw+raNF6mGI3+6wNXWQdY0tIMER5NsrVIfWbh1kn
+         /uctgv2ZdCVum6TO5EsT2EfGsGpRmMJFKH60bx3AazjdTeisBYKaYJ1DV2d7DF45Kqt6
+         pIIw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.rightmove.co.uk header.s=s1 header.b="U/gbwQ2u";
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=PRyEeAL4;
+       spf=pass (google.com: domain of postmaster@gh-mail.rightmove.co.uk designates 185.250.239.190 as permitted sender) smtp.mailfrom=postmaster@gh-mail.rightmove.co.uk;
+       dmarc=pass (p=QUARANTINE sp=REJECT dis=NONE) header.from=rightmove.co.uk
+Return-Path: <postmaster@gh-mail.rightmove.co.uk>
+Received: from mail-239-190.greenhouse.io (mail-239-190.greenhouse.io. [185.250.239.190])
+        by mx.google.com with UTF8SMTPS id ffacd0b85a97d-4378f635edasi3062795f8f.551.2026.02.12.01.39.05
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:39:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.rightmove.co.uk designates 185.250.239.190 as permitted sender) client-ip=185.250.239.190;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.rightmove.co.uk header.s=s1 header.b="U/gbwQ2u";
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=PRyEeAL4;
+       spf=pass (google.com: domain of postmaster@gh-mail.rightmove.co.uk designates 185.250.239.190 as permitted sender) smtp.mailfrom=postmaster@gh-mail.rightmove.co.uk;
+       dmarc=pass (p=QUARANTINE sp=REJECT dis=NONE) header.from=rightmove.co.uk
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.rightmove.co.uk; q=dns/txt; s=s1; t=1770889145; x=1770896345;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=EbuwBR7fwhCWgakOn99SHoRdUrbrHPoUpPJdj6UuAe8=;
+ b=U/gbwQ2u7F4vtlLmkEtVDGtisdloCuVqIbQOxuOhF2xub+d2MJofACEr5q/RfBPyXNIV1hR1we/RRS8W2BZo7Up3GY7ndys88K4pGzS8Wn6b+z8CsK+lUlB8ZPnk8W0NE88/FR2YLc2cl29Chezs34oSYK1MqgVQwFmouwJ1hkOuKcE2p0v6x1hw/lUdxcMJ3a37oEeKvtTMFAE46RAE3BKkqHFg4wD+DGLhKTKFiqM77lDaMXbyeyJoIO56JgCJcVzvDtCErzM2cky2oKNYikwANeK1VRkpSpIQW0uznuLGhqCiOUzYQxjYWTHLb31o3JBi7fE8WVICL/xXiaSSlg==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.mailgun.org; q=dns/txt; s=krs2; t=1770889145; x=1770896345;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=EbuwBR7fwhCWgakOn99SHoRdUrbrHPoUpPJdj6UuAe8=;
+ b=PRyEeAL4pSFFzgQrmZwXq0KG7j4PbjPdma3n4exkIs+7V2uaQ1aV9iRSmhOfxjPiPZ3/zYyNNcRkafArdNMPoafFdQWKD6Zlhpw5q9a2sUbwdorM/jEGv/CSd0cSFEZRtJQ1PF2lh6KPf8dc7mxoWuvTmPCQW669NWczOk52uT8=
+X-Mailgun-Sid: WyJmNmYzYiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImU3YWNmIl0=
+X-Feedback-Id: postmaster@gh-mail.rightmove.co.uk:CandidateAutoReply:68f609f3122f8d16071774ae:mailgun
+Received: by dfb6f0f75939ab3667476f052af6ee09a539e649dec45894f37933eaad397157 with HTTP
+ id 698d9fb9d9fa5747e0df3065; Thu, 12 Feb 2026 09:39:05 GMT
+X-Mailgun-Sending-Ip: 185.250.239.190
+Date: Thu, 12 Feb 2026 09:39:05 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="21a209a3cf81d60deb566537556886d216b302aadf3e7bb56ac3a518a1ce"
+Subject: =?UTF-8?q?Thanks_for_your_application_to_join_Rightmove!_=F0=9F=99=8C_-_D?=
+ =?UTF-8?q?ata_Architect?=
+From: no-reply@rightmove.co.uk
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001308101", "person_id": "59380321101", "silo_id": "101",
+ "user_id": ""}
+Message-Id: <20260212093905.6de852c98138f9f9@gh-mail.rightmove.co.uk>
+
+--21a209a3cf81d60deb566537556886d216b302aadf3e7bb56ac3a518a1ce
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Hi Tushar =F0=9F=91=8B
+
+Thanks for applying to Rightmove. We=E2=80=99re excited to learn more about=
+ you and your experience!
+
+Your application has been received and is under review, and we=E2=80=99ll b=
+e in touch as soon as possible with an update.
+
+Here=E2=80=99s what to expect next:
+
+Application review
+All applications are reviewed carefully, and shortlisted candidates will be=
+ contacted with the next steps.
+
+Initial conversation
+If selected, you=E2=80=99ll be invited to an initial conversation - a chanc=
+e to learn more about the role and ask any questions about working at Right=
+move.
+
+Next stages
+Depending on the role, further steps may include additional interviews or a=
+ role-specific assessment.
+
+Thanks!
+
+Talent Acquisition Team
+
+Rightmove
+--21a209a3cf81d60deb566537556886d216b302aadf3e7bb56ac3a518a1ce
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Hi Tushar&nbsp;=F0=9F=91=8B</p>
+<p>Thanks for applying to Rightmove. We&rsquo;re excited to learn more abou=
+t you and your experience!</p>
+<p><!--StartFragment--></p>
+<p class=3D"isSelectedEnd">Your application has been received and is under =
+review, and we&rsquo;ll be in touch as soon as possible with an update.</p>
+<p class=3D"isSelectedEnd">Here&rsquo;s what to expect next:</p>
+<p class=3D"isSelectedEnd"><strong>Application review</strong><br>All appli=
+cations are reviewed carefully, and shortlisted candidates will be contacte=
+d with the next steps.</p>
+<p class=3D"isSelectedEnd"><strong>Initial conversation</strong><br>If sele=
+cted, you&rsquo;ll be invited to an initial conversation - a chance to lear=
+n more about the role and ask any questions about working at Rightmove.</p>
+<p><strong>Next stages</strong><br>Depending on the role, further steps may=
+ include additional interviews or a role-specific assessment.<!--EndFragmen=
+t--></p>
+<p>Thanks!</p>
+<p>Talent Acquisition Team</p>
+<p>Rightmove&nbsp;</p><img width=3D"1" height=3D"1" alt=3D"" src=3D"http://=
+email.gh-mail.rightmove.co.uk/o/eJwcjEFuhSAYBk9TdjUfP_KEBYumN-gFml_4VVJ9vCC=
+a9PYN3U5mJgWZOC5Kgp4mOOf1aNUWFicRMOMcvTjjNUc7Y7JgYsDOVuVAoAdIE7zxsMMjibMUvd=
+PGLX7xbyPW7f3gvA81r1s7yi1DLMP1o0pdv3MKI6ANnIZWL6lneXZovXEwpDutoV3nxnVnTgRQX=
+_4PYznUmffSgy628MnPlBM3-bha-ZLX_quuU2oX1B3oLwAA__9GQkUN">
+--21a209a3cf81d60deb566537556886d216b302aadf3e7bb56ac3a518a1ce--

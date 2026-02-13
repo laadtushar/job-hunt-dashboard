@@ -1,0 +1,102 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp849780ecs;
+        Thu, 12 Feb 2026 06:56:37 -0800 (PST)
+X-Received: by 2002:a05:6a00:2d9d:b0:824:4a41:bff9 with SMTP id d2e1a72fcca58-824b0597d5dmr2743329b3a.51.1770908197144;
+        Thu, 12 Feb 2026 06:56:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770908197; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Z6IKuXNs5/h5Q1xdP7OvdIl1Nzir/O3kLGKbRDqmbM7QklEQ4fEg/WPO3X4xPYKBsV
+         SEbqGOdAmnVTetz9+/w5F3nv0uuAf+XmdplE6+O0Fw5E6AMBSxjW0Z7Euo9goRNTLPu/
+         1KvijMfoheuokkVaY3yX/pcGrwWIdAeJfqfyDT/gJjpgJ0C4nclAp5N9lrvJXR9MQrKj
+         kSU1lVCZKRfUQNozsMCef0JIFUogiwCnFqkmLRWxENQ7KjYLx15yb9g/CHjyWsy0tItg
+         INN2j2VtVUSVoVhpL4LtoHvrW/6nZyXDsKH3HP/oWJWSXGBYPMA8yQBUSlkHAaz1/dSj
+         pMTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=57NZHiU10/2fz+S79WrcBYP96+sQr7jK3Uk9Zly5ads=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=AwVAy6KvO18gg3ajYZ0+YNt3zLbbMBw9Opbk08xV4jcK9Enyft2ttpkEb7oHEHmrqu
+         +zZ2aVjHHScpyyEUloJYKEE/VFrrmB1UqYZqIrtDbJSK3VEe3oAj1ik1FwLaUzR+LbDk
+         90SMD4kdM4Owu7AiGjgAlnMpey0NmpgZDs8R6p5IL7qQMngvQiu/GGTP8p0fEzA1DtgR
+         5FqdBVYi765S6V6BR/C1cSDgIxYc3Bx4AKwjk9CLFfaZHW8XJ/sY9sXJzOI2o0zZJi6v
+         voKtZx+Yz9rqNYD1jeOypCIutoJuRliIIUhPNWQTPpkD3i0UddzOxs45n2k+XSQumNP/
+         RweQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=IHjJJYqO;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=eUwqSJvZ;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id d2e1a72fcca58-8249ea5626dsi8695046b3a.291.2026.02.12.06.56.36
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 06:56:37 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=IHjJJYqO;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=eUwqSJvZ;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770908195; x=1770915395;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=57NZHiU10/2fz+S79WrcBYP96+sQr7jK3Uk9Zly5ads=;
+ b=IHjJJYqOxOcLS5UkjP5YG9zCZHAYOBE2szacPPw42tvUZLSUpKQYkTNm6qeIhtEBICmxIYSXzUtJW8HigtdU+dfU0NAZdx2jhGZG5EzUisTpN0rC/rfWUeE4pRwUYswYLvoGr8YamDcqTlc66R+0ycq+wTVHcuFCZYClV11IdOQ=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770908195; x=1770915395;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=57NZHiU10/2fz+S79WrcBYP96+sQr7jK3Uk9Zly5ads=;
+ b=eUwqSJvZQkH86kGoDZb7zGCmdgiFm17AwORpTBFMqFLnRqROPsM0J9iDOY/E/C9I8ERrQ8LRIfXVHFE8k9fx4veE3vj+FnrcnD+cvsPP2Vqg+x+3x3eRmU9ESsPVFgdCk+a1SnqxJPQvjCcYVOXgIRGMIoW9OcQBtbEsAztRm9I=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:ScheduledCandidateEmail:5ff5c19deab70c1acacf09a2:mailgun
+Received: by aae1b7aca86be4360f77f7739b030ebe3b88769130d1c978f1a9082b6527406b with HTTP
+ id 698dea23f590eca322802424; Thu, 12 Feb 2026 14:56:35 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 14:56:35 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="46ac3abf1af7485bf2e44914bdfc5295ba57cf11852c8a3460874e500498"
+Subject: Thank you for your interest in Wheely
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: ScheduledCandidateEmail
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4002099003", "person_id": "168497157003", "silo_id": "3",
+ "user_id": ""}
+Message-Id: <20260212145635.0fac48558063ffc8@us.greenhouse-mail.io>
+
+--46ac3abf1af7485bf2e44914bdfc5295ba57cf11852c8a3460874e500498
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Dear Tushar,
+
+Thank you for your interest in the Data Scientist position at Wheely.
+Unfortunately, we are sending you this email to let you know that we will not be proceeding with your application on this occasion.
+
+I hope you understand that it is always tough to make decisions about who we would like to progress in our hiring process, and feel reassured that we gave your application and its alignment with this role due consideration.
+
+As we grow as an organisation, we would be both flattered and delighted if you were to consider other roles with us.
+
+Thank you again for your interest in Wheely and we wish you the best of luck in your career!
+
+Best regards,
+Samira Serazhetdinova
+Wheely
+--46ac3abf1af7485bf2e44914bdfc5295ba57cf11852c8a3460874e500498
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=ascii
+
+<p>Dear Tushar,<br><br>Thank you for your interest in the Data Scientist po=
+sition at Wheely. <br>Unfortunately, we are sending you this email to let y=
+ou know that we will not be proceeding with your application on this occasi=
+on.<br><br>I hope you understand that it is always tough to make decisions =
+about who we would like to progress in our hiring process, and feel reassur=
+ed that we gave your application and its alignment with this role due consi=
+deration.<br><br>As we grow as an organisation, we would be both flattered =
+and delighted if you were to consider other roles with us. <br><br>Thank yo=
+u again for your interest in Wheely and we wish you the best of luck in you=
+r career!<br><br>Best regards,<br>Samira Serazhetdinova<br>Wheely</p>
+--46ac3abf1af7485bf2e44914bdfc5295ba57cf11852c8a3460874e500498--

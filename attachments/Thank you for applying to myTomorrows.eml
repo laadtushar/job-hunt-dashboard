@@ -1,0 +1,146 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp720244ecs;
+        Thu, 12 Feb 2026 03:24:55 -0800 (PST)
+X-Received: by 2002:a05:622a:3d3:b0:501:5218:929f with SMTP id d75a77b69052e-506934223a5mr26332371cf.17.1770895494926;
+        Thu, 12 Feb 2026 03:24:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770895494; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FJbg5kxP30P7SgSbGAXvpQSTYsrPUrVz7N7dAQfCXl3c/bOu/+P+32K3LSFdvthFJ+
+         pKrU4tLNXivouRgJ9t+TzHYyEerNSDm/6n8eOYuVt1XVX7BGQaQ4pIduOqsr/xo/7x98
+         GFERBLtbRdWz/8MO08Y76GzbCCWRuZLexpR6mnoDz8AcM+K6UDHswqkIGKCQGIT3bcSX
+         fdWqH0p8pQSOyvfPSGnPvMMGw6rOVYkXprjm4aNhqWbuD+CUYrqxeFDK0tzb3rMQqEoX
+         mtFdraYn91Q1IRhfnXr+eIetcqlPjuEYsEll3qQ84TuYHI4ziIw2OJA8MlKicY3c1KUs
+         Cs3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:date:message-id:mime-version:subject:to:from
+         :dkim-signature:dkim-signature;
+        bh=ARvRlPpZUn6GSvMZSYNoa0N7zjy0N1ux3g8iX8Qu7K8=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=VVPI+EDTgArVyVaJWAx52IwocLVnASeLKqLACIOSLjnl06umT842D37riJfwVYU/IO
+         Dumv8sw74xEGHoIKaMHj4YaAdrCnK6z9JsqYmCJoK0JF75tZO8MPFwgLHASH+PTZdlL1
+         edLn8AVbxAjvY5iZqEi/k3B+nE3P+uLT1GtQE5WHo6z4v4AmWrHNOwDQnjAZj81uCZxc
+         SxjfUG3YqO9qHTiMFNLKc3+ZW28f3CnuOGHJcnjl8gZ0GUNF0KS79Sk7yCrVV+k4wkMl
+         gpbhfBMOr1yUlm8VEUem/8eGPqKDRAwX3OeXUk8GkCd3VTfAOigxhp6L+aSsDWq6Ex85
+         0Svw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b="q+yH5/s+";
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=Dfih66Ck;
+       spf=pass (google.com: domain of 0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+Return-Path: <0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com>
+Received: from a78-44.smtp-out.amazonses.com (a78-44.smtp-out.amazonses.com. [54.240.78.44])
+        by mx.google.com with ESMTPS id d75a77b69052e-50684c08fb8si49865671cf.270.2026.02.12.03.24.54
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:24:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) client-ip=54.240.78.44;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b="q+yH5/s+";
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=Dfih66Ck;
+       spf=pass (google.com: domain of 0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=o52kitveeafei4picxt43fxtgwymyfqu; d=ashbyhq.com; t=1770895494;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date;
+	bh=qomNRKdwgnHmYv+eo3qlU770WVqpY6oX5i9YArajB1c=;
+	b=q+yH5/s+diEcgM37UcgCJ6cq5RkkuJtIky/Kuhhn29VounO4T8GfM5tGDu4CEwxE
+	sTqRKr+dOLdx2ZN+/RF4T9eXJs1FUd6/ielM6olGFmjJDV5Sn33lqWVYbszSbspXMJW
+	o/ywjTD3K6soLkPfX7v0E475kae1AlV/4hDzJ3+j1xTD+NPYi2Vv/UsKA14RRaiwvk6
+	p56N8tbc5PmwrR69iK6iU0oB7ZUD0RVxWcyQ3bI/qvNP1BqJD7FC+rNlmyU5n9ZtjfK
+	Zl6/EoObsIj+V13uuRQKwvyJz6JMTlECBtWUdmya02JdLHzoDts0BJrL412TNmk3Owx
+	BETX4QcEMg==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1770895494;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=qomNRKdwgnHmYv+eo3qlU770WVqpY6oX5i9YArajB1c=;
+	b=Dfih66CkJdz2oLLxfKgUwXR2ON0UIKXO5R8oq7qEmmKfEeoMt7MWVtlLTCX1jwHF
+	zNeZZRypTirLdu+ZqBhyoHn4axcN5O0EuYjapfthx0WO4zEvMeSDG3UFcvWaQbzsI1S
+	4eB6GPNRbA8RDRMwHzT+m9Ds8Y0rj0tHUUACqqkY=
+From: myTomorrows Hiring Team <no-reply@ashbyhq.com>
+To: tusharlaad2002@gmail.com
+Subject: Thank you for applying to myTomorrows
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_146812_780274084.1770895494522"
+Message-ID: <0100019c5198cd7a-2f069367-b671-4949-96ef-ba7a71b6fafb-000000@email.amazonses.com>
+Date: Thu, 12 Feb 2026 11:24:54 +0000
+Feedback-ID: ::1.us-east-1.WOmir7uCwltm0aTT8gfbA5rz60mv7TkX4bFsmUZNNF0=:AmazonSES
+X-SES-Outgoing: 2026.02.12-54.240.78.44
+
+------=_Part_146812_780274084.1770895494522
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Tushar,
+
+Thank you for submitting your application for the Data Engineer position at=
+ myTomorrows. We appreciate the time you took to explore this opportunity a=
+nd share your experience with us.
+
+By applying for the Data Engineer role, you=E2=80=99re potentially joining =
+a team that is driven by purpose. You=E2=80=99ll be contributing to a missi=
+on that matters, not just another job.
+
+We will review your application and be in touch as soon as possible to let =
+you know the next steps. In the meantime, if you have any questions about t=
+he role, the team, or our work, feel free to reach out.
+
+Thank you again for your interest in myTomorrows.
+
+Kind regards,
+
+myTomorrows Hiring Team
+
+[https://app.ashbyhq.com/api/images/user-content/59dcab83-a68c-4eeb-a5ea-91=
+b5e089a213/7d659866-c0e2-46ff-9f78-035f37dc0721/image.png]
+
+
+
+This email is confidential and for use only by the intended addressee. If y=
+ou are not the intended addressee of this communication, please inform us i=
+mmediately. In that case, we request that you delete the e-mail and that yo=
+u do not use or transmit the content of the email to any third party. Thank=
+ you.
+------=_Part_146812_780274084.1770895494522
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">Hi <span><span></span><span>Tushar</span><span></span></span>,</di=
+v><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;</div>=
+<div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">Thank you for =
+submitting your application for the <span><span></span><span>Data Engineer =
+</span><span></span></span> position at myTomorrows. We appreciate the time=
+ you took to explore this opportunity and share your experience with us.</d=
+iv><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;</div=
+><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;</div><=
+div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">By applying for=
+ the <span><span></span><span>Data Engineer </span><span></span></span> rol=
+e, you=E2=80=99re potentially joining a team that is driven by purpose. You=
+=E2=80=99ll be contributing to a mission that matters, not just another job=
+.</div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;<=
+/div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">We will r=
+eview your application and be in touch as soon as possible to let you know =
+the next steps. In the meantime, if you have any questions about the role, =
+the team, or our work, feel free to reach out.</div><div style=3D"min-heigh=
+t:1.2em;margin-top:0;margin-bottom:0">&nbsp;</div><div style=3D"min-height:=
+1.2em;margin-top:0;margin-bottom:0">Thank you again for your interest in my=
+Tomorrows. </div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:=
+0">&nbsp;</div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0"=
+>Kind regards,</div><div style=3D"min-height:1.2em;margin-top:0;margin-bott=
+om:0">myTomorrows Hiring Team</div><div style=3D"min-height:1.2em;margin-to=
+p:0;margin-bottom:0">&nbsp;</div><div style=3D"text-align:left"><img style=
+=3D"max-width:100%" src=3D"https://app.ashbyhq.com/api/images/user-content/=
+59dcab83-a68c-4eeb-a5ea-91b5e089a213/7d659866-c0e2-46ff-9f78-035f37dc0721/i=
+mage.png" /></div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom=
+:0">  </div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">Th=
+is email is confidential and for use only by the intended addressee. If you=
+ are not the intended addressee of this communication, please inform us imm=
+ediately. In that case, we request that you delete the e-mail and that you =
+do not use or transmit the content of the email to any third party. Thank y=
+ou. </div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbs=
+p;</div><div style=3D"min-height:1.2em;margin-top:0;margin-bottom:0">&nbsp;=
+</div></body></html>
+------=_Part_146812_780274084.1770895494522--

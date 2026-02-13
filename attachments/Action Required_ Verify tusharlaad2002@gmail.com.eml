@@ -1,0 +1,304 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp687126ecs;
+        Thu, 12 Feb 2026 02:15:41 -0800 (PST)
+X-Received: by 2002:ac8:5993:0:b0:4ee:ce3:6c9d with SMTP id d75a77b69052e-50691cbbed9mr33608021cf.19.1770891340701;
+        Thu, 12 Feb 2026 02:15:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770891340; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kUi6pwaAW26CzmfMZN4tNKHS9/chca2NbrErzZ87bT/82EvbqmHlYtVGC8BRyEzsu2
+         f9RAXgQMTGv/EvmAVY3EkVXDBeS+bPOVax2DCmeBRtbv7a0JH7Ywo5vbJq8y/b8tJJVz
+         nDZgZn0GzLNyeT9NjIX7dZ2sJpxW4FQOCQ7sp96e/mYVB6lY2SRCpRuQIEfM3z94lai0
+         j1OD/C9zVbNIIfNtxwMQBlRxat2+cJTZhCx/+U1dc0BDrmCnz6qTDec76AcdmYioOy8E
+         4cVpWLQdAdukRMb61aqNwU59j1qgjyYAYAxNTgEJBqZCmgnkNkL5lD4RbY848wuD3PGl
+         5TpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:list-unsubscribe:list-unsubscribe-post:content-transfer-encoding
+         :mime-version:subject:message-id:from:date:dkim-signature
+         :dkim-signature;
+        bh=xsfgjwC8WgsPjuf1e/h0ZQlo0jlinaUtmtSGU050Cjk=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=X7ZRkXGxwmA/gjHugmUYcEpLHEmqwd7od3ox8zcsoKcbZcXcMve42etmKkD7bUlRHa
+         FDmxevXnbC8bVefX3V5whM5bfd6e6EXXD40qFzpMZyn4AC3/gkGPDFRbDZxPqWzd2Nb3
+         wLILP4/5q6Xnywzj6d7YsPw3GLAdwCT+XKWa65okIQhp9suxWMECvrBNIy6+IJ9sOIdt
+         jm7Z61uChWhGTFMHNfji2Us5Q+FnleM2Ae9x8SgAJ2/pjo7qBAHHayHmK3qVp5WtWUzh
+         zR0A0l9NUVZ3O5FqvuejADqHqGR0fO7l0Q+ZytiZ9heYoMoM+n0/a4GCUsPFflIpyy4E
+         TUOg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@zip.applygateway.com header.s=s1 header.b=GozQAaQz;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=YSU9AXFa;
+       spf=pass (google.com: domain of bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com designates 167.89.86.173 as permitted sender) smtp.mailfrom="bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=zip.applygateway.com
+Return-Path: <bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com>
+Received: from xtrwrsxd.outbound-mail.sendgrid.net (xtrwrsxd.outbound-mail.sendgrid.net. [167.89.86.173])
+        by mx.google.com with ESMTPS id d75a77b69052e-50684c6ff8csi44725941cf.385.2026.02.12.02.15.40
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 02:15:40 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com designates 167.89.86.173 as permitted sender) client-ip=167.89.86.173;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@zip.applygateway.com header.s=s1 header.b=GozQAaQz;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=YSU9AXFa;
+       spf=pass (google.com: domain of bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com designates 167.89.86.173 as permitted sender) smtp.mailfrom="bounces+2341222-96b6-tusharlaad2002=gmail.com@em8002.zip.applygateway.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=zip.applygateway.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zip.applygateway.com;
+	h=date:from:subject:mime-version:content-type:content-transfer-encoding:
+	list-unsubscribe-post:list-unsubscribe:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=s1; bh=xsfgjwC8WgsPjuf1e/h0ZQlo0jlinaUtmtSGU050Cjk=;
+	b=GozQAaQzQp2hwtn45NQQJoetZoSOXTDKQTtLo0V4wKCtgAKXgyZRVgZamF1TVOnGA+a2
+	H+MYPLRipJvfg9alopM9COMiiUnwwKVwZOHZZfjI6INLb0WpaqQa6LA6jsfQsgscMKg6wc
+	RkIGWBm9TisKlu0Br4jCGBn+DK0R10LCvQYVDMGFNpJvr04lwbUJ09u5caVT4YsMtymzmY
+	MHb6BykBmAcwFMFd+Cubu9/4UwU6r9jevCQs6+WNIJqGsyBT7FgWlt0WUu7vlwDHph+Cvs
+	W0YI6cVfoVr2H/Qed8MK1ap7O5DBDGJFMiibpmHZYKaP0WfF+b/HMED1ob+UqpAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=date:from:subject:mime-version:content-type:content-transfer-encoding:
+	list-unsubscribe-post:list-unsubscribe:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=smtpapi; bh=xsfgjwC8WgsPjuf1e/h0ZQlo0jlinaUtmtSGU050Cjk=;
+	b=YSU9AXFanzLJks+kIeJsZFl5Imog5Hlf22SuoVuyVWrUW8kx0UgccOsQQeB/ex8EM+Cl
+	keHpwZ0piUW3jZoPMmR1CzUG7j1zu/Qmv/s5WiotH88y/qEfm78hMO7z0HgklcQPBS809e
+	pDQem3e9Iq4ePlQ/5jcEKB2e2hz0c4cRY=
+Received: by recvd-6bcd7874db-l2rkm with SMTP id recvd-6bcd7874db-l2rkm-1-698DA84C-19
+	2026-02-12 10:15:40.262805154 +0000 UTC m=+4882153.668689371
+Received: from jobboardio.herokuapp.com (unknown)
+	by geopod-ismtpd-22 (SG)
+	with ESMTP id hCorbnlcQcOKeuxt-vSvxg
+	for <tusharlaad2002@gmail.com>;
+	Thu, 12 Feb 2026 10:15:40.226 +0000 (UTC)
+Date: Thu, 12 Feb 2026 10:15:40 +0000 (UTC)
+From: ApplyGateway <noreply@zip.applygateway.com>
+Message-ID: <698da84ca78d_8411fb082145@sidekiq-default-7b4cf54646-pz2vg.mail>
+Subject: Action Required: Verify tusharlaad2002@gmail.com
+Mime-Version: 1.0
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Chttps=3A=2F=2Fapply-gateway=2Ejobboard=2Eio=2Femail=5Fsubscriptions=2Flist=5Fun?=
+ =?us-ascii?Q?subscribe=3Ftoken=3DeyJhbGciOiJBMjU2S1ciLCJ?=
+ =?us-ascii?Q?lbmMiOiJBMjU2R0NNIiwidHlwIjoiSk9TRSIsIm?=
+ =?us-ascii?Q?tpZCI6IjEifQ=2E6BxUIGCJMCCauTxB2R75WT6kLA?=
+ =?us-ascii?Q?Xvv4vwSpeJXBOuDM=5FOu0wcsP8QoQ=2Ee6L2u=5FjJEm?=
+ =?us-ascii?Q?0qugT6=2EkncyxDuftxyxqD0rA8zsK-1NDOC73nhf?=
+ =?us-ascii?Q?O25FrxAuEItQ-ePpBKCUIuQDJF5KqLpSvYOWRS-?=
+ =?us-ascii?Q?edi=5Fh-nWb4PlTUZWYV5Ig9wK66aW5xi=5FrLcTqDk?=
+ =?us-ascii?Q?dMwOBse9i3kP5sKVxux1NY9tm6=2EmxMhEJFsOSTL?=
+ =?us-ascii?Q?FShEZz85yg=3E?=
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EsJDxLZUMLAFlk1xZeiOQ5uAq=2FLVASazWaI6KYT59=2Frn7YLF1NhIJpxTK+?=
+ =?us-ascii?Q?eZvI8X=2F19I6j0c6Xl2ATUoOln3sKuzRKSO+2X=2FS?=
+ =?us-ascii?Q?UlKVvGQmeogiwSbKsfPAlkdWrhzcBhVg6V9n5UB?=
+ =?us-ascii?Q?wkE4lvKm8f+PA8QXixgboHHsaw48EXHbg3f4t7v?=
+ =?us-ascii?Q?7So5nOYVeQakOALCDnIfRKLof0UoUfEZk8ZeGSW?=
+ =?us-ascii?Q?BAgSns0qJmDRSiX8oSUZcpvyk0VZYFZCfGfQ0hh?= =?us-ascii?Q?vd5g?=
+To: tusharlaad2002@gmail.com
+X-Entity-ID: u001.KhK5G327f0/XRd5VXs/VsQ==
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns=3D"http://www.w3.org/199=
+9/xhtml" style=3D"font-family: &#39;Helvetica Neue&#39;, &#39;Helvetica&#39=
+;, Helvetica, Arial, sans-serif;margin: 0; padding: 0;">
+  <head>
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width"/>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+"/>
+  </head>
+  <body bgcolor=3D"#e7e8e8" style=3D"font-family: &#39;Helvetica Neue&#39;,=
+ &#39;Helvetica&#39;, Helvetica, Arial, sans-serif;margin: 0; padding: 0; -=
+webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: =
+100% !important; height: 100%;">
+    <style type=3D"text/css">
+      .email-content {
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-=
+serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        color: #0777b3;
+      }
+     =20
+      @media only screen and (max-width: 600px) {
+        .header-logo {
+          padding-left: 20px !important;
+        }
+
+        body, table, td {
+          background: #ffffff !important;
+        }
+      }
+    </style>
+
+    <table width=3D"100%" height=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+      <tr>
+        <td width=3D"100%" height=3D"100%" bgcolor=3D"#e7e8e8">
+            <table class=3D"head-wrap email-content" cellpadding=3D"0" cell=
+spacing=3D"0" border=3D"0" bgcolor=3D"#e7e8e8" style=3D"width: 100%; margin=
+: 10px 0px; padding: 0px 0px; Margin: 10px 0px;">
+              <tr class=3D"email-content">
+                <td class=3D"email-content"></td>
+                <td class=3D"header container email-content" style=3D"displ=
+ay: block !important; max-width: 600px !important; clear: both !important; =
+margin: 0 auto; padding: 0;">
+                  <table bgcolor=3D"#e7e8e8" class=3D"email-content">
+                    <tr class=3D"email-content">
+                      <td width=3D"300" class=3D"email-content header-logo"=
+ style=3D"Margin: 10px 0px;">
+                        <a href=3D"https://apply-gateway.jobboard.io/"><img=
+ border=3D"0" alt=3D"ApplyGateway" width=3D"200" src=3D"https://apply-gatew=
+ay.jobboard.io/uploads/tenant/logo/65733/email_Artboard_1_2x__1_.png" /></a=
+>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class=3D"email-content"></td>
+              </tr>
+            </table>
+
+
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" class=3D"=
+body-wrap email-content" style=3D"width: 100%;">
+            <tr class=3D"email-content">
+              <td class=3D"email-content"></td>
+              <td class=3D"container email-content" bgcolor=3D"#e7e8e8" sty=
+le=3D"display: block !important; max-width: 600px !important; clear: both !=
+important; margin: 0 auto; padding: 0;">
+                <div class=3D"content email-content" style=3D"max-width: 60=
+0px; display: block; margin: 0 auto; padding: 0;">
+                  <table class=3D"email-content" style=3D"width: 100%;">
+                    <tr class=3D"email-content">
+                      <td class=3D"email-content" style=3D"background: #fff=
+fff">
+                        <div class=3D"callout email-content" style=3D"font-=
+weight: normal; font-size: 14px; line-height: 1.6; margin: 20px; padding: 0=
+px; Margin: 20px;">
+                         =20
+  <div style=3D"font-weight: normal; font-size: 14px; line-height: 1.6; mar=
+gin: 0 0 10px; padding: 0;">
+  Hello,<br>
+
+  <p>Please confirm that your email address is tusharlaad2002@gmail.com.</p=
+><br>
+
+  <div style=3D"text-align: center;">
+  <table style=3D"width: 100%">
+    <tr>
+      <td>
+        <table style=3D"border: 0">
+          <tr>
+            <td style=3D"height: 20px; width: 100%; font-size: 20px; line-h=
+eight: 20px;">
+              &nbsp;
+            </td>
+          </tr>
+        </table>
+        <table style=3D"border: 0; margin:0 auto;">
+          <tbody>
+          <tr>
+            <td style=3D"text-align: center;">
+              <table style=3D"border: 0; margin:0 auto;">
+                <tr>
+                  <td>
+                        <a target=3D"_blank" style=3D"padding: 10px; width:=
+ 240px; display: block; text-decoration: none; text-align: center; font-wei=
+ght: bold; font-size: 15px; color: #ffffff; background-color: #0777b3; bord=
+er: 1px solid #2BA6CB; -moz-border-radius: 4px; -webkit-border-radius: 4px;=
+ border-radius: 4px; line-height: 17px; border-color: #0777b3" href=3D"http=
+s://apply-gateway.jobboard.io/coi/confirm/eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBM=
+jU2R0NNIiwidHlwIjoiSk9TRSIsImtpZCI6IjIifQ.GK7q873fo1rUugvQeFZnAanDCSRMxQWNr=
+dDzlc4RrjmCSxVLeazfqw.rxDaE_yNFZPQw_PD.TGzwYW0KVbS1YtZA6IBae9TpPCuvrpJnk6bB=
+3uFGivGVsCGR1PU_y3gTppRVH6XWmTYmNZQGtkA97DqGzDC2fx1iS5Tk7QJm2ibUU6hvSl-ASc5=
+Je9dqQKeXQk7m_wu-1rchWhlbnxvlYQU_zzJVVUVHRAKoH5Ku84gvOlnmG5gsgxQUcnf0CBlVwb=
+hFaH73Ipl0qQVJJOhIoJpaRj0YR_Ff0e_oezsgygRkd1rWyVIWGBjLPEEAlPOllhGp5elY_GPSZ=
+277nejqGrpxN3YMK70tsKXK795Sq5-aJjUcyTwIZ5PSmUgTa3mMWXLwpRRgb-zvCKfGsaKyUz12=
+BvnawbDvaekGGKrFdX6m-wr8VFfSGl-cYviCHxm3wH8wUBTpHMzisckt3rU2o-6HWmajfb1rSgk=
+0ZWl9Popc1b7nDqoC0-0VKcYcT8cH.IaPwHBQwtKC_ObU6FXHzjA">Confirm My Email</a>
+
+
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <table style=3D"border: 0">
+          <tr>
+            <td height=3D"20" style=3D"width: 100%; font-size: 20px; line-h=
+eight: 20px;">
+              &nbsp;
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<br>
+
+  <p style=3D"font-size: 12px; color:#666666;">
+    Believe you were sent this email in error?  Don&#39;t worry -- your add=
+ress may have been entered by mistake.  If you ignore or delete this email,=
+ nothing further will happen.
+  </p>
+</div>
+
+
+
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <table class=3D"footer-wrap email-content" style=3D"width: 100%; =
+clear: both !important;">
+            <tr class=3D"email-content">
+              <td class=3D"email-content"></td>
+              <td class=3D"container email-content" style=3D"display: block=
+ !important; max-width: 600px !important; clear: both !important; margin: 0=
+ auto; padding: 0;">
+                <div class=3D"content email-content" style=3D"max-width: 60=
+0px; display: block; margin: 0 auto; padding: 10px;">
+                  <table class=3D"email-content" style=3D"width: 100%;">
+                    <tr class=3D"email-content">
+                      <td align=3D"center" class=3D"email-content">
+                        <p class=3D"email-content" style=3D"font-weight: no=
+rmal; font-size: 12px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+                            ApplyGateway<br/>
+ =20
+    <br>
+    <a style=3D"color: #666666;" href=3D"https://apply-gateway.jobboard.io/=
+email_subscriptions/unsubscribe?token=3DeyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU=
+2R0NNIiwidHlwIjoiSk9TRSIsImtpZCI6IjEifQ.H-PAWHdbrdDbvXSd3JKRhsD6G0hgqJPn9zw=
+AY3XnZ4vM507BpMmiAw.yUKnXJJp8CA1eMet.D8WJuPqV-WrUYyFhIElUVK2Kdd2sVtMXbq3gnE=
+bB43FFKBZFsfpPPuDX8-VeP4Iwl_v5rZX2hGxwtzoxohnUW7ANRCoAaH2AcQcog6vkamvXLcl-r=
+b4qGP8BPuk-5OCdc-TH4J8e.NOyflp02hVOM_lk5Z_A0Rw">Unsubscribe</a>
+
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+              <td class=3D"email-content"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <img src=3D"http://alertclick.jobboard.io/wf/open?upn=3Du001.XHLxFyk6ynE0=
+O66Jgocl4Au9lcmjbJ-2BxQs6sFhnhZcJ0JSn3VGZbR23j7-2BJeHaiM3E3L-2FagzNFgfeU5pb=
+GNjxt9R2MuCCXDtiG-2BuMiV1U5ApDB1l0MlhyJHI-2Bt5a9JfZZEIyVbfRo5WnF51N1Y670xyI=
+75soAD-2F4f5a5VjrA2g-2BZS2ltziKtsKC0SZeSvyk0O8kc1K25S1EaivTlgUPhYcoDtfkbk7Q=
+QeJFNjRVf90A-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"he=
+ight:1px !important;width:1px !important;border-width:0 !important;margin-t=
+op:0 !important;margin-bottom:0 !important;margin-right:0 !important;margin=
+-left:0 !important;padding-top:0 !important;padding-bottom:0 !important;pad=
+ding-right:0 !important;padding-left:0 !important;"/></body>
+</html>

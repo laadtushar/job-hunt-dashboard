@@ -1,0 +1,842 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp793118ecs;
+        Thu, 12 Feb 2026 05:31:13 -0800 (PST)
+X-Received: by 2002:a05:6870:c216:b0:409:5ef7:43bd with SMTP id 586e51a60fabf-40ec71ccdbamr1348011fac.46.1770903072712;
+        Thu, 12 Feb 2026 05:31:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770903072; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jEYCLPkK5/lvbRjBGiSrQ+VZU1YXDdIhHCF3wcJqdZPADOkya/eJ9wKcakR6dPIC+J
+         BBdFUk1axv/mzPSznLvWl9l0HfNDFOQJVWfqkW9TISY3aI81N8tem81VLWK2gRqbxVHy
+         GP4fqyeG+WM4wZMM/jYUS3fN4VZ4DQb3TV3pFXqCZyGZZ7/zTSP3bC9Xp2VVeUd4cg7X
+         x3Mw0igGTWaeYUKZhaqRvevOw4TtOAYhNDhZzkXAGXTKMF2uXYAz5NbZKyGS4hNtEq1x
+         t4dWdfjs9k/XmjAcGDkRFEK1l+EQ0Xp5ioTNHWIYDb1cK9b49W1U4t2RknVRmLZRqiOe
+         nxkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:message-id:reply-to:mime-version:list-help:date:subject
+         :to:from:dkim-signature:dkim-signature;
+        bh=Ys/cawMJOLE7HmTL1q9Mo76ReeHg6M0FNtjc6jrWgyU=;
+        fh=dG9C/IWJmwDZXcP6qac4ioiqY6U63QIQ5IUQPGIXwjE=;
+        b=X5vOo6qr83EoqXNTRrLkeZUT7xi+O5Q2WIXnxHA5mTXoC+XzSArfiEXiKrHDwLIEwa
+         ki8EXEPfkQTT5mzuvplihUtWgUbC6ugasdUIvqRtaubJavmLSb/rAf9wHyCCX/OT9gaG
+         jQc7TjaFMqbLYORn0iqhrSIqPurZRkxl5Gu12DSKkuu18UgB3EQvzlE2MjNf39iTcss2
+         FK5R+2jVKuwp6rzXK9E0i8W/BHNihq8MmRYDfy//AdXfoGnxZDpo/tmvhBGtPkW1sY6k
+         XmyXIPRv9Vo9U36tLnpLY5KDxTq6f3rxCLubm55aHz5QHPUGTAKuXcd9FxBK3jl0eBxT
+         FV5Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@email.roberthalf.com header.s=10dkim1 header.b=lZND0DPW;
+       dkim=pass header.i=@s10.y.mc.salesforce.com header.s=fbldkim10 header.b=L+F3ukJB;
+       spf=pass (google.com: domain of bounce-jxriyyw67kcubcja3arxyzbex4.100216@bounce.email.roberthalf.com designates 13.111.62.131 as permitted sender) smtp.mailfrom=bounce-JXRIYYW67KCUBCJA3ARXYZBEX4.100216@bounce.email.roberthalf.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=roberthalf.com
+Return-Path: <bounce-JXRIYYW67KCUBCJA3ARXYZBEX4.100216@bounce.email.roberthalf.com>
+Received: from mta.email.roberthalf.com (mta.email.roberthalf.com. [13.111.62.131])
+        by mx.google.com with ESMTPS id 586e51a60fabf-40eaf290b4asi3719728fac.294.2026.02.12.05.31.12
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 05:31:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-jxriyyw67kcubcja3arxyzbex4.100216@bounce.email.roberthalf.com designates 13.111.62.131 as permitted sender) client-ip=13.111.62.131;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@email.roberthalf.com header.s=10dkim1 header.b=lZND0DPW;
+       dkim=pass header.i=@s10.y.mc.salesforce.com header.s=fbldkim10 header.b=L+F3ukJB;
+       spf=pass (google.com: domain of bounce-jxriyyw67kcubcja3arxyzbex4.100216@bounce.email.roberthalf.com designates 13.111.62.131 as permitted sender) smtp.mailfrom=bounce-JXRIYYW67KCUBCJA3ARXYZBEX4.100216@bounce.email.roberthalf.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=roberthalf.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=10dkim1; d=email.roberthalf.com;
+ h=From:To:Subject:Date:List-Help:MIME-Version:Reply-To:Message-ID:Content-Type;
+ i=reply@email.roberthalf.com;
+ bh=Ys/cawMJOLE7HmTL1q9Mo76ReeHg6M0FNtjc6jrWgyU=;
+ b=lZND0DPWZ1gyg+y71iWKB0H3a5Yn7BoL/nWqpxTCTTveiTLBuSeQeVo7KxyAw/1iH6BMsBGl5bxS
+   Jm+7vzcsPE0QjTivOw/DKlpc/hU8srl18YYAW3AsXY6SBKlmNX6m/XlQCOr7JiIMIHz44sjKkI0h
+   Ppf3F8cGRfz6cGwV5ysg+Ybs7IMTlmKQvXnGxGw2ZKqm0ve+NZxLwGi8e1ILdLHnY0Y3O57M8njj
+   MfDRlgjCfzYhYlAB7aFPgIgquqpHj+4EHFOBDkgnaXsjQvV1VI4k69wXKqPXjSoqBD1hvYjg2Jg4
+   SJejJuY4vrR/wXr2QadkwZa+XGwqBW3ePXSL7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=fbldkim10; d=s10.y.mc.salesforce.com;
+ h=From:To:Subject:Date:List-Help:MIME-Version:Reply-To:Message-ID:Content-Type;
+ bh=Ys/cawMJOLE7HmTL1q9Mo76ReeHg6M0FNtjc6jrWgyU=;
+ b=L+F3ukJBCzPyx3jbhmBil5idVJvvl5EL8zO69160RgKHMUGJzVBlBpYZo2kAUy3OshOlatutuM4n
+   hXtSrhicIM3cDVP3/Bo06OW7iYTdhQlnfYbH+yEtcRvl5ERpPDelqKj1oZ4EyoWcx/wwsf1SZmMS
+   F1K9HacUKBbgZnAFxK230xsSPau10t0SerJfN0RQfKzLlQ0Tld9ZAqBpUxciVsqRuZy7wXwMU1p8
+   A+Q4konipDrFpQbeu1Hl8dRQ7l5IdWaMAILAINVL9eVqdouQW3ad5g1kTq+C880Kx3zdAxLvsoOw
+   HlDW3Yi82YQiG2S/kXMCVL+wPTvslmfRMBFTNg==
+Received: by mta.email.roberthalf.com id hhnb202fmd4c for <tusharlaad2002@gmail.com>; Thu, 12 Feb 2026 13:31:12 +0000 (envelope-from <bounce-JXRIYYW67KCUBCJA3ARXYZBEX4.100216@bounce.email.roberthalf.com>)
+From: "Robert Half" <reply@email.roberthalf.com>
+To: <tusharlaad2002@gmail.com>
+Subject: Verify your email address with Robert Half
+Date: Thu, 12 Feb 2026 07:31:12 -0600
+List-Help: <https://click.email.roberthalf.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMjA1NTUiLCJzIjoiNzUwNDYwODkzIiwibGlkIjoiNjg3IiwiaiI6IjE3ODAxMDkiLCJqYiI6IjY1MjEiLCJkIjoiMTAwMjE2In0.kqibWGvmNpJsS_YBlS7SqBY-HDdjUgGOQZAs35tm4k8>
+MIME-Version: 1.0
+Reply-To: "Robert Half RMM" <reply-G2VMXJXEXEMEZCUIKPLW4HIZXQ.100216@email.roberthalf.com>
+X-SFMC-Stack: 10
+x-job: 100020555_1780109
+Message-ID: <95d40d1d-edd8-496c-8619-a134b3cdf6c9@dfw1s10mta169.xt.local>
+Feedback-ID: 100020555:1780109:13.111.62.131:sfmktgcld
+Content-Type: multipart/alternative;
+	boundary="OZQgrE1keALx=_?:"
+
+This is a multi-part message in MIME format.
+
+--OZQgrE1keALx=_?:
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ View as a 
+https://view.email.roberthalf.com/?qs=eyJkZWtJZCI6IjY3NDk4OTI0LWRkNzUtNDQxMy1iZTA5LThlODYwNmY4YzNkNCIsImRla1ZlcnNpb24iOjEsIml2IjoiODBoanplenJBeUxDeWM2YVJ3RCszZz09IiwiY2lwaGVyVGV4dCI6ImtZQ1EreWhRa0ViYmE5T3dEUFVqWFczb0xOYUlLZ2ZrTnNFVUFZaWtaY2c0d0JDVDZyVm1WUVRjeWQ1WEh2bEppZ1dUTHcvdGZMUWtMUEFsMmRQeUlTNHk3aEd4NkJLQnNZQzhqbnJ0eXRhVitGY0pMQ0c0U1RyMHd1Nm5OcDA1ODBoanplenJBeUxDeWM2YVJ3RCszZz09IiwiYXV0aFRhZyI6ImxmaFhDU3dodUVrNjlNTHVwemFkT1E9PSJ9 
+webpage 
+https://view.email.roberthalf.com/?qs=eyJkZWtJZCI6IjI4ODJlNGZiLTk2OTgtNDVhNC1hZTU2LWE1OWNmZTcwYWNhNiIsImRla1ZlcnNpb24iOjEsIml2IjoiY2I1MG9ycWdIYjF5Q1BRUVg5akFrZz09IiwiY2lwaGVyVGV4dCI6IjEzRFVaUHlUdXR4R3Q3ZjNaZE9kRnJlcnRiSEZpTVZlZlRLeDRUN3hOelRsRHZpTGRILzhTSG1pc0licGFHNktvZHdDMFIrVloxS202S3oxRkZ1UEJKWHRqeVJiWi9SRU1OS0ZqNzVLaDArS0VGVTMzVkNleWRTZHBNaExoTkZoY2I1MG9ycWdIYjF5Q1BRUVg5akFrZz09IiwiYXV0aFRhZyI6ImloQlZOOTFRbnNuVW5hVElTNFRSWVE9PSJ9 
+ 
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjI1NzM4MjQ4LTJlOTUtNGU4OC05MTI1LWU1ZWU5ZDcwNzQyMCIsImRla1ZlcnNpb24iOjEsIml2IjoiTC93SFB2T2dldFlWVjBIU0dEWU5GZz09IiwiY2lwaGVyVGV4dCI6IkI0Z0dIRXNObktLVW9VM3N4WDhiR3dmdU1TeXN0STZxazg4YWVtY1BJR3NaUUZsSW1XT3E1Tk9IQ3MrT0U5YUorL2oya0pDcG8rYmRXYUV5QWd0anZJRW9lRXJuczJ3cDNBVUZFUy84Qno3em9IcldGVmRCMGhnMkRSWT0iLCJhdXRoVGFnIjoiQWd0anZJRW9lRXJuczJ3cDNBVUZFUT09In0%3D 
+
+
+ 
+ 
+ 
+
+ Verify Your Email Address 
+
+
+
+
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+Hi Tushar,Hi, 
+
+
+ Please verify your email address with Robert Half so we send job opportunities to the right place.
+
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjExMDhlYWM5LWU1MWMtNGM4Yi04NGNjLTA2NjA1ZmRhYTExYiIsImRla1ZlcnNpb24iOjEsIml2IjoiQlZ3TmpROXJOV1hBNXZjdXM2U1NYZz09IiwiY2lwaGVyVGV4dCI6Ijd3WnhnaXZGK1BFUTIrcTl0bmhUbGFWbE8wdGFreW4yQWJkbERjUlVWd21aRmNDS0xiTWZrWWVjM3BSWnRiYXI4dEJHWDRHTjRoNjZEZnVUUlNMYU1CdDR1Z0pJZVNEYWMrbDJUd1ZjRFkwUGF6Vmx3T2IzTHJPa2tsND0iLCJhdXRoVGFnIjoiUlNMYU1CdDR1Z0pJZVNEYWMrbDJUdz09In0%3D 
+Verify email 
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjNmMDUyZTNhLTM4YjctNDllYy1hY2M5LTliMWM0ODgwNzdkZSIsImRla1ZlcnNpb24iOjEsIml2IjoiTXh4dEY2TjlxNlVNUW81c0g3NjJ2dz09IiwiY2lwaGVyVGV4dCI6Im1TUURIcm1oQS9GVHA1VlkrdnhUT0J0V01mdU8rL2dxZTc3YmFjU2dJNnZRcGhxVTlBRU1QVHdaQ1FZbTZLUEcwWnlsYW00M0pYWjRWcjdONG5XbE90Zm14WjdFUXVnUzNmWGhmek1jYlJlamZhdWxERUtPYkIrK3RyOD0iLCJhdXRoVGFnIjoiNG5XbE90Zm14WjdFUXVnUzNmWGhmdz09In0%3D 
+Verify email 
+
+
+ 
+ 
+
+ 
+ 
+ 
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjFlZGM1OThmLTRmYjgtNDE0MS1hODA3LTQ2ZDdiNzBmZGM0YyIsImRla1ZlcnNpb24iOjEsIml2IjoiU2NqTnEyZFRjVFFwaFFGdDJvcWtRdz09IiwiY2lwaGVyVGV4dCI6IkZnVmVkZU5SUmkxWmJ4YitPUFh3TUdpcDJXVVYzR0hmTVlYTFd1bHBZamhPd0lrVGppT0x4YzBhYkhWdzYwK3dCZ09OMFZQYVBPdTQ0VW5LdndZa3kwNXpUS1pYanhRRFNjak5xMmRUY1RRcGhRRnQyb3FrUXc9PSIsImF1dGhUYWciOiJ1T0ZKeXI4R0pNdE9jMHltVjQ4VUF3PT0ifQ%3D%3D 
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjYwZmY2NDhmLTk3YjUtNGI4Ni1iYzdiLWMxMjlmZWM4MjNjNyIsImRla1ZlcnNpb24iOjEsIml2IjoiOUp4VE5GT05naENTck14bFNqVEdPZz09IiwiY2lwaGVyVGV4dCI6IjdEVGlLVTFnQ3Zsd25Ham5EbEJMVGgwQVp5cnRTZktxYndJTVNQTHN6WWtoV3FUL2ltYTV3cXREUUd6SlZjMmhhWGJ6d0FNazJpRzE0NEpzRXZ5QTJnY0NNOUFpY3dTcjlKeFRORk9OZ2hDU3JNeGxTalRHT2c9PSIsImF1dGhUYWciOiJ0ZU9DYkJMOGdOb0hBalBRSW5NRXF3PT0ifQ%3D%3D 
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImE2NGQ3ZDgxLWIyZjItNDE4OC1iZWY0LTFhMDEwOWM4NzYzYSIsImRla1ZlcnNpb24iOjEsIml2IjoiZkRYL3NFejdCTmRkT3NKMld1UXFGUT09IiwiY2lwaGVyVGV4dCI6Im9KTlM1NVF6aHlYc1pJOXA0ZHI1UHFyeWs4SWx2OGxCUzdUOXRqSUpxOTZKcmlBcDEyTStHVUpYZUpwYjhydWVZeGVlVzUyRENPblVSK0J6aWphRitCeW01cmtGcHhibGZEWC9zRXo3Qk5kZE9zSjJXdVFxRlE9PSIsImF1dGhUYWciOiIxRWZnYzRvMmhmZ2NwdWE1QmFjVzVRPT0ifQ%3D%3D 
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjI0YTJjZTIzLWFkNjYtNGUzOS1hMWE3LWU5ZmYyYzNhZWNkOSIsImRla1ZlcnNpb24iOjEsIml2IjoidFFaVVZCeHdqbTNLa2FWbXhyU1EwZz09IiwiY2lwaGVyVGV4dCI6IkNPZXA5SHJQRDlnOVpVM3pqL0F0K0JuTm5zaXM5QXJOV2pmSjVGM0k3eG8vVmZacjkyZlN5SHd5Tmt5TWE1WVZzTmNSbU5qV0ROVFloSXRHSmd5SjRibmkxNGpPOFkrcXRRWlVWQnh3am0zS2thVm14clNRMGc9PSIsImF1dGhUYWciOiIySVNMUmlZTWllRzU0dGVJenZHUHFnPT0ifQ%3D%3D 
+
+
+
+
+ (c) 2026 Robert Half Limited
+
+
+ Robert Half Limited. Registered in England (No. 2087139)
+
+
+ 
+
+Registered Office: AIR Second Floor, 35 Homer Road, Solihull B91 3QJ
+
+
+
+
+ For more information, please visit 
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjliNjUyZTY4LTFjNjgtNDZhYS04NWNiLTNiODI4M2Q5MWRmZiIsImRla1ZlcnNpb24iOjEsIml2IjoiczBzdmdBZnFzamxVZGIrVnJLRUtsUT09IiwiY2lwaGVyVGV4dCI6InhJa0RHdXNFOXF1WmxIQm1HQWNrRDFXNEQ1L1ZTdW1wb0FxM2VKRDlMQ1JMeVVEVy8vMlNIeStIQWxLQVMyRXJQVEhRVjk5enA3UVcwUzlIc2VWRFozbDFGRHN6b1pTREZxZVcyYk5MTDRBSDZySTVWSFcvbGF5aENwVT0iLCJhdXRoVGFnIjoic2VWRFozbDFGRHN6b1pTREZxZVcyUT09In0%3D 
+ roberthalf.co.uk  
+
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjQ3Nzg3YWZlLTliNzUtNGZlNS05YWI2LTc1ZTM5NTk2ZjFlOSIsImRla1ZlcnNpb24iOjEsIml2IjoicXM3aDJWbWw0bHlnU3hFbmx1U0Q2UT09IiwiY2lwaGVyVGV4dCI6ImpjUUE5NFdmbjB3a2F2QlZ6Rmw4bzRmaGdHcXJBSmlIREtERUZ1d2pOcEJxeXd0S0FuUHlRUlQ0N2FqVlZMMVUzWEd4NFVFQ09UZEdlNGsxOEZhS2hvOEFWZG1UbG92Z1VrOGQyYXJPNGRsWnBlSmNvRXNSSjVia2craz0iLCJhdXRoVGFnIjoiOEZhS2hvOEFWZG1UbG92Z1VrOGQyUT09In0%3D 
+Terms of Use     |  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjhjYzY2ODZhLTM4ZmItNDVmMC1hNTE2LTBiNWQwNWM2ODg5MSIsImRla1ZlcnNpb24iOjEsIml2IjoiY0RSRllNN0p5ZDFZWHdwMVhidTNLUT09IiwiY2lwaGVyVGV4dCI6InErTkEyYmhac2k0WklVN1UzZHg1ZUtudktqUzY2S3VCSGJ1cXoydHFiMkx0QTEzcFBLbEpYd0dHeWMzN09ZZGJLOVQyM0I2S3FEQ1Z6c2dMcnEzMjczbXBMZGRoaExKd2tQb2tiWEEwUldET3ljbmRXRjhLZFYyN3R5az0iLCJhdXRoVGFnIjoicnEzMjczbXBMZGRoaExKd2tQb2tiUT09In0%3D 
+      |  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjYzMjJiZDZkLWNiN2UtNDljNS1hMzUwLTM0ZGMyNjFjOTEyMSIsImRla1ZlcnNpb24iOjEsIml2IjoiVHlmam5LZmphUHU5a1FNb2hzc3pyQT09IiwiY2lwaGVyVGV4dCI6InQ1dzFvdkR0KzlKVjUwcGJ3VGRZU09KMEpvd1JZczVhcUhCSXYxTlJBaGNSUmZ5R1BFRDYzMEFyNnk1c3N6c2x3aXhFa0JndXhkYjFFbDZPUERqNkZJRHpwM1NSQ1B6Z1Qrbk1aMDhuNDV5bjQyajd2WkVES0liTE02dz0iLCJhdXRoVGFnIjoiUERqNkZJRHpwM1NSQ1B6Z1Qrbk1adz09In0%3D 
+ Privacy Notice     |  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImYxMWVhYjg5LWVjOTItNDQwZC05MDZhLTJmZDk2ODYzZjgzNyIsImRla1ZlcnNpb24iOjEsIml2IjoiWHRtTFkxVlo3QlRGaXR1ZGl1ekFmdz09IiwiY2lwaGVyVGV4dCI6IkQxUlNtSlRDMzVVRXZXVWcrbXJ1VXY0SXlrTUplZm4yck4rSmQxd0xYUUNLOVJSL1VFOEVSVGluQkFBb25WUWVmMG50NXZxY2tjM08xQTQwa01WSW12ejBPc2FFYzd0Tng4NkplVjdaaTJOVldld1V4WXJibllyc3dIOD0iLCJhdXRoVGFnIjoia01WSW12ejBPc2FFYzd0Tng4NkplUT09In0%3D 
+ Contact Us     |  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImY4NzNjZmU4LTFiNjItNGUwMy1iZTA4LTEwOTkwNzRjNDlmMSIsImRla1ZlcnNpb24iOjEsIml2IjoiZFJzM2I3Wkc3L0NjVzB2eFhVODE5dz09IiwiY2lwaGVyVGV4dCI6ImwrdUFrRGc4QzhWVThUdjdxTmVUWVNyOHdrN0gvRVlaaitnM1UxNklHRXlmWlRmTE5xeGRMMUdjc1BMczh1RFgxTlpEdlRFMFFaK2ZlV2lsZktDOVhyanV6R0RIN3NxUDNWaVBNM1ViTjIrMlJ1L3duRnRMOFYxUE5mYz0iLCJhdXRoVGFnIjoiZktDOVhyanV6R0RIN3NxUDNWaVBNdz09In0%3D 
+     
+
+
+ 
+ 
+ 
+  Our website  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImY2NDM1YjNlLTQwZTgtNDIzZC05MmVhLTVmOTdjZTA1NjBkNSIsImRla1ZlcnNpb24iOjEsIml2IjoiNGZvM2krdTgvR1ZMR2VGc0pPbkZpQT09IiwiY2lwaGVyVGV4dCI6IitBTkxyeW0yTytJK01sd05peEdzMllOWko2anVwQ1VyeDh0NU5DWWZUNVhtWGkvSE9ZdVZ3NVpIOStjMzhpKzVqY2NyUllMT0FUM2ljVG1HdHM2WUE2czdRR2NnamZFaFZhS1duT0g2TjR2cnZQeGxTeG5oYkNUcHhZZz0iLCJhdXRoVGFnIjoidHM2WUE2czdRR2NnamZFaFZhS1duQT09In0%3D 
+Privacy Notice   describes how Robert Half may process, store and disclose Personal Information collected about individuals, including candidates, agency / temporary workers, job applicants, employees and business contacts. RH verifies candidate information by contacting selected previous employers regarding experience and work history. RH does not verify all representations made by candidates and recommends that its clients perform such additional
+ verification as may be considered appropriate. The information contained in, or attached to, this e-mail, is intended solely for the use of the addressee and may contain confidential and/or legally privileged information. If you are not the intended recipient you are not authorised to copy it or use it for any purpose. If you have received a message in error please notify the sender immediately by reply e-mail and delete the message from your system. RH monitors emails for security and other purposes. The views or opinions presented in this email do not necessarily represent those of RH. To unsubscribe from our marketing campaigns, visit our website and  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjVlZWY5MzUyLWY5NWEtNDk3ZS1hMmNjLTUxYmY1M2YxNWQyOCIsImRla1ZlcnNpb24iOjEsIml2IjoiRExRalJVaEorc05hRFV2d0o0RWxDUT09IiwiY2lwaGVyVGV4dCI6IjlidVZlQjRSU2doM3pzNkRVSE00bnBYQzNrSUhhRlE2S3FVTklNbVBONGxnYmhzZ3BHSWNNd1lqY2IvbXlSNGtnZE1pdHdTYmhpcGJ0Qm40b2s5cmhOcUROUVd6LzlLYUdjaGN6UXkwSTBWSVNmckRXZzFMOENlQkpRaz0iLCJhdXRoVGFnIjoib2s5cmhOcUROUVd6LzlLYUdjaGN6UT09In0%3D 
+update your preferences .  Robert Half International, Robert Half, Robert Half Financial Services, Robert Half Management Resources, OfficeTeam, RH Executive Search, Robert Half Technology and Robert Half Finance and Accounting are trading names of Robert Half Limited. Registered in England (No. 2087139). Registered office: AIR Second Floor, 35 Homer Road, Solihull B91 3QJ (RH).  
+https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjM2YjI5ZDUzLWFmMDUtNDdlNi04MzA4LWU0ZDViZGEzYmQ3ZSIsImRla1ZlcnNpb24iOjEsIml2IjoiUWMrOWtoaHY3UmV1TmMzSHFaeEFZUT09IiwiY2lwaGVyVGV4dCI6ImpsV25DYnNPQ3JQMnlOenVWZU9NVWVrazltSmNvdkJHWjBtcGY1RWRDTXpjYTA5b0ZnTVdTUTBlVGgwcnhUR1JHYTlwMkRwUkVWd2NHSWlRZVZPU1d3dDk0ZE9wY0hvL0g3TVpNRUhQdlpJWWIrMFhyalhOeDZtY1FHRT0iLCJhdXRoVGFnIjoiZVZPU1d3dDk0ZE9wY0hvL0g3TVpNQT09In0%3D 
+www.Roberthalf.co.uk  
+
+ 
+ 
+ 
+
+
+
+--OZQgrE1keALx=_?:
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+<!--
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--[if gte mso 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml><![endif]-->
+    <style type="text/css">
+      ReadMsgBody{
+        width: 100%;
+      }
+      .ExternalClass {
+        width: 100%;
+      }
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+        line-height: 100%;
+      }
+      body {
+        -webkit-text-size-adjust:100%;
+        -ms-text-size-adjust:100%;
+        margin:0 !important;
+      }
+      p {
+        margin: 1em 0;
+      }
+      table td {
+        border-collapse: collapse;
+      }
+      img {
+        outline:0;
+      }
+      a img {
+        border:none;
+      }
+      @-ms-viewport{
+        width: device-width;
+      }
+      h1, h2, h3, h4, h5, p, a {
+        font-family: Arial, sans-serif;
+        margin-top: 0 !important;
+        mso-line-height-rule: exactly;
+      }
+      h1 {
+        font-size: 30px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 10px;
+        font-weight: 500;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+      }
+      h3 {
+        font-size: 20px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 10px;
+        font-weight: 300;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+      }
+      h4 {
+        font-size: 18px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 10px;
+        font-weight: 500;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+      }
+      a {
+        text-decoration:none;
+      }
+      a.cta {
+        font-size: 17px !important;
+        line-height: 125%;
+        color: #9F1C35 !important;
+        font-weight: 500 !important;
+        background-color: transparent !important;
+        border: none !important;
+        text-transform: none !important;
+        max-width: none !important;
+        padding: 0 !important;
+        font-family: Arial, sans-serif;
+      }
+      p {
+        font-size: 14px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 10px;
+        font-weight: 300;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+      }
+      p.small {
+        font-size: 12px !important;
+        line-height: 125%;
+        font-weight: normal;
+        font-family: Arial, sans-serif;
+      }
+      li {
+        font-size: 14px;
+        line-height: 125%;
+        color: #212325;
+        margin-bottom: 10px;
+        font-weight: 300;
+        font-family: Arial, sans-serif;
+        mso-line-height: exactly;
+        text-align:-webkit-match-parent;
+        display:list-item;
+      }
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width: 480px) {
+        .container {
+          width: 100% !important;
+        }
+        .footer {
+          width:auto !important;
+          margin-left:0;
+        }
+        .mobile-size {
+          width: auto !important;
+          height: 216px !important;
+        }
+        .mobile-hidden {
+          display:none !important;
+        }
+        /* Show the mobile image */
+        .mobileShow {
+          display: block !important;
+          height: auto !important;
+          width: 100% !important;
+          max-height: initial !important;
+        }
+        .logo {
+          display:block !important;
+          padding:0 !important;
+        }
+        img {
+          max-width:100% !important;
+          height:auto !important;
+          max-height:auto !important;
+        }
+        .header img{
+          max-width:100% !important;
+          height:auto !important;
+          max-height:auto !important;
+        }
+        .photo img {
+          width:100% !important;
+          max-width:100% !important;
+          height:auto !important;
+        }
+        .drop {
+          display:block !important;
+          width: 100% !important;
+          float:left;
+          clear:both;
+        }
+        .footerlogo {
+          display:block !important;
+          width: 100% !important;
+          padding-top:15px;
+          float:left;
+          clear:both;
+        }
+        .nav4, .nav5, .nav6 {
+          display: none !important;
+        }
+        .tableBlock {
+          width:100% !important;
+        }
+        .responsive-td {
+          width:100% !important;
+          display:block !important;
+          padding:0 !important;
+        }
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        /* MOBILE GLOBAL STYLES - DO NOT CHANGE */
+        body {
+          font-size: 15px !important;
+          padding: 0px !important;
+        }
+        h1 {
+          font-size: 30px !important;
+        }
+        h2 {
+          font-size: 26px !important;
+        }
+        h3 {
+          font-size: 22px !important;
+        }
+        h4 {
+          font-size: 18px !important;
+        }
+        /* END OF MOBILE GLOBAL STYLES - DO NOT CHANGE */
+        .pl10 {
+          padding-left: 10px !important;
+        }
+        .left {
+          text-align: left !important;
+          display: block !important;
+        }
+      }
+      @media only screen and (max-width: 640px) {
+        .container {
+          width:100% !important;
+        }
+        /* Hide the mobile image */
+        .mobileHide {
+          display: none !important;
+        }
+        .mobile-hidden {
+          display:none !important;
+        }
+        .logo {
+          display:block !important;
+          padding:0 !important;
+        }
+        .photo img {
+          width:100% !important;
+          height:auto !important;
+        }
+        .nav5, .nav6 {
+          display: none !important;
+        }
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+      }
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width:599px) {
+        .main_table_ia {
+          width: 100% !important;
+          max-width:481px !important;
+        }
+        .wrapper_ia {
+          width: 100% !important;
+        }
+        .hide_ia {
+          display: none !important;
+        }
+        .full_img1_ia img {
+          width: 100% !important;
+          height: auto !important;
+          max-width:none !important;
+        }
+        .bg_ia {
+          background:none !important;
+          background:url(https://image.email.roberthalf.com/lib/fe331570756404757c1076/m/1/9c2d59d2-2a95-4408-baf6-1f2394e1751b.png) !important;
+          height:auto !important;
+          background-size:100% !important;
+          background-repeat:no-repeat !important;
+        }
+        u + .body_ia .full_wrap_ia {
+          width: 100% !important;
+          width: 100vw !important;
+        }
+        .hide_ia_desktop {
+          display: table !important;
+          float: none !important;
+          width: 100% !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+        .h158_ia {
+          height:250px !important;
+        }
+        .h10_ia {
+          height:15px !important;
+          font-size:1px !important;
+          line-height:1px !important;
+        }
+      }
+      @media screen and (max-width: 480px) {
+        .main_table_ia {
+          width: 374px !important;
+        }
+        .hide_ia_desktop {
+          display: table !important;
+          float: none !important;
+          width: 100% !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+        .h158_ia {
+          height:200px !important;
+        }
+        .h10_ia {
+          height:15px !important;
+          font-size:1px !important;
+          line-height:1px !important;
+        }
+        .rh-mobile-device {
+          display:block !important;
+          border: 1px solid red!important;
+        }
+      }
+      @media screen and (max-width: 374px) {
+        .main_table_ia {
+          width: 320px !important;
+        }
+        .hide_ia_desktop {
+          display: table !important;
+          float: none !important;
+          width: 100% !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+        .h158_ia {
+          height:168px !important;
+        }
+      }
+    </style>
+    <style type="text/css">
+      td .buttonstyles:hover {
+        background: #711d28!important;
+        border: 1px solid #711d28;
+        transition: background 200ms;
+      }
+      .buttonstyles:hover {
+        background: #711d28!important;
+        border: 1px solid #711d28;
+        transition: background 200ms;
+      }
+      .buttonstyles:hover a {
+        color: #711d28 !important;
+        border: 1px solid #711d28;
+        transition: color 200ms;
+      }
+      .link:hover {
+        color: #711d28 !important;
+        transition: color 200ms;
+      }
+      .underline-link:hover {
+        color: #711d28 !important;
+        transition: color 200ms;
+        text-decoration: none !important;
+      }
+      a.outline.buttonstyles:hover {
+        color: #FFFFFF !important;
+        background: #711d28 !important;
+        border:0 !important;
+      }
+    </style>
+    <style type="text/css"> 
+      @media screen and (max-width: 480px) {
+        u + .body .glist {
+          padding:0 0 0 0!important;
+          margin:0 0 0 40px !important;
+        }
+      }
+      u + .body .glist {
+        padding:0 0 0 0!important;
+        margin:0 0 0 25px;
+      }
+    </style>
+    <!--[if mso]> 
+<style type="text/css"> /* Begin Outlook Font Fix */ table, tr, td {border-collapse: collapse; border-spacing: 0; } tr { font-size:0px; line-height:0px; border-collapse: collapse; border-spacing: 0; } body, table, tr, td, span {font-family : Arial, sans-serif !important; line-height : 125% !important; } h1 {font-family : Arial, sans-serif !important; line-height : 125% !important; } h2 {font-family : Arial, sans-serif !important; line-height : 125% !important; } h3 {font-family : Arial, sans-serif !important; line-height : 125% !important; } h4 {font-family : Arial, sans-serif !important; line-height : 125% !important; } a {font-family : Arial, sans-serif !important; line-height : 125% !important; } p {font-family : Arial, sans-serif !important; line-height : 125% !important; } p.small
+ {font-family : Arial, sans-serif !important; line-height : 125% !important; } /* End Outlook Font Fix */ .table-wrapper { padding: 0 20px 20px 18px !important;} </style> <![endif]-->
+    <!--[if mso 16]> <style type="text/css"> /* Begin Outlook Font Fix */ li {  margin: 0 20px 8px 0 !important; } /* End Outlook Font Fix */ </style> <![endif]-->
+  </head>
+  <body class="body" bgcolor="#EFEFEF" style="font-size: 16px; line-height: 125%; color: #382E2C; font-weight: 300; font-family: 'Futura', Arial, Helvetica, sans-serif; padding: 0px; margin: 0px; -webkit-text-size-adjust:none; background-color: #EFEFEF; "><style type="text/css">
+div.preheader 
+{ display: none !important; } 
+</style>
+<div class="preheader" style="font-size: 1px; display: none !important;">We’re ready to help you find your next great job</div>
+    <!-- Analytics -->
+    <div style="font-size:0; line-height:0">
+      <img src="https://click.email.roberthalf.com/open.aspx?XFK5JIFKFQNEZFD7WDLWALN6FY.100216&d=100216&bmt=0" width="1" height="1" alt="">
+      
+      <img src="https://pixel.app.returnpath.net/pixel.gif?r=c9f775f84f987b2f4fe3a3527743eae8beb0b4ca&c=Candidate-LUX_Verification_Reminder-NonRec-Auto-Email1-GB" width="2" height="2" />
+    </div>
+    <table style="width:100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td width="100%">
+            <div class="webkit" style="max-width:600px;Margin:0 auto;background-color:#ffffff;" bgcolor="#ffffff">
+              <!--[if (gte mso 9)|(IE)]> <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" style="border-spacing:0;ffont-family:Arial, sans-serif; font-size:14px; line-height:125%;"> <tr> <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" > <![endif]-->
+              <table style="width:100%; max-width:600px; Margin:0 auto; font-size: 16px; line-height: 125%; color: #382E2C; font-weight: 300; font-family: Arial, sans-serif;" cellspacing="0" cellpadding="0" bgcolor="#ffffff" width="100%">
+                <tr>
+                  <td align="center" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td align="left" valign="top">
+                          
+                          
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top">
+                          
+                            <table cellpadding="0" cellspacing="0" width="100%" role="presentation" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 0px 0px 0px 7px; "><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><div style="display:none;">
+  
+</div>
+
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%; max-width:600px;" width="100%">
+  <tr valign="top">
+    <td align="center" bgcolor="#FFFFFF" role="presentation" style="padding: 0px 20px 0px 0px;" valign="top" width="100%">
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%;" width="100%">
+  <tr>
+    <td align="right" class="link" style="padding:10px 0 10px 0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;text-align:right; font-family:Arial,sans-serif; display:block;font-size:11px;text-decoration:none; color:#212325 !important;">
+            <!---->
+            View as a <a  href="https://view.email.roberthalf.com/?qs=eyJkZWtJZCI6IjY3YWI0ZDY2LTQ2YmItNGEzYi05OTExLTIyMGZjOTU3MGFkMCIsImRla1ZlcnNpb24iOjEsIml2IjoiU1dJUHhBaEpxS2RhVGpybjZGbGZrdz09IiwiY2lwaGVyVGV4dCI6IlQ5Qm54bGE1TVo3MkpidFFJc09wZmFGSGpnZVJVb3BKZFFGMU94cDUyYU5aL2xMK0Jma3FVUzUyT1R2aGhCaE83N0FxNVlacnNCQy90VzdITjVTWjFBYnZPNWhhdmVMaW85TUFpeVlyVWNMWnJYcGJ3M1FRU3VWbktHOWZqcDk3U1dJUHhBaEpxS2RhVGpybjZGbGZrdz09IiwiYXV0aFRhZyI6IjJhMTZXOE4wRUVybFp5aHZYNDZmZXc9PSJ9" class="link" style="text-decoration:none;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-weight: normal;color:#0b6e76 !important; font-size: 11px;font-family:Arial,sans-serif;" target="_blank">webpage</a>
+      <!---->
+    </td>
+  </tr>
+</table>
+    </td>
+  </tr>
+
+<tr valign="top">
+  <td align="center" bgcolor="#ffffff" style="padding: 20px 0 40px 0;" valign="top">
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tr valign="top">
+        <td align="left" style="padding: 0;" valign="top">
+          <div class="w100p" style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top;">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tr valign="top">
+                <td align="left" style="padding: 0 0 0 20px;" valign="top">
+                  <!--[if (gte mso 9)|(IE)]> <table border="0" cellspacing="0" cellpadding="0" role="presentation" width="580"> <tr valign="top"> <td valign="top" align="left" style="width: 580px" width="580"> <![endif]-->
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tr valign="top">
+                      <td align="left" valign="top">
+                        <a   data-linkto="other" href="https://click.email.roberthalf.com/u/?qs=eyJkZWtJZCI6ImYwZWI1ODZjLThlMWYtNDg3OS04MDhiLTFhNzk1YmVmMjcyYiIsImRla1ZlcnNpb24iOjEsIml2IjoiT3Ivd2FzcDZQZXh5OE1WVXlhRncvQT09IiwiY2lwaGVyVGV4dCI6IkJLV2ZCUUxrS3lYQ1pDckplV2hJeHRITWRTM2NGQktYWk95WVBqSFM5cnY0UytnQjJhaE12NStYTERLcVVqdEVEcVY2TG9PL044M0JWRmpZdUVNK2cyMWNHSmYwYllCS004YWNSanEvOEdyS2VqM3NjdkRGVk1taGNQdz0iLCJhdXRoVGFnIjoidUVNK2cyMWNHSmYwYllCS004YWNSZz09In0%3D"  title="Robert Half"><img alt="Robert Half" border="0" data-assetid="425083" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/90434f3c-ad80-4a26-aff1-433055513edf.jpg" style="display: block; height: auto; width: 180px; padding: 0px; max-width: 180px;" width="180"></a> 
+                      </td>
+                    </tr>
+                  </table>
+                  <!--[if (gte mso 9)|(IE)]> </td></tr></table> <![endif]-->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table></td></tr></table></td></tr></table>
+                            
+                          
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top">
+                          <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #F1F5F8; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 10px 0px 0px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" role="presentation" style="width: 100%;"><tr><td><table cellspacing="0" cellpadding="0" role="presentation" style="width: 100%;"><tr><td valign="top" class="responsive-td" style="width: 50%; padding-right: 2.5px;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 20px 26px 0px 32px; "><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #F1F5F8; border: 0px; min-width: 100%; " class="stylingblock-content-wrapper"><tr>
+<td style="padding: 60px 0px 0px; " class="stylingblock-content-wrapper camarker-inner"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+	
+		<tr valign="top">
+			<td align="left" style="padding: 30px 0 0;" valign="top">
+				<h1 style="font-size: 30px; line-height: 1.2; color: #212325; font-weight: normal; font-family: Arial, sans-serif; mso-line-height: exactly;">
+					<span style="color:#212325;">Verify Your Email Address </span></h1></td></tr></table></td></tr></table></td></tr></table></td><td valign="top" class="responsive-td" style="width: 50%; padding-left: 2.5px;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tr><td align="center"><img data-assetid="464529" src="https://image.email.roberthalf.com/lib/fe331570756404757c1076/m/1/32016227-8a9e-4535-9fa5-463862791ce1.png" alt="" height="260" width="300" style="display: block; padding: 0px; text-align: center; height: 260px; width: 300px; border: 0px;"></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+                          
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top">
+                          <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tr><td align="center"><img data-assetid="486785" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/9b332215-a720-4d85-8852-55ee7efcef59.png" alt="" width="600" style="display: block; padding: 0px; text-align: center; height: auto; width: 100%;"></td></tr></table></td></tr></table>
+                          
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top">
+                          <table cellpadding="0" cellspacing="0" width="100%" role="presentation" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 0px 26px 0px 32px; "><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+ 
+  <tr valign="top">
+   <td align="left" style="padding: 10px 0 0;" valign="top">
+    <p style="font-size: 14px; line-height: 1.5; color: #212325; margin: 0 0px 16px 0px; font-weight: normal; font-family: Arial, sans-serif; mso-line-height: exactly;">
+     <!----><span style="color:#212325;">Hi Tushar,</span> <!----><br>
+     <br>
+     Please verify your email address with Robert Half so we send job opportunities to the right place.</p></td></tr></table></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px 0px 30px; " class="stylingblock-content-wrapper camarker-inner"><!-- Dual VML/Standard Button -->
+<!-- VML Button -->
+<!--[if mso]> <center> <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" target="_blank" style="height:56px;v-text-anchor:middle !important;text-align:center !important;width:200px; padding:15px 20px 20px 20px; margin:0 0 20px 0; mso-line-height-rule:exactly; font-family:Arial, sans-serif;" arcsize="85%" strokecolor="#033941" fillcolor="#033941"> <w:anchorlock/> <center> <![endif]-->
+<div style="display:none;visibility:hidden;overflow:hidden;max-height:0px;padding:5px 20px 0 0;">
+  <a   data-linkto="other" href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImE1ZDU3NzkyLTBhMjYtNGE0Ni1hZmIyLWQzODMwZGQ5YmFiOCIsImRla1ZlcnNpb24iOjEsIml2IjoiRkR0UWJLOUl4aWV6TnFMN09sRHY5QT09IiwiY2lwaGVyVGV4dCI6IlUwb0VWRFAwVVAxc0pjQU5nVk1ZK05MVm95dVNJZEQ1cUJDQU1FMGpoUUFVa0paWXltc2tNdkhoREVHM2VmdldsclpFa3A3WUhWbzVLMUQzR2J4U3ZzL3F6VkRsUWhWcVROR0ZDeFE3VUd5dlNNWW5zemFpK3pwUTcvUT0iLCJhdXRoVGFnIjoiR2J4U3ZzL3F6VkRsUWhWcVROR0ZDdz09In0%3D" style="color:#ffffff; display:inline-block; font-family:Arial, sans-serif; font-size:14px; font-weight:normal; line-height:56px; text-align:center; text-decoration:none; width:100%; -webkit-text-size-adjust:none;">Verify email</a>
+</div>
+<!--[if mso]> </center> </v:roundrect> </center> <![endif]-->
+<!-- Standard Button -->
+<!--[if !mso]><!-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="center">
+      <table align="center" cellpadding="0" cellspacing="0" role="presentation" style="width:200px; padding: 10px 0 0 0;">
+        <tr>
+          <td style="background-color:#033941; border-radius:80px;">
+            <a   data-linkto="other" href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjkzMjI5ZDJlLTlkMGItNDFlNi04M2RjLTVmYmIzZGI2ODQxYSIsImRla1ZlcnNpb24iOjEsIml2IjoibC9BUytLK3dHR2lxNkVYaEE1QmFnQT09IiwiY2lwaGVyVGV4dCI6IlBsVHBqU3FtVTI3M2h4SkdTaFF1aGNIU2NMYmdGWDFCTDRYWDcrQXhIaEg2RWpOVCtVMUNUc0ZhampFaDIvK21Bc1R6TSthMi9nSXFXclBpT1I2b2pmeUI0YS9QTmdvbEVVcDdxSmZ3RXZpdnNCaG9xdWhGNFFPUVdvQT0iLCJhdXRoVGFnIjoiT1I2b2pmeUI0YS9QTmdvbEVVcDdxQT09In0%3D" style="color:#ffffff; display:inline-block; font-family:Arial, sans-serif; font-size:14px; font-weight:normal; line-height:56px; text-align:center; text-decoration:none; width:100%; -webkit-text-size-adjust:none;">Verify email</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!--<![endif]-->
+<!-- End VML Button --></td></tr></table>
+                          
+                        </td>
+                      </tr>
+                      <!--START FOOTER-->
+                      <tr>
+                        <td align="left" valign="top">
+                          
+                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #373A3E; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- </div> --><!-- Social Banner Section --><table bgcolor="#27323A" border="0" cellpadding="0" cellspacing="0" style="color: #FFFFFF; font-family: Arial, sans-serif; font-size: 12px; text-align: center; line-height: 18px; width: 100%;">
+ 
+  <tr>
+   <td style="padding: 16px 30px;">
+    <div style="text-align: center;">
+     <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><div style="text-align: center;">
+  <table border="0" cellspacing="0" cellpadding="0" align="center" style="margin: 0 auto;">
+    <tr>
+      
+      <td style="text-align: center;">
+        <a  href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjY1NzM0MDQwLTAxNWUtNDMzOC05MmZhLWRhNjUzMjc3MDI0MCIsImRla1ZlcnNpb24iOjEsIml2IjoiemU0anNOaEFUK21UMmpoT0hrbkNIZz09IiwiY2lwaGVyVGV4dCI6ImVKZWRjSUdPUFRSUDc5OWZJb3d2ZldGQUxVYU1pSjY0M2tFU0xPdVVSSmJ3UldXSFB2eEZaN0d4NHVVN3N4cUNJMXk3cW9EMitId1Bna043cU5QUnF5UEhLc3hpN3hxRXplNGpzTmhBVCttVDJqaE9Ia25DSGc9PSIsImF1dGhUYWciOiJENEpEZTZqVDBhc2p4eXJNWXU4YWhBPT0ifQ%3D%3D" target="_blank" title="Facebook" class="social-icon">
+          <img alt="Facebook" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/f2a69f4c-7d17-4558-9e21-6d23637181db.png" style="display: inline-block; border: 0; outline: none; width: 32px; max-width: 32px; height: 32px;" width="32">
+        </a>
+      </td>
+           <td width="32"></td>
+      <td style="text-align: center;">
+        <a  href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImRkY2Q4MGU3LWRkZjUtNDliMi1hZTljLTExNjZlOWJjYmEwNSIsImRla1ZlcnNpb24iOjEsIml2IjoiTDF4M1VDVjQxQi9STWpwWDc2c0RmZz09IiwiY2lwaGVyVGV4dCI6ImxEK2wrdGk3L2dVNkhQK2ZiV1ljZ3REN0VYcUpEeHc1R3kra3VJQnRKbkFYeWd5RzRJUmh5T1paSDZjRUdLVzFwaWx2NUhiNHVLUXptY3NiRE1zczBRaWl0U2R3c0FHVkwxeDNVQ1Y0MUIvUk1qcFg3NnNEZmc9PSIsImF1dGhUYWciOiJNNW5MR3d6TExORUlvclVuY0xBQmxRPT0ifQ%3D%3D" target="_blank" title="LinkedIn" class="social-icon">
+          <img alt="LinkedIn" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/8f080047-7c5e-491d-882a-c1cb73df6f4b.png" style="display: inline-block; border: 0; outline: none; width: 32px; max-width: 32px; height: 32px;" width="32">
+        </a>
+      </td>
+           <td width="32"></td>
+      <td style="text-align: center;">
+        <a  href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImMzYjY2ZjU2LTdiY2MtNGY2Zi1hNTZkLWM0Zjg3ZDRjYzc4OSIsImRla1ZlcnNpb24iOjEsIml2IjoicWhRTzJLc0hCaW5YK0FFU1Bkd1lTUT09IiwiY2lwaGVyVGV4dCI6IjJrWlV4cUdiWWgraHhYdnU3Mm9OczNBcGk0cFVoYUppRlhrWjNLVTlLYUdOWmhtMXNwZjdld1lwaW4zck4xSmlJcHNhOFEzbEJFTjBocWpoZFRlc29EVFg4Wm9Bbys0QnFoUU8yS3NIQmluWCtBRVNQZHdZU1E9PSIsImF1dGhUYWciOiJkSWFvNFhVM3JLQTAxL0dhQUtQdUFRPT0ifQ%3D%3D" target="_blank" title="Twitter" class="social-icon">
+          <img alt="X" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/d441e04d-4ac9-490b-aadf-5e4246ff7231.png" style="display: inline-block; border: 0; outline: none; width: 32px; max-width: 32px; height: 32px;" width="32">
+        </a>
+      </td>
+           <td width="32"></td>
+      <td style="text-align: center;">
+        <a  href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6ImJlNGMxM2RiLTAwMjgtNDkxZS1hMDNiLTg4YWY0YmYzYmRhNyIsImRla1ZlcnNpb24iOjEsIml2IjoiUUIycXNiRWIyUlVsbFNRUSthZmtjUT09IiwiY2lwaGVyVGV4dCI6IldaVWovdW41bGVzNnZxaW5RS1pwbjlwanNqS1ZLcnoxMmk1OGpiRkYvaTBFeXRVMG94c1EzWVUwRHM1c255RkwzL085OStmbHp5bGhQQkw5ZkFNTGV4NWpvbTNjUDA1RFFCMnFzYkViMlJVbGxTUVErYWZrY1E9PSIsImF1dGhUYWciOiJZVHdTL1h3REMzc2VZNkp0M0Q5T1F3PT0ifQ%3D%3D" target="_blank" title="Youtube" class="social-icon">
+          <img alt="YouTube" src="https://image.email.roberthalf.com/lib/fe3d15707564067d701175/m/1/74bd1ce5-072f-49e3-93b2-95e9164fd648.png" style="display: inline-block; border: 0; outline: none; width: 32px; max-width: 32px; height: 32px;" width="32">
+        </a>
+      </td>           
+    </tr>
+  </table>
+</div>
+</td></tr></table><table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+      
+       <tr>
+       </tr></table></div></td></tr></table><!-- Footer Section --><table cellpadding="0" cellspacing="0" class="slot-styling" style="background-color: #373a3e; width: 100%; margin: 0 auto;" width="100%">
+ 
+  <tr>
+   <td class="slot-styling camarker-inner" style="padding: 0px;">
+    <table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: #373a3e; margin: 0 auto; text-align: center;" width="100%">
+     
+      <tr>
+       <td class="stylingblock-content-wrapper camarker-inner" style="padding: 25px 30px 20px;">
+        <p class="small" style="text-align: center; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px; mso-line-height-rule: exactly; font-weight: normal; color:#ffffff;">
+         &copy; 2026 Robert Half <!--  -->Limited<!-- --></p><!-- registeredTXT --><!--  --><p class="small" style="text-align: center; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px; mso-line-height-rule: exactly; font-weight: normal; color:#ffffff;">
+         Robert Half Limited. Registered in England (No. 2087139)</p><!--  --><!-- transactional TXT --><!--  --><!-- Address --><!--  --><p class="small" style="text-align: center; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px; mso-line-height-rule: exactly; font-weight: normal; color:#ffffff;">
+         <span class="appleLink" style="font-size: 12px; font-family: Arial, sans-serif !important;">Registered Office: AIR Second Floor, 35 Homer Road, Solihull B91 3QJ</span></p><!--  --><!-- More Information Link --><!--  --><!-- Learn More and Modify Links --><p class="small" style="text-align: center; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px; mso-line-height-rule: exactly; font-weight: normal; color:#ffffff;">
+         For more information, please visit <span style="color:#c5e9eb;"> <a   data-linkto="other" href="https://click.email.roberthalf.com/u/?qs=eyJkZWtJZCI6ImY4YTRjZDBiLTA1ODYtNDFiNy05YmRlLTkxYmE4NDgxMDY2YSIsImRla1ZlcnNpb24iOjEsIml2IjoibjJlWnRyeEpJZnpLZy9tZmRTbTlLZz09IiwiY2lwaGVyVGV4dCI6IlJ2NGtkTnZXK2JoNSt1VndmSnl6dkdIeTFGRTN6Wmc5QWxvV1lQWG15RUE5dFRXQlBFLzJHalBtZTVMZ21TdHUvdE5vcnNFankvQWNCcE81S0czZ0tVcmFxc2RNUTJ2cEZJcldKSjlubWJhOFNTSDh5b1A1bjNVcHZTbz0iLCJhdXRoVGFnIjoiS0czZ0tVcmFxc2RNUTJ2cEZJcldKQT09In0%3D"  style="color:#c5e9eb;text-decoration:underline; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px;"> roberthalf.co.uk</a> </span> <span style="color:#ffffff;"> </span></p><!-- Legal Links (Conditions, Imprint, Privacy) --><p class="small" style="text-align: center; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px mso-line-height-rule: exactly; font-weight: normal; color:#9F1C35;">
+         <span style="color:#c5e9eb;"><a   data-linkto="other" href="https://click.email.roberthalf.com/u/?qs=eyJkZWtJZCI6ImMxOGU0MDY3LTI2ZDUtNDYwMy05ODBjLTE3OGZiZjIzZjU2OSIsImRla1ZlcnNpb24iOjEsIml2IjoiV2RLUkdQMm1hYkZOM2ZLV1BEMWl4dz09IiwiY2lwaGVyVGV4dCI6Im1MSk9tM0ZSNjFUQ3FweUlHcUtBSUFZZFZEOS9wdDNOOE9SUWJ1WjU1WHRyM3NQaEZjV2dGSHZLSTdlanRlU3c2SUhSVnl2ck5HZHVMZVM5QWxEdFgrdGRjVzFPTHd1U2JzZDhkMW5Ta1JqOXBtbXhUZDN5bGp3OVlzYz0iLCJhdXRoVGFnIjoiQWxEdFgrdGRjVzFPTHd1U2JzZDhkdz09In0%3D"  style="color:#c5e9eb;text-decoration:none; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px;">Terms of Use </a> </span>&nbsp; <!--  --> <span style="color:#ffffff">&nbsp;|</span>&nbsp; <span style="color:#c5e9eb;">
+<a   data-linkto="other" href="https://click.email.roberthalf.com/u/?qs=eyJkZWtJZCI6ImM2MTAzZDYwLTFhMGQtNDA3YS04NjJmLTU3ZWVhNTBkZDBkYSIsImRla1ZlcnNpb24iOjEsIml2IjoiTjVoN3JkUmFOSHlSTzhkVTkxUjNLUT09IiwiY2lwaGVyVGV4dCI6IjFYOUI3Z0dMQ3JMVEFpMnpZTWJndVA5aUl2c04zYUtwRUk2RVdDaFYzZ2FTVkpJSE1NS29jdVpTWk0vdDlwR0RZekZ2WUNybUU5UEFHYkVjMmNadzk5Q1R0djdjUTI3RForK3FGRGVZZTYzVVdqUjhrVHZIVlBkVWR5az0iLCJhdXRoVGFnIjoiMmNadzk5Q1R0djdjUTI3RForK3FGQT09In0%3D"  style="color:#c5e9eb;text-decoration:none; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px;"> Privacy Notice </a> </span>&nbsp; <span style="color:#ffffff">&nbsp;|</span>&nbsp; <span style="color:#c5e9eb;">
+<a   data-linkto="other" href="https://click.email.roberthalf.com/u/?qs=eyJkZWtJZCI6IjUyZDljNzMxLWMyMTgtNDBjZi04N2ViLWUwZjAxOGMzNDAzZiIsImRla1ZlcnNpb24iOjEsIml2IjoiL041MEMrem5xRDdabnpPQnEvZWpCZz09IiwiY2lwaGVyVGV4dCI6IlhiWUl4a0lRTklBVmVoMWd4ZHdWam1MWjE1WXBwSjhCUk9PdjlGejViYmx5ZTJnbm85cmZHd0pSdmkyTUdNSXNpc25SUzVWT0dTVVducktUVVoxOVYzK25iWjMrVFBMeGdPaUFYZnplZEF2czU2ZysyWjh6Z2F2M293WT0iLCJhdXRoVGFnIjoiVVoxOVYzK25iWjMrVFBMeGdPaUFYUT09In0%3D"  style="color:#c5e9eb;text-decoration:none; font-size: 12px; font-family: Arial, sans-serif; line-height: 24px;"> Contact Us </a> </span>&nbsp; <!--  --></p></td></tr></table></td></tr></table></td></tr></table>
+                            <table cellpadding="0" cellspacing="0" width="100%" role="presentation" class="stylingblock-content-wrapper" style="min-width: 100%; "><tr><td class="stylingblock-content-margin-cell" style="padding: 24px 24px 14px; "><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- css to remove blue link for iPhone 12 -->
+<meta name="format-detection" content="telephone=no">
+<style type="text/css">
+  a[x-apple-data-detectors], a[href^="tel"], a[href^="sms"] {
+    color: inherit !important;
+    text-decoration: none !important;
+    pointer-events: none !important;
+    cursor: default !important;
+  }
+</style>
+<div style="display:none">
+  </div>
+<style type="text/css">
+  @media (min-width: 600px) {
+    .social-ico-desk {
+      text-align:left;
+      padding-left:0 !important;
+    }
+    .social-text-desk {
+      text-align:right !important;
+      padding-right:15px;
+    }
+  }
+</style>
+<!---->
+<table cellpadding="0" cellspacing="0" class="stylingblock-content-wrapper" style="background-color: transparent; min-width: 100%;" width="100%">
+  <tr>
+    <td class="stylingblock-content-wrapper camarker-inner" style="padding: 0 0 0 0;">
+      <div style="text-align: center;">
+        <p class="small" style="text-align: left; font-size: 12px; font-family: Arial, sans-serif; line-height: 18px; mso-line-height: exactly; font-weight: normal;">
+          <!-- For countries with links (e.g., Germany) --> 
+          <span class="emaillegaltext" style="font-family:Arial, sans-serif; font-size:12px; line-height:18px; color:#212325;"> Our website  <a href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjkxYTI3NjJjLWQ0NTYtNDdhNi04N2MxLTE1MzBlNmUxNjA3NyIsImRla1ZlcnNpb24iOjEsIml2IjoiQ3dtdXJ2VVRFOFVzeFN5aTd4QzQ1QT09IiwiY2lwaGVyVGV4dCI6ImFnUVdEeUZEd3lzSnd5UENsaCtqRm1WSWVta1RPTlNPMnZlR1hiZWYzWVR3UXBJNU1sb0plbHVLdXZQTWtjZUt1RWRVeDVqeXAyazNHczFDaHpGd2l4WEZudmErUUlJcHNwVzlsQXNKcnE3MUV4UEZMTVVzb3U4UXVPUT0iLCJhdXRoVGFnIjoiaHpGd2l4WEZudmErUUlJcHNwVzlsQT09In0%3D" style="color:#0b6e76; text-decoration:none;">Privacy Notice
+</a>  describes how Robert Half may process, store and disclose Personal Information collected about individuals, including candidates, agency / temporary workers, job applicants, employees and business contacts. RH verifies candidate information by contacting selected previous employers regarding experience and work history. RH does not verify all representations made by candidates and recommends that its clients perform such additional
+ verification as may be considered appropriate. The information contained in, or attached to, this e-mail, is intended solely for the use of the addressee and may contain confidential and/or legally privileged information. If you are not the intended recipient you are not authorised to copy it or use it for any purpose. If you have received a message in error please notify the sender immediately by reply e-mail and delete the message from your system. RH monitors emails for security and other purposes. The views or opinions presented in this email do not necessarily represent those of RH. To unsubscribe from our marketing campaigns, visit our website and  
+<a href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjNiM2ZjMjY4LTFkZjAtNDYwMy04MzlmLTliNWZhYjhkODU4MyIsImRla1ZlcnNpb24iOjEsIml2IjoidUhZejJ1NWplRHBtSDM1UThVWHdydz09IiwiY2lwaGVyVGV4dCI6IjZ4R1dPQ1RVcFQycDBWNE9DVzE3eHhvcks1R094OVdJaFpiMjE3ZjMrSmkzdkwrRkpaNHliV0ZHeGlyUmJSb1d1eFNZRGw5b2N2RFBZc1oyc0tlanBzdHhwamxSbkVzL2kzS2JYcmgyTTlydVkzZzZaaDkrVVBGRjhLOD0iLCJhdXRoVGFnIjoic0tlanBzdHhwamxSbkVzL2kzS2JYZz09In0%3D" style="color:#0b6e76; text-decoration:none; white-space:nowrap;">update your preferences</a><span style="white-space:nowrap;">.</span>  Robert Half International, Robert Half, Robert Half Financial Services, Robert Half Management Resources, OfficeTeam, RH Executive Search, Robert Half Technology and Robert Half Finance and Accounting are trading names of Robert Half Limited. Registered in England (No. 2087139). Registered office: AIR Second Floor, 35 Homer Road, Solihull B91 3QJ (RH).  
+<a href="https://click.email.roberthalf.com/?qs=eyJkZWtJZCI6IjUzZmI0ZDVjLTA5NDQtNGNiZS05NDQyLWJhYTQwYzhjZThhNCIsImRla1ZlcnNpb24iOjEsIml2IjoiQzNjSDY4UEVvNm9Hb1dtZklYT0NmQT09IiwiY2lwaGVyVGV4dCI6ImpEd2xtSlNuT3N4V2llZk5aQjJPeFlBN0kvMkJ1MFdvSU5LRFltK2FOcXdLYkk2VTBGSm9Pb3RkbVR1dStOZzNyRlVPTXhiV0VqQVVaeXEyc1VTM1FzYjJ5UFZGMnhpRG9hNkNmZ3QzQit2RHhLT3FCcUZwbnlGemdudz0iLCJhdXRoVGFnIjoic1VTM1FzYjJ5UFZGMnhpRG9hNkNmZz09In0%3D" style="color:#0b6e76; text-decoration:none;">www.Roberthalf.co.uk</a> </span> 
+          <!-- For other countries like Belgium, French and Dutch (no links) --> </p>
+      </div>
+    </td>
+  </tr>
+</table>
+<!----></td></tr></table></td></tr></table>  
+                          
+                        </td>
+                      </tr>
+                      <!--END FOOTER-->
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <!--[if (gte mso 9)|(IE)]> </td> <tr> </table <![endif]-->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+
+--OZQgrE1keALx=_?:--
+

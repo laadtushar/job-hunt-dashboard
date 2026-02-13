@@ -1,0 +1,107 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp653756ecs;
+        Thu, 12 Feb 2026 01:04:05 -0800 (PST)
+X-Received: by 2002:a05:6a20:9f05:b0:38b:d95d:efd7 with SMTP id adf61e73a8af0-3944880efb7mr2637495637.44.1770887044687;
+        Thu, 12 Feb 2026 01:04:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770887044; cv=none;
+        d=google.com; s=arc-20240605;
+        b=L8SVsZhX5MYaUI8HCkBo7QU6iXeBVpBHOb35uu/aIeV0amhqHRdabwhNlyGXTu/XdY
+         v08UkuIBRwCibcmXzont1b9bWoQuTugS5iqfhnLrQHswH9u4qFsPDyOiY+9kJkr9FtDW
+         m3mOSc07BqqQthBmp+QiRf4W9OuKqUItGkJQnyG2Bxzb3UpQMlgRIkWKreETQsaxD6RI
+         PCczMqCCzJGT3pTlvB2AszfJf9/fevh0SIMRi1vmdzVsg0pKXB9gLtx8xYeMf62+X0bA
+         wYLygP+Aq57wXTNBmB6w/dFPKktgms4Bi32j1UY2e60ovghqnbKoVfz7J07KH4RUEBsj
+         /5dg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=+u3QbdNyqiAx4mPhkIPI/aCOFfWJDUII32wxVOxzZGU=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=cGXliitFlcdFGWOqIFlRUy2saTj5KJdVWhHgwRuYb5m7PtZAKqPzzd2XHN5AVyB7df
+         0Xc7UAtI4A/nF4ks5/Ie9ZNVmZw+jWAH/rKpWZES/ecFD6AZrr1fkNYS0v0tf8MYHcsn
+         v5gxX+7FDHwasEnnexBFPEwj3ZlnfVEs6yCFV45GNbMU/ajY4a63mUF7R9I+l0aB1TNc
+         fNfzBnSLeiiaviTFFg6/bX2kQ++B09fX+9tqSJOq+QaIrP5sDLeTw7+3morvpyaV0haE
+         YkeBc9NCF9Cwr/lAgK5wrdKkOxui3GpRTJN8weGrCauGNTYScCAh7z/Wvm8NvLIKSDRK
+         3QYA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=Xs1wCHr3;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b="Bo2/FU+r";
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id 41be03b00d2f7-c6e195c3478si6677605a12.55.2026.02.12.01.04.04
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:04:04 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=Xs1wCHr3;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b="Bo2/FU+r";
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770887043; x=1770894243;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=+u3QbdNyqiAx4mPhkIPI/aCOFfWJDUII32wxVOxzZGU=;
+ b=Xs1wCHr3qoAXyiY54PE0YgM/mAr8snJrZfMwlk4+veyzfhXux1p0XVl1CgmYi9Ojt2uD6mY6A3r4oi7MznhDMRf8wZDnoihmD/rsK7QoDPbDdjU/JWv7ZuJEAI8nhYVo4ABvzYGO35Oosaru2HTO9N5ZDC53SjXkLObK0szWcjE=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770887043; x=1770894243;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=+u3QbdNyqiAx4mPhkIPI/aCOFfWJDUII32wxVOxzZGU=;
+ b=Bo2/FU+rC9EmnIdR/jOqtl5POSOna0gazKwAHsoIlSw979xvPmhvPLDHM2rVSZ/tXTtja/w4DwqtrSK1hNxywLs9BRh33uD2gIZNdSyUQaIc/FVWgFY566mluAo4KgYCaLO2//K5vRYrF1o44t+kFRXyF6oYwwTDzN9T6k45qCg=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:CandidateAutoReply:5ff5c19deab70c1acacf09a2:mailgun
+Received: by 5fbcd912b738ef6d0b343ad2d95ab6cf197356025725b7d030f419ec848516c9 with HTTP
+ id 698d978353147dba5fd7aba9; Thu, 12 Feb 2026 09:04:03 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:04:03 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="c99e3ecbee07460b3b2044260bb35efedbd3b9e867937efbf235caa97c25"
+Subject: Update from Anaplan: We've received your application
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4000786002", "person_id": "261809668002", "silo_id": "2",
+ "user_id": ""}
+Message-Id: <20260212090403.9b24fddff0b6949e@us.greenhouse-mail.io>
+
+--c99e3ecbee07460b3b2044260bb35efedbd3b9e867937efbf235caa97c25
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Hi Tushar,
+
+Thank you for applying for the Associate Software Engineer position =E2=80=
+=93 this email confirms we've received your application.
+
+What=E2=80=99s next
+At Anaplan, we're always looking to expand our team of diverse problem-solv=
+ers building decision-making solutions. Our recruiting team will review you=
+r qualifications to see if they align with the role's requirements. If your=
+ background appears to be a strong match, we=E2=80=99ll contact you directl=
+y about next steps.
+
+In the meantime, we encourage you to learn more about Life at Anaplan on an=
+aplan.com/careers and follow us on LinkedIn.
+
+-Anaplan Talent Acquisition Team
+
+Let's build what's next, together.
+
+(Note: This email is sent from an unmonitored mailbox)
+--c99e3ecbee07460b3b2044260bb35efedbd3b9e867937efbf235caa97c25
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p style="font-family: proxima-nova, Proxima-Nova, 'Helvetica-Neue',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 19px; color: #3a3a3a;"><img src="https://d3ooc9jud7priz.cloudfront.net/public/uploads/company_images/files/000/016/502/original/Anaplan_Logo.png?1528151634" alt="" width="190" height="40"></p>
+<p>Hi Tushar,</p>
+<p><br>Thank you for applying for the &nbsp;Associate Software Engineer position &ndash; this email confirms we've received your application.</p>
+<p><strong>What&rsquo;s next</strong><br>At Anaplan, we're always looking to expand our team of diverse problem-solvers building decision-making solutions. Our recruiting team will review your qualifications to see if they align with the role's requirements. If your background appears to be a strong match, we&rsquo;ll contact you directly about next steps.</p>
+<p><br>In the meantime, we encourage you to learn more about Life at Anaplan on anaplan.com/careers and follow us on LinkedIn.</p>
+<p>&nbsp;</p>
+<p>-Anaplan Talent Acquisition Team</p>
+<p><em>Let's build what's next, together.</em></p>
+<p><em>(Note: This email is sent from an unmonitored mailbox)</em></p>
+--c99e3ecbee07460b3b2044260bb35efedbd3b9e867937efbf235caa97c25--

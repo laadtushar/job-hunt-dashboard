@@ -1,0 +1,94 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp664553ecs;
+        Thu, 12 Feb 2026 01:26:07 -0800 (PST)
+X-Received: by 2002:a05:600c:34c5:b0:477:63b5:7148 with SMTP id 5b1f17b1804b1-483656ab45fmr31046275e9.6.1770888367520;
+        Thu, 12 Feb 2026 01:26:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770888367; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YW8u36ncOCWxH0wiPicQ9Grbl0VSdoJCCNt+YLj5D7mwP8mfc7ji8rAIN6UVlaWOLS
+         MqQIy8zy+lDYRvE8J9gRB+04Ln1W2QNaBUNzq/WW3ktf+hfH3+werIhsHiBTWCRACavE
+         Znj2msTYRm/GwmN5n76zWOQxt0p5dJ1WvDZXai/u8h+GCMY85dVtiYaQXFPK+w3QzntD
+         wXtHYRA2FYkObyk77oBcHTyHSgF7oXRSRG1+gFWBRb0tcn2wC3RwgV+6EbgtRaRFCoFf
+         P9PbkKrGL7oexHaoNI/NViBtX1/kCWjWve4A0xgsV/gByXf2HSaIQLEOs8DaB2N4JKar
+         wn1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=APmaDmfrnbTxoZpYAiFODaA9fU3JXqoiaJy/lV/knX8=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=fEPIIkzQuIXRM0N3Ks+04dumMe2NkUUwO3XG4M+ZhKu9CK7xrMePXTgxde3CtymjRL
+         aMdXc5DMGrxoE4eKDgYZpndsdmi/2lKcQihImqWhaoegBKAq2EoQyz/hpeoL+oQdP8j3
+         QKonv0rLyCrrKpP0/c2M6TGJl3Do0HIW+J7HTSeOmFWgh2TzP7pKlOa5j+7yxY5u3fBK
+         PCynBjKed6rsNVMdln6xDsfzzdUXNHFaDkdbtqiWBeVlA08/+xoQ0f5nRT4ASp6Iy55m
+         5IYhQj7kM5gzp+RzCNYl5eHMCv8VW4rVPUmzoYKEbtMlPxcq92o6yzokZQb99rLemw/q
+         1otw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@eu.greenhouse-mail.io header.s=mailgun header.b=xnVUBBqD;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=s0gT0usC;
+       spf=pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) smtp.mailfrom="bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eu.greenhouse-mail.io
+Return-Path: <bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io>
+Received: from mail-239-148.greenhouse.io (mail-239-148.greenhouse.io. [185.250.239.148])
+        by mx.google.com with UTF8SMTPS id 5b1f17b1804b1-4834d93c68asi42070355e9.39.2026.02.12.01.26.07
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 01:26:07 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) client-ip=185.250.239.148;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@eu.greenhouse-mail.io header.s=mailgun header.b=xnVUBBqD;
+       dkim=pass header.i=@eu.mailgun.org header.s=krs2 header.b=s0gT0usC;
+       spf=pass (google.com: domain of bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io designates 185.250.239.148 as permitted sender) smtp.mailfrom="bounce+29818d.3c5ef-tusharlaad2002=gmail.com@eu.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eu.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770888367; x=1770895567;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=APmaDmfrnbTxoZpYAiFODaA9fU3JXqoiaJy/lV/knX8=;
+ b=xnVUBBqDqijNVKuD2Ra/dWxVQi+8itrq+rUxlzie+DDR6cvRA2bk5QFMqlTpnTd9WmQGShfDCMea9IV9qJ/gCagYj9A9KoN4EcybcbtqUPZz7b/v2/hFAy0CGQrdY/QzMSOvnn/UxSKw9YR3ofybE0LY8kyVVplEaiXySHLKE4I=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=eu.mailgun.org; q=dns/txt; s=krs2; t=1770888367; x=1770895567;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=APmaDmfrnbTxoZpYAiFODaA9fU3JXqoiaJy/lV/knX8=;
+ b=s0gT0usCQ96eDSFOT3soSQCaogPln2GiIeYclaLooolymZZxShtYA4GEjG5GfxJpK+gLYtjXcS7/gM8ygPxa8ifQeBFldcsclJq4MigIxAMpOdiOSaIZKxDJ9EBAXkqfPx4pM+2uM6u5rw4OwLR6b7ngdroUt5yx2CPqRZFKpMc=
+X-Mailgun-Sid: WyIyNDk0YSIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjNjNWVmIl0=
+X-Feedback-Id: no-reply@eu.greenhouse-mail.io:CandidateAutoReply:6019b5a1aca131cc76614ef2:mailgun
+Received: by 2429ef5c14d76a1e0782ca0bbcd516526296057dc51578aabcad0f7a7bf517da with HTTP
+ id 698d9caf943b7c5901099e47; Thu, 12 Feb 2026 09:26:07 GMT
+X-Mailgun-Sending-Ip: 185.250.239.148
+Sender: no-reply@eu.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 09:26:07 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="a0bd15fcf454c391fd2c97d0df6310083b3b6c489f86043bcddd9cffcfa1"
+Subject: Thank you for applying to B2C2
+From: no-reply@eu.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4000136101", "person_id": "59379555101", "silo_id": "101",
+ "user_id": ""}
+Message-Id: <20260212092607.1a402b6de4226631@eu.greenhouse-mail.io>
+
+--a0bd15fcf454c391fd2c97d0df6310083b3b6c489f86043bcddd9cffcfa1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Tushar,
+
+Thanks for applying to B2C2. Your application has been received and we will contact you if your skillset matches an open position.
+
+If you do not hear from us right away, we will keep your CV on file.
+
+Regards,
+
+B2C2
+
+** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.
+--a0bd15fcf454c391fd2c97d0df6310083b3b6c489f86043bcddd9cffcfa1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<p>Tushar,</p>
+<p>Thanks for applying to B2C2. Your application has been received and we will contact you if your skillset matches an open position.</p>
+<p>If you do not hear from us right away, we will keep your CV on file.<br><br>Regards,</p>
+<p>B2C2</p>
+<p>** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.</p>
+--a0bd15fcf454c391fd2c97d0df6310083b3b6c489f86043bcddd9cffcfa1--

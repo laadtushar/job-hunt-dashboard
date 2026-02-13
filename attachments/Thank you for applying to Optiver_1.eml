@@ -1,0 +1,115 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp726901ecs;
+        Thu, 12 Feb 2026 03:38:06 -0800 (PST)
+X-Received: by 2002:a17:90b:3d8a:b0:34c:a29d:992a with SMTP id 98e67ed59e1d1-3568f51ef20mr2082939a91.34.1770896285942;
+        Thu, 12 Feb 2026 03:38:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770896285; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dOvCJMI86tzLz1XD2CHxBd/aOx5GCuHLTkV4zQe3p7MfQikoezabgg/Z74ucM01TCl
+         TVXJVocJRJfUpo0ayzYSrG/Zz9NzvdoKI4PX0mEmBgJBHVKGBjv7XubO/gtSOM1u5uPf
+         47EPWlozSrEwr3FmJ/Si2rlnx+XC8yOTYEo99OixmLoGyiXYBY2Q+HFRwWPUCFN/pYNL
+         LnMQS/1vHpKMfUhbDpXySJBCjIZeFSwEd/Hpx45nuTotvf64G4WGIs2cvIdXM/rh0AlS
+         OOo0k+oP8I6wLjdzEo6UvRs2iP2EQ2IZVHYhsrh62QXkjNXcRMgPQNvLBPQLBsRx4WNp
+         76rw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :sender:dkim-signature:dkim-signature;
+        bh=kTwJnkPn4dI+hkcUUkj4isiYOBBFY9Emx90Aq4bp2TY=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=A2l0qRwWmrELIwIGoFiL9qL2dni2aigYs3Ncfge7jxtQrnxjd+lsRwOUtTSpggDe8J
+         g0URZgvne6LGojFz4NZV6nFqa0RS/bBIVC5TdnqlHIo/AVQxfXNGTf5+klOcjlpv+0+M
+         xH5hhbbAgXkmYwFZLAEsGnIwhiRpRcGD650Tw5JWZOiOEQTn+7zRD90e/Iap4cA8WYNF
+         DqvBN6/51m0IIRrSR1CFWdxCug80KE3+Z42VY2n9Sbi75v05jZCelFQrqkLn3aiBYoD/
+         sxf7zj4hPMox4LRxQfODGXBU+8BIWKxtFTuDn4+xRfR5DKYAUAMckelYwnmif5VGEnDN
+         cZ2g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=CdBNCkSg;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=k8ceNAP7;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+Return-Path: <bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io>
+Received: from mail-47-205.greenhouse.io (mail-47-205.greenhouse.io. [69.72.47.205])
+        by mx.google.com with UTF8SMTPS id 98e67ed59e1d1-3567ebb684csi2168345a91.34.2026.02.12.03.38.05
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:38:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) client-ip=69.72.47.205;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@us.greenhouse-mail.io header.s=mailgun header.b=CdBNCkSg;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=k8ceNAP7;
+       spf=pass (google.com: domain of bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io designates 69.72.47.205 as permitted sender) smtp.mailfrom="bounce+1b1a2b.eb6b8a-tusharlaad2002=gmail.com@us.greenhouse-mail.io";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=us.greenhouse-mail.io
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=us.greenhouse-mail.io; q=dns/txt; s=mailgun; t=1770896284; x=1770903484;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=kTwJnkPn4dI+hkcUUkj4isiYOBBFY9Emx90Aq4bp2TY=;
+ b=CdBNCkSgNvMDK2wEWdr7DYFPdc0ZyFFewVLEAsFoDFc1jQM0+5YrvRaRPfLv6b0B2VGcsseRRcjvLBlBui/FbmaSyI/OgS101Fe4VxGXcrUEf1gmMbGzLBp84JcsEPKOCEB3gPdHA6y9Do+6fes1wCsZBP9jZ3Hd73kO/y80kGY=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770896284; x=1770903484;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender: X-Feedback-Id;
+ bh=kTwJnkPn4dI+hkcUUkj4isiYOBBFY9Emx90Aq4bp2TY=;
+ b=k8ceNAP7VLNcgfTp3REtoPfPhryAMcpSrZDowzxbKKu13NQ16nN1KITYgKiPnW0UXM/PNGaCMGWKwwQH82HAbUNoZ3SiCDxcLukg2fm3WIkgQemWlViwrroOcy19aYh83mPC97GWvKLFK7UFMZoLVQE3b5Ro2Tqq0A/dWwiEM4I=
+X-Mailgun-Sid: WyIzZTcwNiIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsImViNmI4YSJd
+X-Feedback-Id: no-reply@us.greenhouse-mail.io:CandidateAutoReply:5ff5c19deab70c1acacf09a2:mailgun
+Received: by 73f2ed935d801bc13f83cdc8c63bf150864be3f387c7e4d0a6ccca982a4fc96d with HTTP
+ id 698dbb9c53147dba5f5e044e; Thu, 12 Feb 2026 11:38:04 GMT
+X-Mailgun-Sending-Ip: 69.72.47.205
+Sender: no-reply@us.greenhouse-mail.io
+Date: Thu, 12 Feb 2026 11:38:04 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="89ab598f62f8d6532e4b66af7cf3037606e6212a0ae2fa06f7ca16097cc9"
+Subject: Thank you for applying to Optiver
+From: no-reply@us.greenhouse-mail.io
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: CandidateAutoReply
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001650002", "person_id": "261818663002", "silo_id": "2",
+ "user_id": ""}
+Message-Id: <20260212113804.1589f09947d4ff16@us.greenhouse-mail.io>
+
+--89ab598f62f8d6532e4b66af7cf3037606e6212a0ae2fa06f7ca16097cc9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Hi Tushar,
+
+Thank you for your interest in Optiver . We=E2=80=99re excited that you wan=
+t to play your part in improving financial markets across the globe. We=E2=
+=80=99ve successfully received your application for the Software Engineer -=
+ Automated Trading Systems position.
+
+What happens next? Our Recruiting team will review your information and fol=
+low up within the next two weeks regarding the outcome of your application.
+
+To ensure you receive future communications, please mark this email address=
+ as a safe sender in your inbox.
+
+We also strongly recommend that you check your spam and junk folders regula=
+rly as based on your provider settings our communications can end up there.
+
+In the meantime, you can learn more about us by visiting our website ( http=
+://www.optiver.com ), Insights blog ( https://www.optiver.com/insights/ ) o=
+r reading our annual report ( https://www.optiver.com/insights/reports/ ).
+
+Best,
+
+The Optiver Team
+
+** Please note: Do not reply to this email. This email is sent from an unat=
+tended mailbox. Replies will not be read.
+--89ab598f62f8d6532e4b66af7cf3037606e6212a0ae2fa06f7ca16097cc9
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<div>Hi Tushar,</div>
+<div>
+<p>Thank you for your interest in Optiver . We&rsquo;re excited that you want to play your part in improving financial markets across the globe. We&rsquo;ve successfully received your application for the Software Engineer - Automated Trading Systems position.</p>
+<p>What happens next? Our Recruiting team will review your information and follow up within the next two weeks regarding the outcome of your application.</p>
+<p>To ensure you receive future communications, please mark this email address as a safe sender in your inbox.&nbsp;</p>
+<p>We also strongly recommend that you check your spam and junk folders regularly as based on your provider settings our communications can end up there.</p>
+<p>In the meantime, you can learn more about us by visiting our <a href="http://www.optiver.com">website</a>, <a href="https://www.optiver.com/insights/">Insights blog</a> or reading our <a href="https://www.optiver.com/insights/reports/">annual report</a><u>. </u></p>
+<p>Best,</p>
+<p>The Optiver Team</p>
+</div>
+<p>** Please note: Do not reply to this email. This email is sent from an unattended mailbox. Replies will not be read.</p>
+--89ab598f62f8d6532e4b66af7cf3037606e6212a0ae2fa06f7ca16097cc9--

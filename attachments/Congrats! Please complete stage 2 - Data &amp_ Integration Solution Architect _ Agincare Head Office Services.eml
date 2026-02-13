@@ -1,0 +1,559 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp686279ecs;
+        Thu, 12 Feb 2026 02:13:53 -0800 (PST)
+X-Received: by 2002:a05:690e:1599:20b0:649:df15:ae26 with SMTP id 956f58d0204a3-64bbab49b67mr1538788d50.73.1770891233306;
+        Thu, 12 Feb 2026 02:13:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770891233; cv=none;
+        d=google.com; s=arc-20240605;
+        b=j/W8HUlsd1YoFrkyq8mnjvKsOa/GFiKukbn82W0ufsdPETy2mJgGdmR7KS1SMAAtpP
+         p6yO6hkVXbZuLbDnYqahke3JcYo2VvtvcqzRWsSZUXqMNYF2FJuovtzT3AthA57VI74w
+         0pyJaC9o5iq+1aQTCAt21jfUBRVm771XI9az5ln4s2SiFtvlvdQHx9X5oU0lxTCkWDV3
+         Q3DPfIOIDZNnTJ/II1tVypGz21qNqN/jbp3ZuU5pWAp1MwcDFdEUFhYwot/JvfG9A+XY
+         4cUWJYbMfhgRq0jsT7das06WYF931yyBcGA1iYOsjY18HF4c6my/xi4vXsT9uXJrLhcX
+         y4WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:date:message-id:feedback-id:to:subject:from
+         :dkim-signature:dkim-signature;
+        bh=SK4M/bZb/8BkUHH93pZ32q2BDQRHUNfIKq77mcRzow4=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=hA0PgrPCOZVaEHD19vxJhx/nQcg2euPrs8UrGy8e5Tfqx/SCQ06ZJ8PTG3WWn/GMiX
+         VvS+2nlEjOtyah7vkc/4En5h01H7XiiLZb8vWPu5FfxCxNIiYO0SJ8oclNI6F44adiqu
+         w+2pkSqsb3Aav3+brHgcPFIszZ3BT0ySq0z0ikc0rjOhNo1x3O0/37jmJY8MXK3AdeB2
+         eDJv0w14RIAcuHA6z0Ww8VUVWFMc96sPQLuBRsqrwcfMXxjt/Hon+6meD2mUmZ0n+kD8
+         ApskrQMqcfy4f/u1s5akL9bVpieEnmi6ON/S9A6cfiX3Z4Dru1GIjoIwAVWwXUD/6Ggh
+         Czeg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=h2X3SHdB;
+       dkim=pass header.i=@applygateway.com header.s=mte1 header.b=sJUMGeQ+;
+       spf=pass (google.com: domain of bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com designates 198.2.136.28 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+Return-Path: <bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com>
+Received: from mail136-28.atl41.mandrillapp.com (mail136-28.atl41.mandrillapp.com. [198.2.136.28])
+        by mx.google.com with ESMTPS id 956f58d0204a3-64afc859a74si3866371d50.13.2026.02.12.02.13.53
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 02:13:53 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com designates 198.2.136.28 as permitted sender) client-ip=198.2.136.28;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mandrillapp.com header.s=mte1 header.b=h2X3SHdB;
+       dkim=pass header.i=@applygateway.com header.s=mte1 header.b=sJUMGeQ+;
+       spf=pass (google.com: domain of bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com designates 198.2.136.28 as permitted sender) smtp.mailfrom=bounce-md_30883532.698da7e0.v1-b8bc93f00ec344c896452612ff98ba3d@mandrillapp.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=applygateway.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+	s=mte1; t=1770891233; x=1771161233;
+	bh=SK4M/bZb/8BkUHH93pZ32q2BDQRHUNfIKq77mcRzow4=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=h2X3SHdB96Sv9+0osDfEpZREjemqix7ol+YambS1ns/dWpxfZgHbe7bat/5IDnqev
+	 x542n5H/0r97Eh317Plw6XOTS/UW+Rw6Lrl2/eprGdsL29ltCi2GrwDfAgHtXVVjfD
+	 +L+CV+XVpdKtFEBaijeR9U46TR6CvOjI/5jL8LkT6GVpT9A66YdnoFzdOXxkhGjWjp
+	 fI6gOH/z3gA1CF+xw/OZHaf8MrGnQF4LuW9A/4GxgCVkLO2mPXGZnyoW7gQJfGnFrL
+	 xI0vxLSa0a169iK7bvOOosfFQkKi/xR9wNdo+sK9mXGipKgi60LWk/xkQtwDnIiv/o
+	 MVr/Mi/5UQmRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=applygateway.com;
+	s=mte1; t=1770891233; x=1771151733; i=noreply@applygateway.com;
+	bh=SK4M/bZb/8BkUHH93pZ32q2BDQRHUNfIKq77mcRzow4=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=sJUMGeQ+4/pZSn+8Emzn4GV1QBu/fAChGcRB/sSviDO9Q+Y2jHz+eSywR/hPoa4xy
+	 mwgZDm2syhLskCywokdLbFbQPR+8oc9wkzfDrWVErTQCni6YagQPh/bUjSPn8vbS82
+	 nrgR6pTVuqUgKFq36ZJYtsZh6qBXSwsoO+yBCDooP64LpRNtwe8rfnmD1F/rQHCfBq
+	 qyZLZBcwCpeOEbIGthjXb8gJd57/uh7IMco9mi6WujMQG4zY/Cfxk1otZ9Oy2R6ymZ
+	 4CoNuHzmVeA3v9I1JjdRCxfRhJnbuu4/HLMdTQJluNSuqzBbfHemE0zIDxqUxJvmy3
+	 7YYAcMybZirng==
+Received: from pmta11.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
+	by mail136-28.atl41.mandrillapp.com (Mailchimp) with ESMTP id 4fBWNc753KzKsc5Js
+	for <tusharlaad2002@gmail.com>; Thu, 12 Feb 2026 10:13:52 +0000 (GMT)
+From: ApplyGateway <noreply@applygateway.com>
+Subject: =?utf-8?Q?Congrats!=20Please=20complete=20stage=202=20-=20Data=20&amp;=20Integration=20Solution=20Architect=20/=20Agincare=20Head=20Office=20Services?=
+Received: from [87.117.237.182] by mandrillapp.com id b8bc93f00ec344c896452612ff98ba3d; Thu, 12 Feb 2026 10:13:52 +0000
+To: tusharlaad2002@gmail.com
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,=20including=20all=20headers,=20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30883532.b8bc93f00ec344c896452612ff98ba3d?=
+X-Mandrill-User: md_30883532
+Feedback-ID: 30883532:30883532.20260212:md
+Message-Id: <30883532.20260212101352.698da7e0d52af2.06231382@mail136-28.atl41.mandrillapp.com>
+Date: Thu, 12 Feb 2026 10:13:52 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_av-FnwYwkFbFHG6SFAamerBtg"
+
+--_av-FnwYwkFbFHG6SFAamerBtg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+                    ApplyGateway 
+
+             =3D  =3D
+
+ Congratulations! Your application with has been approved and moved to
+stage 2!.
+
+Data & Integration Solution Architect at Agincare Head Office Services
+
+Please use this link to provide a password (so you can track your
+application on their career site) and then answer any further questions:
+ Provide further information for this application
+<https://careershub.agincare.com/app/user/register-invite/9c98a782-b08c-431=
+2-a83c-67fc40686ad1>
+
+
+Your CV has been provided to them and you do not need to do that again.
+
+Good Luck!
+ApplyGateway             Copyright =C2=A9 Apply Gateway Ltd, All rights
+reserved.      ApplyGateway.com is part of Apply Gateway Ltd 
+ Registered address - 125-135 Preston Road, Brighton, BN1 6AF
+
+--_av-FnwYwkFbFHG6SFAamerBtg
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+" />
+    <title></title>
+    <style type=3D"text/css">
+        /* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+=09=09
+=09=09p.detail { color:#41494b;font-weight:bold;font-family:'Open Sans Bold=
+', arial;font-size:30px }
+=09=09span.name { color:#9aaaaa;font-weight:bold;font-family:'Open Sans Bol=
+d', arial;font-size:30px }
+=09
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" message */
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .Externa=
+lClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        /* Prevent WebKit and Windows mobile changing default text sizes */
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        /* Remove spacing between tables in Outlook 2007 and up */
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+        /* Allow smoother rendering of resized image in Internet Explorer *=
+/
+
+        /* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body, #bodyTable, #bodyCell {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Page Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D */
+
+        #bodyCell {
+            padding: 20px;
+        }
+
+        #templateContainer {
+            width: 600px;
+        }
+
+
+        body, #bodyTable {
+            background-color: #f1f1f1;
+        }
+
+
+        h1 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        h2 {
+            color: #231f20 !important;
+            display: block;
+            font-family: 'Open Sans Bold', arial;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: bold;
+            line-height: 100%;
+            letter-spacing: normal;
+            margin-top: 0;
+            margin-right: 0;
+            margin-bottom: 10px;
+            margin-left: 0;
+            text-align: left;
+        }
+
+
+        .headerContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 100%;
+            padding-top: 80px;
+            padding-right: 0;
+            padding-bottom: 80px;
+            padding-left: 0;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+
+            .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail=
+ Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #EB4102;
+                font-weight: normal;
+                text-decoration: underline;
+            }
+
+        #headerImage {
+            height: auto;
+            max-width: 600px;
+        }
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Body Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D */
+
+
+        #templateBody {
+        }
+
+
+        .bodyContent {
+            color: #505050;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 15px;
+            line-height: 150%;
+            text-align: left;
+        }
+
+
+            .bodyContent p {
+                margin-bottom: 30px;
+            }
+
+
+
+            .bodyContent a:link, .bodyContent a:visited, /* Yahoo! Mail Ove=
+rride */ .bodyContent a .yshortcuts /* Yahoo! Mail Override */ {
+                color: #24b780;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            .bodyContent img {
+                display: inline;
+                height: auto;
+                max-width: 560px;
+            }
+
+        /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Footer Styles =3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D */
+
+
+        #templateFooter {
+            border-top: 1px solid #dcdcdc;
+        }
+
+
+        .footerContent {
+            color: #626262;
+            font-family: 'Open Sans Bold', arial;
+            ;
+            font-size: 13px;
+            line-height: 150%;
+            padding-top: 20px;
+            text-align: left;
+        }
+
+        .footerRight {
+            text-align: right;
+            color: #231f20;
+        }
+
+
+        .footerContent a:link, .footerContent a:visited, /* Yahoo! Mail Ove=
+rride */ .footerContent a .yshortcuts, .footerContent a span /* Yahoo! Mail=
+ Override */ {
+            color: #231f20;
+            font-weight: normal;
+            text-decoration: underline;
+        }
+
+        /* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+
+        @media only screen and (max-width: 480px) {
+            /* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+            body, table, td, p, a, li, blockquote {
+                -webkit-text-size-adjust: none !important;
+            }
+            /* Prevent Webkit platforms from changing default text sizes */
+            body {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+            /* Prevent iOS Mail from adding padding to the body */
+
+            #bodyCell {
+                padding: 20px !important;
+            }
+
+            /**************** Header ****************/
+
+            .headerContent img {
+                width: 300px !important;
+            }
+
+            .headerContent {
+                padding-top: 40px !important;
+                padding-bottom: 40px !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Page Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            #templateContainer {
+                max-width: 600px !important;
+                width: 100% !important;
+            }
+
+
+            h1 {
+                font-size: 24px !important;
+                line-height: 130% !important;
+            }
+
+
+            h2 {
+                font-size: 20px !important;
+                line-height: 130% !important;
+            }
+
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Header Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .headerContent {
+                font-size: 20px !important;
+                line-height: 125% !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Body Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .bodyContent {
+                font-size: 15px !important;
+                line-height: 150% !important;
+            }
+
+            /* =3D=3D=3D=3D=3D=3D=3D=3D Footer Styles =3D=3D=3D=3D=3D=3D=3D=
+=3D */
+
+
+            .footerContent {
+                display: block !important;
+                font-size: 14px !important;
+                line-height: 115% !important;
+                text-align: left !important;
+            }
+
+                .footerContent a {
+                    display: block !important;
+                }
+            /* Place footer social and utility links on their own lines, fo=
+r easier access */
+        }
+    </style>
+</head>
+<body leftmargin=3D"0" marginwidth=3D"0" topmargin=3D"0" marginheight=3D"0"=
+ offset=3D"0" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust:=
+ 100%;margin: 0;padding: 0;background-color: #ffffff;height: 100% !importan=
+t;width: 100% !important;">
+    <center>
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" height=3D"100%" width=3D"100%" id=3D"bodyTable" style=3D"-webkit-tex=
+t-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-ta=
+ble-rspace: 0pt;margin: 0;padding: 0;background-color: #ffffff;border-colla=
+pse: collapse !important;height: 100% !important;width: 100% !important;">
+            <tr>
+                <td align=3D"center" valign=3D"top" id=3D"bodyCell" style=
+=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lsp=
+ace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 20px;height: 100% !import=
+ant;width: 100% !important;">
+                    <!-- BEGIN TEMPLATE // -->
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ id=3D"templateContainer" style=3D"-webkit-text-size-adjust: 100%;-ms-text-=
+size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 600px;=
+border-collapse: collapse !important;">
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN HEADER // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateHeader" style=3D" -webkit-text-si=
+ze-adjust 100%;-ms-text-size-adjust 100%;mso-table-lspace 0pt;mso-table-rsp=
+ace 0pt;border-collapse collapse !important;">
+                                    <tr>
+                                        <td valign=3D"top" class=3D"headerC=
+ontent" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;=
+mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: 'Op=
+en Sans Bold', arial;font-size: 20px;font-weight: bold;line-height: 100%;pa=
+dding-top: 0px;padding-right: 0;padding-bottom: 18px;padding-left: 0;text-a=
+lign: left;vertical-align: middle;">
+                                                <p class=3D"detail">Apply<s=
+pan class=3D"name">Gateway</span> </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END HEADER -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN BODY // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateBody" style=3D"-webkit-text-size-=
+adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rsp=
+ace: 0pt;border-collapse: collapse !important;">
+                                    <tr>
+                                        <td valign=3D"top" class=3D"bodyCon=
+tent">
+                                            <h1></h1>
+                                            Congratulations!  Your applicat=
+ion with has been approved and moved to stage 2!.<br /><br />Data &amp; Int=
+egration Solution Architect at Agincare Head Office Services<br /><br />Ple=
+ase use this link to provide a password (so you can track your application =
+on their career site) and then answer any further questions:<br /><a href=
+=3D"http://clicktracking.applygateway.com/track/click/30883532/careershub.a=
+gincare.com?p=3DeyJzIjoidlZuaGNQWmhUZVZUM3ZVZEdRMC1wM2dCTXJBIiwidiI6MiwicCI=
+6IntcInVcIjozMDg4MzUzMixcInZcIjoyLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2NhcmVlcn=
+NodWIuYWdpbmNhcmUuY29tXFxcL2FwcFxcXC91c2VyXFxcL3JlZ2lzdGVyLWludml0ZVxcXC85Y=
+zk4YTc4Mi1iMDhjLTQzMTItYTgzYy02N2ZjNDA2ODZhZDFcIixcImlkXCI6XCJiOGJjOTNmMDBl=
+YzM0NGM4OTY0NTI2MTJmZjk4YmEzZFwiLFwidXJsX2lkc1wiOltcIjAwMjkzYWFhMjk2NzBlOWU=
+2YjFjYTBiYjE3NjcyOWMwYTgzYjhjZGZcIl0sXCJtc2dfdHNcIjoxNzcwODkxMjMyfSJ9"> Pro=
+vide further information for this application </a> <br /><br />Your CV has =
+been provided to them and you do not need to do that again.<br /><br />Good=
+ Luck!<br />ApplyGateway
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END BODY -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align=3D"center" valign=3D"top" style=3D"-w=
+ebkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;">
+                                <!-- BEGIN FOOTER // -->
+                                <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" id=3D"templateFooter" style=3D"-webkit-text-siz=
+e-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-r=
+space: 0pt;border-top: 1px solid #dcdcdc;border-collapse: collapse !importa=
+nt;">
+
+                                    <tr>
+                                        <td valign=3D"top" class=3D"footerC=
+ontent footerLeft" style=3D"-webkit-text-size-adjust: 100%;-ms-text-size-ad=
+just: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #626262;font-=
+family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;padding-t=
+op: 20px;text-align: left;">
+                                            Copyright &#169; Apply Gateway =
+Ltd, All rights reserved.
+                                        </td>
+                                        <!--td valign=3D"top" class=3D"foot=
+erContent footerRight" style=3D"-webkit-text-size-adjust: 100%;-ms-text-siz=
+e-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #231f20;f=
+ont-family: 'Open Sans Bold', arial;font-size: 13px;line-height: 150%;paddi=
+ng-top: 20px;text-align: right;">
+                                            <a href=3D"*unsubscribe*" style=
+=3D"-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #231f2=
+0;font-weight: normal;text-decoration: underline;">Unsubscribe from these e=
+mails</a>
+                                        </td-->
+                                    </tr>
+                                    <tr>
+                                        <td colspan=3D"2" valign=3D"top" cl=
+ass=3D"footerContent footerLeft" style=3D"-webkit-text-size-adjust: 100%;-m=
+s-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color:=
+ #626262;font-family: 'Open Sans Bold', arial;font-size: 13px;line-height: =
+150%;padding-top: 20px;text-align: left;">
+                                            ApplyGateway.com is part of App=
+ly Gateway Ltd <br> Registered address - 125-135 Preston Road, Brighton, BN=
+1 6AF
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- // END FOOTER -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- // END TEMPLATE -->
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
+
+--_av-FnwYwkFbFHG6SFAamerBtg--
+

@@ -1,0 +1,120 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp854185ecs;
+        Thu, 12 Feb 2026 07:01:56 -0800 (PST)
+X-Received: by 2002:ac8:7d4b:0:b0:502:a298:3f9 with SMTP id d75a77b69052e-506919e8a35mr43198901cf.9.1770908515635;
+        Thu, 12 Feb 2026 07:01:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770908515; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KR/c4YpnYhp4m6whccmgppWt1WyM2QnBe1LoLzznTObSY+BIn3vWn5MDhwuS340qW4
+         2Wlzt3pqb7tCoyPMhWZ8E7nKXX5dlt9C5eAKw31U9CoR9rsa6TqTj9suX5Q9J6EYCZLR
+         5JXxhkVLhhdHfoXfNrQXA/e8Awji7/7ubg24tNqJSRBRRZAvjS1uzxlUzCJgdFqMtnyh
+         UJRSK7EUPgwHY/fe2QonOTq2LFAaGQidoll5ZVlRCS1orm327D49BWPBUQ+jtYCk17Xo
+         mMb9cXjqBrJXefLQ2fJyQvw+RI4NTOOWlPRQ/ChGPqCQCJhK4BeRB2JBCa4Ua71t5914
+         2fEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:list-unsubscribe:to:from:subject:mime-version:date
+         :dkim-signature:dkim-signature;
+        bh=nAN+mzKp9aTaOhgFTkEa3C1GtWnidNGzpNVpFUwqdCA=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=lJD+x7gyODMrgnJcbzqlhN5DM3zYsyMb9Is1mdOtXt1Tg9JehCec54uyeKjXaCKIgp
+         d0gE7l1A9L2P4r1wKkqQbdsXCNew1ndAMHESbkADw444PadamoHmtodebQOknGdupyY6
+         aBMZknirXR1cSlqqsBy0JxDFIbK+knenBj/awyCLPSi2NH7t0bPdhRhmbacg6ICop3jT
+         dL7I2Gwsjx538XDmw5v9kQtHbYfR/XNUY1o+tVlrDqgfS2fIS1LStjZWfFL+GDny2vns
+         bclZmY6Hyo+POaAlzTuqDzdMbfS4MazlSoJSeWUE9y6GiWIe9FXWLSA94fWklGgxiVTz
+         O0Uw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gh-mail.sharkninja.com header.s=pic header.b=jbzGLWgC;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=rCrwrg5z;
+       spf=pass (google.com: domain of postmaster@gh-mail.sharkninja.com designates 69.72.40.94 as permitted sender) smtp.mailfrom=postmaster@gh-mail.sharkninja.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sharkninja.com
+Return-Path: <postmaster@gh-mail.sharkninja.com>
+Received: from mail-40-94.greenhouse.io (mail-40-94.greenhouse.io. [69.72.40.94])
+        by mx.google.com with UTF8SMTPS id d75a77b69052e-50684e57a3asi53140161cf.85.2026.02.12.07.01.54
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Feb 2026 07:01:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of postmaster@gh-mail.sharkninja.com designates 69.72.40.94 as permitted sender) client-ip=69.72.40.94;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gh-mail.sharkninja.com header.s=pic header.b=jbzGLWgC;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=rCrwrg5z;
+       spf=pass (google.com: domain of postmaster@gh-mail.sharkninja.com designates 69.72.40.94 as permitted sender) smtp.mailfrom=postmaster@gh-mail.sharkninja.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=sharkninja.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=gh-mail.sharkninja.com; q=dns/txt; s=pic; t=1770908514; x=1770915714;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=nAN+mzKp9aTaOhgFTkEa3C1GtWnidNGzpNVpFUwqdCA=;
+ b=jbzGLWgCSH9CaSp3eVIAt/28hAAeLBh4WMbd2Jl9c/r6WLWqsDghSXc5/2w9mEUeXjUoLK/NFqzFkTUd0FF2SUi5byb2kvN9tnjtJB/mGOYVAZvk4RSsgE3UrNSPDuYiRxd1gZblKNXiaLUZTJIvL//uq7RB6GZJiEuJCFUwG/tHRMeiSiTbe5Pva7d3MMmvoBF8Wlmcqir2lQMmLWuETmEWMfzGPdVExoe3Vx6CqZReaEwE+kiI9hW915xQ7unCF6bnTOeSkvsx/CkDP/IcaLC364H9/f0vl3eEYQFNDiv8a2xL03URioB3IVrlGst6fhkZh14TcrYKG0puOl6jEA==
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org; q=dns/txt; s=mg; t=1770908514; x=1770915714;
+ h=Message-Id: List-Unsubscribe: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: X-Feedback-Id: Sender;
+ bh=nAN+mzKp9aTaOhgFTkEa3C1GtWnidNGzpNVpFUwqdCA=;
+ b=rCrwrg5zC27NeJsJLX6J6IfoZXnDcfgQrjkRCnKfbZUWH/BADDq0dIa4xXzlB7qca6rftLzxYOqJnH0SqvH5tgq7hLCU/8fOaAurbqMK0sJ/yTPXgT/ymflex2+4evuQHCsKEAswE2JyI4FJjNSBcLX9XuUmdAokFeGusOQHzQg=
+X-Mailgun-Sid: WyI4Y2NkOCIsInR1c2hhcmxhYWQyMDAyQGdtYWlsLmNvbSIsIjg2ZDA2YiJd
+X-Feedback-Id: postmaster@gh-mail.sharkninja.com:ScheduledCandidateEmail:63c1d1d55a178f67c0fa2f8a:mailgun
+Received: by 2b418613d11ba43b941bba349fa45ee5a6eb0f6c8aae716573f6a1f9e6ffd270 with HTTP
+ id 698deb629ac41031d6f81962; Thu, 12 Feb 2026 15:01:54 GMT
+X-Mailgun-Sending-Ip: 69.72.40.94
+Date: Thu, 12 Feb 2026 15:01:54 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="dd93b3128c300a0677a793344bcbef5b001cb544b05aadd8ad6bb280f548"
+Subject: Software Engineer - Thank you for your interest in SharkNinja
+From: no-reply@sharkninja.com
+To: tusharlaad2002@gmail.com
+X-Mailgun-Tag: ScheduledCandidateEmail
+X-Mailgun-Native-Send: true
+List-Unsubscribe: 
+X-Mailgun-Variables: {"org_id": "4001023006", "person_id": "44060566006", "silo_id": "6",
+ "user_id": ""}
+Message-Id: <20260212150154.1cf78cc45d5d6423@gh-mail.sharkninja.com>
+
+--dd93b3128c300a0677a793344bcbef5b001cb544b05aadd8ad6bb280f548
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Dear Tushar,
+
+Thank you for your interest in SharkNinja and for taking the time to apply =
+with us.
+
+After much consideration, we've made the decision to move forward with some=
+ other candidates. That being said, we=E2=80=99d like to keep your resume o=
+n file as our team continues to grow and encourage you to apply for other c=
+omparable roles.
+
+We wish you the best of luck with your current job search.
+
+Thank you,
+SharkNinja Talent Access Team
+
+Candidate Privacy Notice: https://www.sharkninja.com/candidate-privacy-noti=
+ce.html
+--dd93b3128c300a0677a793344bcbef5b001cb544b05aadd8ad6bb280f548
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p><!--StartFragment--></p>
+<div class=3D"ewa-rteLine">Dear Tushar,</div>
+<div class=3D"ewa-rteLine">&nbsp;</div>
+<div class=3D"ewa-rteLine">Thank you for your interest in SharkNinja and fo=
+r taking the time to apply with us.</div>
+<div class=3D"ewa-rteLine">&nbsp;</div>
+<div class=3D"ewa-rteLine">After much consideration, we've made the decisio=
+n to move forward with some other candidates. That being said, we&rsquo;d l=
+ike to keep your resume on file as our team continues to grow and encourage=
+ you to apply for other comparable roles.</div>
+<div class=3D"ewa-rteLine">&nbsp;</div>
+<div class=3D"ewa-rteLine">We wish you the best of luck with your current j=
+ob search.</div>
+<div class=3D"ewa-rteLine">&nbsp;</div>
+<div class=3D"ewa-rteLine">Thank you,</div>
+<div class=3D"ewa-rteLine">SharkNinja Talent Access Team</div>
+<div class=3D"ewa-rteLine"><!--StartFragment-->Candidate Privacy Notice: ht=
+tps://www.sharkninja.com/candidate-privacy-notice.html<!--EndFragment--></d=
+iv>
+<div class=3D"ewa-rteLine">&nbsp;</div>
+<p><!--EndFragment--></p><img width=3D"1" height=3D"1" alt=3D"" src=3D"http=
+://email.gh-mail.sharkninja.com/o/eJwcjEFShTAMQE9jdzJJmoSy6MrxBB7AqU35VPngF=
+PD8Ttm-ee9ZDGqgX65EHEeYIAiyWyIV05SzepaZZ-8nQU_sNehEQRBcjQSkQEgogMID5nkMObOY=
+mDL5F4bH8vpMdR2OJbWfrW7facj70-3t8VktMgACeQB1v6Ud-3ZDBgVR7bTF8-rpmpIRAPXj_eu=
+To657D9Sd8SMvxa612FvarFo6y3v33HWU1h33F-k_AAD__yjgRUA">
+--dd93b3128c300a0677a793344bcbef5b001cb544b05aadd8ad6bb280f548--

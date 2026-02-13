@@ -1,0 +1,105 @@
+Delivered-To: tusharlaad2002@gmail.com
+Received: by 2002:a54:3185:0:b0:2c5:34d6:a590 with SMTP id c5csp726257ecs;
+        Thu, 12 Feb 2026 03:36:46 -0800 (PST)
+X-Received: by 2002:a05:620a:7081:b0:8cb:2b30:1c7c with SMTP id af79cd13be357-8cb35109230mr151875185a.56.1770896205870;
+        Thu, 12 Feb 2026 03:36:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770896205; cv=none;
+        d=google.com; s=arc-20240605;
+        b=f57I7bw0CEdpfUEOERucXIj3rippbfdA8HNrqWMNEWhwpG92fkYZJapt3iJ2QbCYgE
+         m2l+duIVDPYQfOQUBnozFegV0n+qySGDpBMlszaYCz73HuSp0judM2t/pCjse4Sr5sTD
+         Yan5xjiv3kSX2a/Yg57Uw0pkbXq14vJVozKxDD5awH3pyib83CQqEgjNcMKvx1ZOXggT
+         QwqTz1H2cuSuZwWO56ZLL6xEryEDp6n81TDQuy45lkgBfuLbUDn0K/U4KR+8lslXcs1A
+         5UB8JvWObHY2u57zpunOHGQ6DLvRCnkoBQtoqdzrVsfqnnoyS/gQc3dkgB9ZSLpRKuOK
+         5Ngg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:date:message-id:mime-version:subject:to:from
+         :dkim-signature:dkim-signature;
+        bh=yb3FQNZqKhyPgtIHuR+nkyux3otTTaWZ9igzW2sRsYE=;
+        fh=TJLtt/tqDsOjyUvYRnxie2Ev9DWrXEGLNfEOkD0jcO8=;
+        b=PNN947PR+jYLiuPv8yeH2MkEjVMaNMMLuSVyj77hJnaEqfvASMjj6BBYT4eFzSid/g
+         hOMEm4anS6uhxirUpRuFgZKGuWAQvkwbPIOBiIDpR9FpBjDCGVgyRk3ZzSoAgi+UHU+R
+         uspC+jruODF7Utvp4yhRBPMmK4dIfIGwHscVf/XxbiJ7nMMRtAo2O7zgzdxkpiNxIJND
+         aomF7sk40WYnzVqnPxOk7YSxlwjK5D7dU6DiaUrlMIaQHwOfbq+2NRngK7IFU4dvQ8fH
+         5C2Acoc4IAd0E4tf/HUJZX0MLkPC5s/4nF8T1XOrV+3uOU9+0IHahb8PD64oIHmGfqHQ
+         unGw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b=GeJnEHo0;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b="QI/ELEHt";
+       spf=pass (google.com: domain of 0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+Return-Path: <0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com>
+Received: from a78-44.smtp-out.amazonses.com (a78-44.smtp-out.amazonses.com. [54.240.78.44])
+        by mx.google.com with ESMTPS id af79cd13be357-8cb2b1b73e3si415053185a.158.2026.02.12.03.36.45
+        for <tusharlaad2002@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 03:36:45 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) client-ip=54.240.78.44;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@ashbyhq.com header.s=o52kitveeafei4picxt43fxtgwymyfqu header.b=GeJnEHo0;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b="QI/ELEHt";
+       spf=pass (google.com: domain of 0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com designates 54.240.78.44 as permitted sender) smtp.mailfrom=0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@in-app-mail.ashbyhq.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=ashbyhq.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=o52kitveeafei4picxt43fxtgwymyfqu; d=ashbyhq.com; t=1770896205;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date;
+	bh=yb3FQNZqKhyPgtIHuR+nkyux3otTTaWZ9igzW2sRsYE=;
+	b=GeJnEHo0GJ7lnj3Sc2iC4Le6sVwVay3SCnR3T8eW7v2nvGGEQByXYuRGlmyt/eB2
+	oiOB+0eywcN+hVAiR0EBMeaHZZc/WnBZT30yOS+/lUdJsxdpR/iKtrcZ+QDcTJihOPB
+	+rkvwR8GbEyxnCz7Xw1J2R0JPZEOg5kLWHX6wlLux1F71IRVDxCqa5q4NqtzXmMMfQH
+	zLV+4LWRU7YOvdeA+xn6s/JmKAu/gnCODUpzmVD1ZH0mbvLCuJU3NOyYwb0t5DijueI
+	6isW/UUZJGS1atmE0etK7Phs71Qve1H4kCTSTwssu7W9mBKRk2K0S2mNqYjzuXiC2KV
+	eoLylR6IQw==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1770896205;
+	h=From:To:Subject:MIME-Version:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=yb3FQNZqKhyPgtIHuR+nkyux3otTTaWZ9igzW2sRsYE=;
+	b=QI/ELEHtkskhr+hjE+kha+cZEgnDdX3cb01U+BY7TuZNKffgOJ8vamA7sMjpVmuj
+	U6zaHQQb7helk8F+Y2B3q2oMvnlnWT9lpLP2LwLRJa/5KCRzyQM+vTesca59XEdjPTN
+	jeWlcCL0DLmStNU1xLeat4xkFC6wGtQuF6KRE3Sw=
+From: Clera Hiring Team <no-reply@ashbyhq.com>
+To: tusharlaad2002@gmail.com
+Subject: Thanks for applying to Clera!
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_148681_431952831.1770896205499"
+Message-ID: <0100019c51a3a6bb-94eac82c-36a8-431a-b7a6-791c1c9de572-000000@email.amazonses.com>
+Date: Thu, 12 Feb 2026 11:36:45 +0000
+Feedback-ID: ::1.us-east-1.WOmir7uCwltm0aTT8gfbA5rz60mv7TkX4bFsmUZNNF0=:AmazonSES
+X-SES-Outgoing: 2026.02.12-54.240.78.44
+
+------=_Part_148681_431952831.1770896205499
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Tushar,
+
+Thank you for applying for the Founding Engineer =E2=80=93 SF Hackerhouse (=
+Visa sponsored; $3M pre-seed) role at Clera! We appreciate your interest in=
+ joining the team. We will review your application and get back to you if t=
+here are next steps.
+
+If you'd like to refer candidates for other roles at Clera and earn referra=
+l bonuses, click here: https://www.getclera.com/referral
+
+All the best,
+
+Clera Hiring Team
+------=_Part_148681_431952831.1770896205499
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">Hi <span>Tushar</span>, <br /><br />Thank you for applying for the=
+ <span>Founding Engineer =E2=80=93 SF Hackerhouse (Visa sponsored; $3M pre-=
+seed)</span> role at <span>Clera</span>! We appreciate your interest in joi=
+ning the team. We will review your application and get back to you if there=
+ are next steps. </div><div style=3D"min-height:1.2em;margin-top:0;margin-b=
+ottom:0">&nbsp;</div><div style=3D"min-height:1.2em;margin-top:0;margin-bot=
+tom:0">If you'd like to refer candidates for other roles at Clera and earn =
+referral bonuses, click here: <a target=3D"_blank" rel=3D"noopener noreferr=
+er nofollow" href=3D"https://www.getclera.com/referral">https://www.getcler=
+a.com/referral</a><br /><br />All the best, <br /><br /><span>Clera</span> =
+Hiring Team</div></body></html>
+------=_Part_148681_431952831.1770896205499--
