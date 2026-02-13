@@ -39,7 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# database
 *.db
 prisma/dev.db
-dev.db
-prisma/dev.db
+
+# user data
+attachments/

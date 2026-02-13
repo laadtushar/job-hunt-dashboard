@@ -143,7 +143,7 @@ export function JobCard({ job }: JobCardProps) {
                         <div className="flex gap-4 w-full">
                             <div className="relative shrink-0">
                                 <img
-                                    src={`https://img.logo.dev/name/${encodeURIComponent(Normalizer.cleanCompanyName(job.company))}?token=pk_VQs1A49_TIu_5CZ3yuFz7Q`}
+                                    src={`https://img.logo.dev/name/${encodeURIComponent(Normalizer.cleanCompanyName(job.company))}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
                                     alt={`${job.company} logo`}
                                     className="h-14 w-14 rounded-xl object-contain bg-white border border-gray-100 p-1.5 shadow-sm"
                                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
