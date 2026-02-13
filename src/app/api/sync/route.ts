@@ -7,7 +7,7 @@ import { GoogleSheetsService } from "@/services/sheets";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export const maxDuration = 60; // Allow 60 seconds for sync
+export const maxDuration = 300; // Allow 5 minutes for sync
 
 export async function POST(req: Request) {
     const session = await auth();
