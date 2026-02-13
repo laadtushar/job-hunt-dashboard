@@ -15,12 +15,15 @@ A premium, AI-powered job application tracker that syncs with your Gmail to auto
 
 ### Dashboard Overview
 ![Dashboard Overview](./public/screenshots/dashboard.png)
+*The premium Meridian command center featuring real-time career stats (Total Pulsed, Live Pipeline, Neural Screens), advanced status filtering, and a sleek glassmorphic UI.*
 
 ### Automated Gmail Sync (Agentic Flow)
 ![Sync Running](./public/screenshots/sync_running.png)
+*Behold the **Neural Batch Sync Engine** in action. This high-performance pipeline processes Gmail data in parallel batches of 25, utilizing surgical date-range filters to scan months of history without hitting platform timeouts.*
 
 ### Smart Identity Consolidation
 ![Smart Consolidation](./public/screenshots/Smart_consolidation.png)
+*Precision data resolution at work. Meridian uses L1-L4 identity layers to automatically merge fragmented email threads (interviews, offers, role updates) into a single, cohesive timeline for each application.*
 
 ## ✨ Features
 
