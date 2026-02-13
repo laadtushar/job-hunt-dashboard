@@ -34,7 +34,7 @@ import {
     HelpCircle,
     Code
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface JobDetailsDialogProps {
     job: any // Type this properly with your Prisma type
@@ -43,6 +43,11 @@ interface JobDetailsDialogProps {
 
 export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Status Badge Logic
     const getStatusColor = (status: string) => {
@@ -252,21 +257,21 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                                         <div className="space-y-4 pl-2 border-l-2 border-slate-100 ml-2">
                                             <div className="relative pl-6 pb-2">
                                                 <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-slate-200 border-2 border-white" />
-                                                <div className="text-sm text-muted-foreground">{new Date(job.appliedDate).toLocaleDateString()}</div>
+                                                <div className="text-sm text-muted-foreground">{mounted ? new Date(job.appliedDate).toLocaleDateString() : '...'}</div>
                                                 <div className="font-medium">Applied</div>
                                             </div>
 
                                             {job.interviewDate && (
                                                 <div className="relative pl-6 pb-2">
                                                     <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-orange-400 border-2 border-white" />
-                                                    <div className="text-sm text-muted-foreground">{new Date(job.interviewDate).toLocaleDateString()}</div>
+                                                    <div className="text-sm text-muted-foreground">{mounted ? new Date(job.interviewDate).toLocaleDateString() : '...'}</div>
                                                     <div className="font-medium text-orange-700">Interview</div>
                                                 </div>
                                             )}
 
                                             <div className="relative pl-6 pb-2">
                                                 <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-blue-500 border-2 border-white animate-pulse" />
-                                                <div className="text-sm text-muted-foreground">{new Date(job.lastUpdate).toLocaleDateString()}</div>
+                                                <div className="text-sm text-muted-foreground">{mounted ? new Date(job.lastUpdate).toLocaleDateString() : '...'}</div>
                                                 <div className="font-medium">Last Update</div>
                                             </div>
                                         </div>
@@ -287,9 +292,9 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                                                                 {log.sender?.split('<')[0].replace(/"/g, '').trim() || log.sender}
                                                             </span>
                                                             <span className="text-xs text-muted-foreground whitespace-nowrap">
-                                                                {new Date(log.receivedDate).toLocaleString(undefined, {
+                                                                {mounted ? new Date(log.receivedDate).toLocaleString(undefined, {
                                                                     month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
-                                                                })}
+                                                                }) : '...'}
                                                             </span>
                                                         </div>
                                                         <div className="text-xs font-medium text-slate-700 truncate">

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { JobDetailsDialog } from "./JobDetailsDialog"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
@@ -23,6 +23,11 @@ export function JobCard({ job }: JobCardProps) {
     const [isReanalyzing, setIsReanalyzing] = useState(false);
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
     const [feedback, setFeedback] = useState("");
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const statusColors: Record<string, string> = {
         APPLIED: "bg-blue-100 text-blue-800 border-blue-200",
@@ -213,14 +218,14 @@ export function JobCard({ job }: JobCardProps) {
                             {job.dates?.interview && (
                                 <div className="flex items-center text-orange-600 font-semibold">
                                     <Calendar className="h-3.5 w-3.5 mr-2 shrink-0 opacity-70" />
-                                    Interview: {new Date(job.dates.interview).toLocaleDateString('en-US')}
+                                    Interview: {mounted ? new Date(job.dates.interview).toLocaleDateString('en-US') : "..."}
                                 </div>
                             )}
                         </div>
 
                         <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                             <div className="flex items-center gap-3">
-                                <div className="flex items-center text-[11px] font-medium text-slate-400" title={`Last updated: ${new Date(job.lastUpdate).toLocaleString()}`}>
+                                <div className="flex items-center text-[11px] font-medium text-slate-400" title={mounted ? `Last updated: ${new Date(job.lastUpdate).toLocaleString()}` : ""}>
                                     <Clock className="h-3.5 w-3.5 mr-1.5" />
                                     {daysSinceUpdate > 0 ? `${daysSinceUpdate}d ago` : 'Today'}
                                 </div>
