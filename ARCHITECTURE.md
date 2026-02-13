@@ -70,4 +70,6 @@ When a user clicks "Trash" or "Improve AI detection", the system logs a `UserFee
 ## 🛠️ Tech Stack Nuances
 - **Prisma + SQLite**: Chosen for zero-config local development and blazing-fast local queries.
 - **Framer Motion**: Used for the "Neural" feel of the UI, providing fluid transitions for high-priority alerts.
-- **NextAuth**: Handles secure Google OAuth flow with specific scopes required for Gmail read-only access.
+- **NextAuth + Server Actions**: Secure Google OAuth flow handled via modern Server Actions (`src/lib/actions.ts`) to ensure stable authentication transitions across both client and server components.
+
+<!-- CI/CD Test Commit -->
