@@ -358,8 +358,8 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                     <div>
                         <h5 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-6">Connect</h5>
                         <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-400">
-                            <li className="hover:text-blue-500 cursor-pointer transition-colors">GitHub</li>
-                            <li className="hover:text-blue-500 cursor-pointer transition-colors">LinkedIn</li>
+                            <li><a href="https://github.com/laadtushar" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/tusharlaad2002/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">LinkedIn</a></li>
                         </ul>
                     </div>
                 </div>
