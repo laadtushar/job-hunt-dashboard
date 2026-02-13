@@ -57,6 +57,11 @@ The core of Meridian is a multi-stage agentic workflow designed to handle the no
 4. **Maintenance Agent (Consolidation)**:
    - Automatically runs across your database to merge legacy duplicates or fragmented threads into a cohesive career timeline.
 
+5. **Neural Batch Sync (High-Performance Pipeline)**:
+   - **Multi-Stage Orchestration**: Splits the sync into a **Prepare** stage (metadata discovery) and a **Process** stage (deep analysis), allowing it to handle up to 365 days of history.
+   - **Parallel Batching**: Uses a client-orchestrated parallel threading model to bypass Vercel serverless timeout limits. It processes emails in concurrent batches of 25, delivering high throughput while maintaining platform stability.
+   - **Surgical Search**: Supports advanced date-range parameters (`after:` and `before:`) mapped directly to the Gmail API query engine for precise historical discovery.
+
 ## 🛠️ Getting Started
 
 ### 1. Prerequisites

@@ -9,6 +9,8 @@ import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
 
 export default function DashboardClient({ jobs }: { jobs: any[] }) {
     const [syncLimit, setSyncLimit] = useState(50)
+    const [afterDate, setAfterDate] = useState("2024-01-01")
+    const [beforeDate, setBeforeDate] = useState("")
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("ALL")
     const [sortOrder, setSortOrder] = useState("NEWEST")
@@ -25,7 +27,12 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
             const prepareRes = await fetch('/api/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'prepare', limit: 365 })
+                body: JSON.stringify({
+                    action: 'prepare',
+                    limit: syncLimit,
+                    after: afterDate.replace(/-/g, '/'),
+                    before: beforeDate ? beforeDate.replace(/-/g, '/') : undefined
+                })
             });
             const { messages } = await prepareRes.json();
 
@@ -146,6 +153,10 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                     setSortOrder={setSortOrder}
                     syncLimit={syncLimit}
                     setSyncLimit={setSyncLimit}
+                    afterDate={afterDate}
+                    setAfterDate={setAfterDate}
+                    beforeDate={beforeDate}
+                    setBeforeDate={setBeforeDate}
                     isSyncing={isSyncing}
                     handleSync={handleSync}
                 />
