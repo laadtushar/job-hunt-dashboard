@@ -20,7 +20,7 @@ export default async function Navbar() {
 
                 <div className="flex items-center gap-4 sm:gap-6">
                     <ModeToggle />
-                    {session ? (
+                    {session?.user ? (
                         <div className="flex items-center gap-4">
                             <div className="hidden sm:flex flex-col items-end">
                                 <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Account</span>
