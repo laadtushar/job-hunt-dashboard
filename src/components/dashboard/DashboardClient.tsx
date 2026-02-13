@@ -17,46 +17,77 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
 
     const handleSync = async () => {
         setIsSyncing(true)
-        setSyncLogs([])
+        setSyncLogs([{ message: "Starting Neural Pipeline...", type: 'info' }])
+
         try {
-            const res = await fetch('/api/sync', {
+            // Step 1: Prepare (Get IDs)
+            setSyncLogs(prev => [...prev, { message: "Identifying pending job updates (Last 365 days)...", type: 'info' }]);
+            const prepareRes = await fetch('/api/sync', {
                 method: 'POST',
-                body: JSON.stringify({ limit: syncLimit })
-            })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'prepare', limit: 365 })
+            });
+            const { messages } = await prepareRes.json();
 
-            if (!res.body) return;
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder();
-            let buffer = "";
+            if (!messages || messages.length === 0) {
+                setSyncLogs(prev => [...prev, { message: "No new job updates found. Your pipeline is up to date.", type: 'success' }]);
+                setTimeout(() => window.location.reload(), 2000);
+                return;
+            }
 
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
+            setSyncLogs(prev => [...prev, { message: `Found ${messages.length} new items. Initiating parallel neural processing...`, type: 'info' }]);
 
-                const chunk = decoder.decode(value, { stream: true });
-                buffer += chunk;
+            // Step 2: Batch and Process in Parallel
+            const BATCH_SIZE = 25;
+            const messageIds = messages.map((m: any) => m.id);
+            const batches = [];
+            for (let i = 0; i < messageIds.length; i += BATCH_SIZE) {
+                batches.push(messageIds.slice(i, i + BATCH_SIZE));
+            }
 
-                const lines = buffer.split("\n");
-                buffer = lines.pop() || "";
+            // Run batches in parallel
+            await Promise.all(batches.map(async (batchIds, batchIndex) => {
+                const res = await fetch('/api/sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messageIds: batchIds })
+                });
 
-                for (const line of lines) {
-                    if (line.trim()) {
-                        try {
-                            const parsed = JSON.parse(line);
-                            setSyncLogs(prev => [...prev, parsed]);
-                        } catch (e) {
-                            console.error("Parse error", line);
+                if (!res.body) return;
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    buffer += chunk;
+                    const lines = buffer.split("\n");
+                    buffer = lines.pop() || "";
+
+                    for (const line of lines) {
+                        if (line.trim()) {
+                            try {
+                                const parsed = JSON.parse(line);
+                                // Prepend batch info to message to distinguish logs
+                                setSyncLogs(prev => [...prev, {
+                                    ...parsed,
+                                    message: `[Batch ${batchIndex + 1}] ${parsed.message}`
+                                }]);
+                            } catch (e) { }
                         }
                     }
                 }
-            }
+            }));
 
-            // Reload after short delay if successful
-            setTimeout(() => window.location.reload(), 2000);
+            setSyncLogs(prev => [...prev, { message: "Sync Pulse Complete.", type: 'success' }]);
+            setTimeout(() => window.location.reload(), 1500);
 
         } catch (e) {
             console.error(e)
-            setSyncLogs(prev => [...prev, { message: "Failed to connect to sync service", type: 'error' }]);
+            setSyncLogs(prev => [...prev, { message: "Neural Link Failed: Connection Interrupted", type: 'error' }]);
         } finally {
             setIsSyncing(false)
         }
