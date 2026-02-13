@@ -140,7 +140,7 @@ export class AIService {
         // Fetch USER FEEDBACK for False Positives
         let feedbackContext = "";
         try {
-            const falsePositives = await prisma.userFeedback.findMany({
+            const falsePositives = await (prisma as any).userFeedback.findMany({
                 where: { type: "FALSE_POSITIVE" },
                 take: 20
             });
@@ -171,10 +171,17 @@ export class AIService {
         ${feedbackContext}
 
         STRICT RULES:
-        1.  **Is this job related?** Set "isJobRelated": true ONLY if it is a confirmation, update, interview invite, rejection, or offer. Marketing spam = false.
-        2.  **Job ID**: Look for "Job ID", "Ref", "Requisition ID", or codes in footers (e.g., "ID: 30883532").
+        1.  **Is this job related?** Set "isJobRelated": true ONLY if it is a confirmation, update, interview invite, rejection, or offer. 
+            - **CRITICAL**: ID generic marketing emails (newsletters, "join our talent community", "webinar invite") as "isJobRelated": false.
+        2.  **Job ID / Reference**: Look for "Job ID", "Ref", "Requisition ID", or codes in footers (e.g., "ID: 30883532").
+            - **JOB BOARDS**: If email is from Indeed, CV Library, etc., look for their unique "Ref: 12345" identifiers.
         3.  **Status**: "APPLIED", "SCREEN", "INTERVIEW", "OFFER", "REJECTED".
+            - **HIERARCHY**: OFFER > INTERVIEW > SCREEN > APPLIED > REJECTED.
+            - "Scheduling a chat" = SCREEN or INTERVIEW.
+            - "Not moving forward" = REJECTED.
+            - "Thanks for applying" = APPLIED.
         4.  **Company**: Extract the CLEAR company name.
+            - **HIDDEN COMPANIES**: If company is generic (e.g. "Confidential Application", "A Leading Tech Firm" via CV Library), set company to "Confidential (via [BoardName])".
         5.  **Role**: precise job title.
         6.  **Salary**: Extract ranges if available.
         7.  **Next Steps**: Summarize strict next actions.
@@ -263,29 +270,128 @@ export class AIService {
         Status: ${newJob.status}
         Date: ${newJob.receivedDate ? newJob.receivedDate.split('T')[0] : "Unknown"}
         
-        EXISTING CANDIDATES:
+        EXISTING CANDIDATES (Sorted by freshness):
         ${candidatesDesc}
         
-        INSTRUCTIONS:
-        - Analyze semantic similarity. "Senior Engineer" == "SDE III".
-        - If the new update is just a status change (e.g. "We are moving forward" email) for a candidate, MATCH IT.
-        - If roles are different (e.g. "Product Manager" vs "Engineer"), DO NOT MATCH.
-        - If the candidate is old (> 6 months) and this looks like a new application (based on Date), DO NOT MATCH.
+        INSTRUCTIONS - FOLLOW STEP-BY-STEP:
+        1.  **Company Check**: Must be the same company (fuzzy match ok, e.g. "Google" == "Google Inc").
+        2.  **Role Check**: Analyze semantic role similarity. 
+            - "Software Engineer" == "SDE" == "Dev" (MATCH). 
+            - "Product Manager" != "Software Engineer" (NO MATCH).
+        3.  **Date & Status Logic**:
+            - Calculate days difference between NEW Date and CANDIDATE Date.
+            - **Scenario A (Status Update)**: If NEW status is "INTERVIEW", "OFFER", "REJECTED" -> It is an update to the *most recent* compatible role. MATCH IT.
+            - **Scenario B (Re-Application)**: If NEW status is "APPLIED" and gap is > 4 months (120 days) -> It is likely a fresh application. DO NOT MATCH.
+            - **Scenario C (Duplicate)**: If NEW status is "APPLIED" and gap is < 4 months -> It is a duplicate/reminder. MATCH IT.
+        4.  **JOB BOARD LOGIC (CRITICAL)**:
+            - If Company is "Confidential (via ...)" or generic (e.g. "CV Library", "Indeed"):
+            - **STRICTLY REQUIRE** a matching "jobId" / "Ref" number OR a near-identical Role Title to merge.
+            - If Reference IDs differ, treat as SEPARATE jobs.
         
         Return JSON:
         {
+            "thoughtProcess": "Brief negotiation of steps 1-3...",
             "matchId": "ID_OF_MATCH" | null,
-            "reason": "Brief explanation"
+            "confidence": "HIGH" | "MEDIUM" | "LOW"
         }
         `;
 
         try {
-            const result = await this._generateJson<{ matchId: string | null, reason: string }>(prompt);
-            console.log(`[AI Judge] Decision: ${result.matchId} (${result.reason})`);
+            const result = await this._generateJson<{ matchId: string | null, thoughtProcess: string }>(prompt);
+            console.log(`[AI Judge] Decision: ${result.matchId} (${result.thoughtProcess})`);
             return result.matchId;
         } catch (error) {
             console.error('[AI Judge] Failed:', error);
             return null; // Fallback to safe "No Match"
+        }
+    }
+
+    // REFLEXION PATTERN: Re-evaluate based on user signal
+    async reanalyzeEmail(body: string, subject: string, sender: string, previousOutput: any): Promise<ExtractedJobData> {
+        let feedbackContext = "";
+        try {
+            // Fetch relevant false positive patterns to avoid making the same mistake twice if it matches a known pattern
+            // @ts-ignore - Prisma client regeneration sometimes lags in older VSCode sessions
+            const falsePositives = await (prisma as any).userFeedback.findMany({
+                where: { type: "FALSE_POSITIVE" },
+                take: 20
+            });
+            if (falsePositives.length > 0) {
+                const examples = falsePositives.map((fp: any) => {
+                    try {
+                        const input = JSON.parse(fp.input);
+                        return `- Sender: "${input.sender}", Subject: "${input.subject}" -> NOT JOB RELATED`;
+                    } catch (e) { return ""; }
+                }).filter((s: string) => s).join("\n");
+                if (examples) {
+                    feedbackContext = `
+                    KNOWN FALSE POSITIVES:
+                    ${examples}
+                    `;
+                }
+            }
+        } catch (e) { }
+
+
+        const prompt = `
+        You are an expert HR Data Auditor. 
+        
+        CRITICAL TASK: FIX A PREVIOUS ERROR
+        The user has flagged a previous extraction as INCORRECT. You need to re-examine the email and correct the data.
+        
+        --------------------------------------------------
+        EMAIL CONTEXT:
+        Subject: "${subject}"
+        Sender: "${sender}"
+        Body:
+        ${body.substring(0, 15000)}
+        --------------------------------------------------
+        
+        PREVIOUS (INCORRECT) EXTRACTION:
+        ${JSON.stringify(previousOutput, null, 2)}
+        
+        ${feedbackContext}
+
+        --------------------------------------------------
+        YOUR INSTRUCTION:
+        1.  Critique the Previous Extraction: Why might the user have flagged this? (e.g. wrong company, missed rejection status, wrong role).
+        2.  Re-process the email with a "Fresh Eyes" approach.
+        3.  Strictly follow these rules:
+            - STATUS HIERARCHY: OFFER > INTERVIEW > SCREEN > APPLIED > REJECTED.
+            - If it mentions "scheduling a chat", it is SCREEN or INTERVIEW.
+            - If it says "not moving forward", it is REJECTED.
+            - If it's a generic "Thanks for applying", it is APPLIED.
+            - MARKETING vs STATUS: If it's a newsletter or generic spam, set "isJobRelated": false.
+            
+        4.  Return the CORRECTED JSON.
+        
+        Output JSON format:
+        {
+            "isJobRelated": boolean,
+            "company": "string",
+            "role": "string",
+            "status": "APPLIED" | "SCREEN" | "INTERVIEW" | "OFFER" | "REJECTED" | "GHOSTED",
+            "nextSteps": "string",
+            "salary": { "base": "string", "bonus": "string", "equity": "string" },
+            "location": "string | null",
+            "confidence": number (0-1),
+            "thoughtProcess": "string (Explain your critique and correction)"
+        }
+        `;
+
+        try {
+            const result = await this._generateJson<ExtractedJobData>(prompt);
+            return {
+                ...result,
+                receivedDate: previousOutput.receivedDate, // Preserve original date
+                _meta: {
+                    model: this.provider === 'GEMINI' ? 'gemini-2.0-flash' : (process.env.OPENROUTER_MODEL || 'unknown'),
+                    provider: this.provider
+                }
+            };
+        } catch (e) {
+            console.error("Re-analysis failed", e);
+            throw e;
         }
     }
 }
