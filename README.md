@@ -2,6 +2,8 @@
 
 A premium, AI-powered job application tracker that syncs with your Gmail to automatically organize your career search. Stop manual entry and let AI do the work.
 
+[**Architecture Walkthrough 🏗️**](./ARCHITECTURE.md)
+
 **Live Demo:** [meridian-job-sync.vercel.app](https://meridian-job-sync.vercel.app)
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)

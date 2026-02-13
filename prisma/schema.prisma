@@ -111,6 +111,7 @@ model JobApplication {
   // Meta
   emailLogs       EmailLog[]
   originalEmailBody String? // Store strictly necessary part if helpful for debugging context
+  isIgnored       Boolean @default(false)
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

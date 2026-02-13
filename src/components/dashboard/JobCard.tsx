@@ -46,13 +46,28 @@ export function JobCard({ job }: JobCardProps) {
 
     const handleIgnore = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        if (!confirm("Are you sure this is not a job?")) return;
+        if (!confirm("Are you sure this is not a job? This will delete the entry and mark emails as invalid.")) return;
         try {
             setIsIgnored(true);
             await fetch('/api/feedback/ignore', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ applicationId: job.id })
+            });
+            router.refresh();
+        } catch (error) {
+            console.error(error);
+            setIsIgnored(false);
+        }
+    };
+
+    const handleIgnoreOffer = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!confirm("Ignore this offer? It will be hidden from your active list.")) return;
+        try {
+            setIsIgnored(true);
+            await fetch(`/api/jobs/${job.id}/ignore`, {
+                method: 'POST'
             });
             router.refresh();
         } catch (error) {
@@ -133,9 +148,18 @@ export function JobCard({ job }: JobCardProps) {
                                     <span className="absolute text-xl font-black text-slate-200 dark:text-slate-700 -z-10">{job.company[0]}</span>
                                 </div>
                                 {job.source === 'GMAIL' && (
-                                    <div className="absolute -bottom-1.5 -right-1.5 h-6 w-6 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-slate-900">
-                                        <Mail className="h-3 w-3 text-red-500" />
-                                    </div>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className="absolute -bottom-1.5 -right-1.5 h-6 w-6 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-lg ring-2 ring-white dark:ring-slate-900 cursor-help">
+                                                    <Mail className="h-3 w-3 text-red-500" />
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                                Synced from Gmail
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 )}
                             </div>
                             <div className="min-w-0 pt-1">
@@ -148,9 +172,18 @@ export function JobCard({ job }: JobCardProps) {
                             </div>
                         </div>
                         {isStale && (
-                            <div className="h-8 w-8 rounded-full bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center animate-in fade-in zoom-in">
-                                <AlertCircle className="h-4 w-4 text-amber-500" />
-                            </div>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <div className="h-8 w-8 rounded-full bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center animate-in fade-in zoom-in cursor-help">
+                                            <AlertCircle className="h-4 w-4 text-amber-500" />
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="rounded-xl font-bold text-xs bg-amber-600 text-white border-none px-3 py-1.5 shadow-xl">
+                                        Stale: No activity for 14+ days
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         )}
                     </CardHeader>
 
@@ -165,6 +198,17 @@ export function JobCard({ job }: JobCardProps) {
                                 </span>
                             )}
                         </div>
+                        {status === 'OFFER' && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full h-10 rounded-xl border-green-500/30 text-green-600 dark:text-green-400 bg-green-50/50 dark:bg-green-900/10 font-bold text-xs hover:bg-green-600 hover:text-white transition-all shadow-sm mb-4"
+                                onClick={handleIgnoreOffer}
+                            >
+                                <Trash2 className="h-3.5 w-3.5 mr-2" />
+                                IGNORE THIS OFFER
+                            </Button>
+                        )}
 
                         <div className="flex items-center justify-between pt-5 border-t border-slate-100 dark:border-slate-800/80">
                             <div className="flex items-center gap-4">
@@ -206,22 +250,39 @@ export function JobCard({ job }: JobCardProps) {
                             </div>
 
                             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
-                                    onClick={handleReanalyze}
-                                >
-                                    <Sparkles className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
-                                    onClick={handleIgnore}
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                                onClick={handleReanalyze}
+                                            >
+                                                <Sparkles className="h-4 w-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                            Improve AI detection
+                                        </TooltipContent>
+                                    </Tooltip>
+
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                                                onClick={handleIgnore}
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="rounded-xl font-bold text-xs bg-red-600 text-white border-none px-3 py-1.5 shadow-xl">
+                                            Delete (False positive)
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
                             </div>
                         </div>
                     </CardContent>

@@ -80,7 +80,8 @@ export default async function Home() {
 
   const applications = await prisma.jobApplication.findMany({
     where: {
-      userId: session.user.id
+      userId: session.user.id,
+      isIgnored: false,
     },
     orderBy: {
       lastUpdate: 'desc'

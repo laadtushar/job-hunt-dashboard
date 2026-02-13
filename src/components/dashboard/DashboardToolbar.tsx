@@ -11,6 +11,8 @@ import {
 import { RefreshCw, Search } from "lucide-react"
 import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
 interface DashboardToolbarProps {
     searchTerm: string
     setSearchTerm: (term: string) => void
@@ -80,31 +82,47 @@ export function DashboardToolbar({
 
                     {/* Limit, Settings, Sync Group - Better wrap handling */}
                     <div className="flex items-center gap-2 w-full md:w-auto">
-                        <div className="flex items-center gap-3 bg-white dark:bg-slate-950 px-4 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner flex-1 md:flex-none">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Limit</span>
-                            <Input
-                                type="number"
-                                className="w-10 h-8 border-none bg-transparent shadow-none focus:ring-0 p-0 font-black text-blue-600 dark:text-blue-400 text-center text-sm"
-                                value={syncLimit}
-                                onChange={(e) => setSyncLimit(Number(e.target.value))}
-                                min={1}
-                                max={500}
-                            />
-                        </div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className="flex items-center gap-3 bg-white dark:bg-slate-950 px-4 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner flex-1 md:flex-none cursor-help">
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Limit</span>
+                                        <Input
+                                            type="number"
+                                            className="w-10 h-8 border-none bg-transparent shadow-none focus:ring-0 p-0 font-black text-blue-600 dark:text-blue-400 text-center text-sm"
+                                            value={syncLimit}
+                                            onChange={(e) => setSyncLimit(Number(e.target.value))}
+                                            min={1}
+                                            max={500}
+                                        />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                    Number of emails to scan
+                                </TooltipContent>
+                            </Tooltip>
 
-                        <MaintenanceControls />
+                            <MaintenanceControls />
 
-                        <Button
-                            disabled={isSyncing}
-                            className={`h-14 md:h-12 px-6 md:px-8 rounded-2xl md:rounded-[2rem] font-black text-xs md:text-sm uppercase tracking-wider gap-2 shadow-xl transition-all active:scale-95 flex-1 md:flex-none ${isSyncing
-                                ? 'bg-slate-100 dark:bg-slate-800 text-slate-400'
-                                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/25'
-                                }`}
-                            onClick={handleSync}
-                        >
-                            <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
-                            {isSyncing ? 'Syncing...' : 'Sync Gmail'}
-                        </Button>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        disabled={isSyncing}
+                                        className={`h-14 md:h-12 px-6 md:px-8 rounded-2xl md:rounded-[2rem] font-black text-xs md:text-sm uppercase tracking-wider gap-2 shadow-xl transition-all active:scale-95 flex-1 md:flex-none ${isSyncing
+                                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                                            : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/25'
+                                            }`}
+                                        onClick={handleSync}
+                                    >
+                                        <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+                                        {isSyncing ? 'Syncing...' : 'Sync Gmail'}
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent className="rounded-xl font-bold text-xs bg-indigo-600 text-white border-none px-3 py-1.5 shadow-xl">
+                                    Trigger AI inbox scan
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </div>
                 </div>
             </div>
