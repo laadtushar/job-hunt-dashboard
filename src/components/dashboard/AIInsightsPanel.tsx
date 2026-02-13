@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Sparkles, Brain, Zap, Calendar, TrendingUp, ChevronRight, AlertCircle, CheckCircle2, ListTodo, ShieldCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { motion, AnimatePresence } from "framer-motion"
 import { formatDistanceToNow, isAfter, isBefore, addDays } from "date-fns"
 
@@ -139,10 +140,19 @@ export function AIInsightsPanel({ jobs }: { jobs: any[] }) {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="h-7 px-3 rounded-full border-blue-500/20 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10 font-black text-[10px] tracking-widest animate-in fade-in slide-in-from-right-4">
-                        <Sparkles className="h-3 w-3 mr-1.5 animate-pulse" />
-                        SYNCED: JUST NOW
-                    </Badge>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Badge variant="outline" className="h-7 px-3 rounded-full border-blue-500/20 text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10 font-black text-[10px] tracking-widest animate-in fade-in slide-in-from-right-4 cursor-help">
+                                    <Sparkles className="h-3 w-3 mr-1.5 animate-pulse" />
+                                    SYNCED: JUST NOW
+                                </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                System just completed a neural scan
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
             </div>
 

@@ -16,6 +16,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { formatDistanceToNow } from "date-fns"
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
 export function MaintenanceControls() {
     const [isConsolidating, setIsConsolidating] = useState(false)
     const [logs, setLogs] = useState<string[]>([])
@@ -95,12 +97,21 @@ export function MaintenanceControls() {
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-                <Button variant="ghost" className="h-12 px-5 rounded-[2rem] bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 font-bold gap-2 shadow-inner hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-                    <Settings2 className="h-4 w-4" />
-                    <span className="hidden sm:inline text-xs uppercase tracking-widest">Settings</span>
-                </Button>
-            </DialogTrigger>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" className="h-12 px-5 rounded-[2rem] bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 font-bold gap-2 shadow-inner hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                <Settings2 className="h-4 w-4" />
+                                <span className="hidden sm:inline text-xs uppercase tracking-widest">Settings</span>
+                            </Button>
+                        </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                        System & Data Control
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <DialogContent className="sm:max-w-4xl h-[85vh] flex flex-col p-0 overflow-hidden bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl">
                 <div className="bg-slate-50 dark:bg-slate-900/50 px-8 py-6 border-b border-slate-200 dark:border-slate-800">
                     <DialogHeader>
