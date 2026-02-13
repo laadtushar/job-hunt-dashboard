@@ -112,7 +112,7 @@ export function JobCard({ job }: JobCardProps) {
     return (
         <>
             <Dialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-                <DialogContent className="sm:max-w-md rounded-3xl" onClick={(e) => e.stopPropagation()}>
+                <DialogContent className="sm:max-w-md rounded-3xl cursor-default" onClick={(e) => e.stopPropagation()}>
                     <DialogHeader>
                         <DialogTitle className="text-xl font-bold">Improve Data Accuracy</DialogTitle>
                         <DialogDescription>
@@ -151,7 +151,7 @@ export function JobCard({ job }: JobCardProps) {
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
                         <div className="flex gap-4 min-w-0">
                             <div className="relative shrink-0 transition-transform group-hover:scale-105 duration-500">
-                                <div className="h-14 w-14 rounded-2xl bg-white dark:bg-slate-800 border-2 border-slate-50 dark:border-slate-700 p-2 flex items-center justify-center shadow-sm overflow-hidden ring-1 ring-slate-200/20">
+                                <div className="h-14 w-14 rounded-2xl bg-white dark:bg-slate-800 border-2 border-slate-50 dark:border-slate-800 p-2 flex items-center justify-center shadow-sm overflow-hidden ring-1 ring-slate-200/20 dark:ring-white/5">
                                     <img
                                         src={`https://img.logo.dev/name/${encodeURIComponent(Normalizer.cleanCompanyName(job.company))}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
                                         alt=""
@@ -168,7 +168,7 @@ export function JobCard({ job }: JobCardProps) {
                                                     <Mail className="h-3 w-3 text-red-500" />
                                                 </div>
                                             </TooltipTrigger>
-                                            <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                            <TooltipContent className="rounded-xl font-bold text-[10px] uppercase tracking-widest bg-slate-900 border-slate-800 text-white px-3 py-1.5 shadow-2xl">
                                                 Synced from Gmail
                                             </TooltipContent>
                                         </Tooltip>
@@ -206,7 +206,7 @@ export function JobCard({ job }: JobCardProps) {
                                 {status}
                             </span>
                             {job.location && (
-                                <span className="px-4 py-1.5 rounded-xl text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700">
+                                <span className="px-4 py-1.5 rounded-xl text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/80 ring-1 ring-slate-200 dark:ring-slate-700">
                                     {job.location}
                                 </span>
                             )}
@@ -275,7 +275,7 @@ export function JobCard({ job }: JobCardProps) {
                                                 <Sparkles className="h-4 w-4" />
                                             </Button>
                                         </TooltipTrigger>
-                                        <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                        <TooltipContent className="rounded-xl font-bold text-[10px] uppercase tracking-widest bg-slate-900 border-slate-800 text-white px-3 py-1.5 shadow-2xl">
                                             Improve AI detection
                                         </TooltipContent>
                                     </Tooltip>
@@ -291,7 +291,7 @@ export function JobCard({ job }: JobCardProps) {
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
                                         </TooltipTrigger>
-                                        <TooltipContent className="rounded-xl font-bold text-xs bg-red-600 text-white border-none px-3 py-1.5 shadow-xl">
+                                        <TooltipContent className="rounded-xl font-bold text-[10px] uppercase tracking-widest bg-red-600 text-white border-none px-3 py-1.5 shadow-2xl">
                                             Delete (False positive)
                                         </TooltipContent>
                                     </Tooltip>
