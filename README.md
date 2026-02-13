@@ -19,6 +19,9 @@ A premium, AI-powered job application tracker that syncs with your Gmail to auto
 ### Automated Gmail Sync (Agentic Flow)
 ![Sync Running](./public/screenshots/sync_running.png)
 
+### Smart Identity Consolidation
+![Smart Consolidation](./public/screenshots/Smart_consolidation.png)
+
 ## ✨ Features
 
 - **📬 Automated Gmail Sync**: Scans your inbox for job applications, interview invites, and rejections.
