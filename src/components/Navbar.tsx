@@ -1,6 +1,7 @@
-import { auth, signIn, signOut } from "@/auth"
+import { auth } from "@/auth"
 import { Compass, LogOut, User } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
+import { loginAction, logoutAction } from "@/lib/actions"
 
 export default async function Navbar() {
     const session = await auth()
@@ -36,24 +37,14 @@ export default async function Navbar() {
                                     referrerPolicy="no-referrer"
                                 />
                             </div>
-                            <form
-                                action={async () => {
-                                    "use server"
-                                    await signOut()
-                                }}
-                            >
+                            <form action={logoutAction}>
                                 <button className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors group" title="Sign Out">
                                     <LogOut className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
                                 </button>
                             </form>
                         </div>
                     ) : (
-                        <form
-                            action={async () => {
-                                "use server"
-                                await signIn("google")
-                            }}
-                        >
+                        <form action={loginAction}>
                             <button className="px-5 py-2.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-all hover:shadow-lg active:scale-95">
                                 Sign In
                             </button>
