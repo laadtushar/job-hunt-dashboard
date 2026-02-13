@@ -25,6 +25,14 @@ A premium, AI-powered job application tracker that syncs with your Gmail to auto
 ![Smart Consolidation](./public/screenshots/Smart_consolidation.png)
 *Precision data resolution at work. Meridian uses L1-L4 identity layers to automatically merge fragmented email threads (interviews, offers, role updates) into a single, cohesive timeline for each application.*
 
+### Neural Protocol Logs
+![Neural Logs](./public/screenshots/Log.png)
+*Full transparency into the AI's "thought process." Every decision, match, and extraction is logged in a real-time console, allowing you to audit the agentic flow.*
+
+### Authorized Access Control
+![Trust List](./public/screenshots/trust_list.png)
+*Meridian is invite-only by default. Manage your trust list through a dedicated admin interface, ensuring only authorized users can access your career data.*
+
 ## ✨ Features
 
 - **📬 Automated Gmail Sync**: Scans your inbox for job applications, interview invites, and rejections.

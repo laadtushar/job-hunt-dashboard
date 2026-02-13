@@ -25,38 +25,44 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     ],
     callbacks: {
         async signIn({ user }) {
-            if (!user.email) return false
+            try {
+                if (!user.email) return false
 
-            // 1. Check if email is explicitly on the allowlist
-            const allowed = await prisma.allowedUser.findUnique({
-                where: { email: user.email }
-            })
-            if (allowed) return true
+                // 1. Check if email is explicitly on the allowlist (using Raw Query to bypass stale client)
+                const allowed: any[] = await prisma.$queryRaw`SELECT * FROM "AllowedUser" WHERE "email" = ${user.email} LIMIT 1`;
+                if (allowed && allowed.length > 0) return true
 
-            // 2. Check if user already exists in the database (grandfather them in)
-            const existingUser = await prisma.user.findUnique({
-                where: { email: user.email }
-            })
-            if (existingUser) {
-                // Also add them to AllowedUser table for consistency
-                await prisma.allowedUser.upsert({
-                    where: { email: user.email },
-                    update: {},
-                    create: { email: user.email }
-                })
-                return true
+                // 2. Check if user already exists in the database (grandfather them in)
+                const existingUser: any[] = await prisma.$queryRaw`SELECT * FROM "User" WHERE "email" = ${user.email} LIMIT 1`;
+                if (existingUser && existingUser.length > 0) {
+                    // Also add them to AllowedUser table for consistency
+                    const id = Math.random().toString(36).substring(7);
+                    await prisma.$executeRaw`
+                        INSERT INTO "AllowedUser" ("id", "email", "createdAt")
+                        VALUES (${id}, ${user.email}, NOW())
+                        ON CONFLICT ("email") DO NOTHING
+                    `.catch(() => { });
+                    return true
+                }
+
+                // 3. Bootstrap: If no allowed users exist yet, allow the first user
+                const countResult: any[] = await prisma.$queryRaw`SELECT COUNT(*)::int as count FROM "AllowedUser"`;
+                const count = countResult[0]?.count || 0;
+
+                if (count === 0) {
+                    const id = Math.random().toString(36).substring(7);
+                    await prisma.$executeRaw`
+                        INSERT INTO "AllowedUser" ("id", "email", "createdAt")
+                        VALUES (${id}, ${user.email}, NOW())
+                    `;
+                    return true
+                }
+
+                return false
+            } catch (e) {
+                console.error("Auth SignIn Error:", e);
+                return false;
             }
-
-            // 3. Bootstrap: If no allowed users exist yet, allow the first user
-            const count = await prisma.allowedUser.count()
-            if (count === 0) {
-                await prisma.allowedUser.create({
-                    data: { email: user.email }
-                })
-                return true
-            }
-
-            return false
         },
         async session({ session, user }) {
             // Pass the user ID to the session

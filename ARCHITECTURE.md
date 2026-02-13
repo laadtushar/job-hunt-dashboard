@@ -95,5 +95,20 @@ To handle race conditions in parallel requests, the system uses **Atomic Upserts
 ### 3. Smart Throttling
 The frontend detects `429` (Rate Limit) errors from the AI engine or Gmail API and performs exponential backoff to ensure the pipeline remains stable during large-scale historical syncs.
 
+## 🔐 Security & Governance Layer
+
+Meridian implements a rigorous **Invite-Only** access model to ensure that high-value career data remains protected.
+
+### 1. The Trust Protocol
+Access is governed by a `signIn` callback in the authentication layer that verifies incoming users against three trust levels:
+1.  **Explicit Whitelist**: The user's email exists in the `AllowedUser` table.
+2.  **Grandfathering**: The user already has an existing account in the `User` table (automatic migration).
+3.  **Bootstrap Path**: If the trust list is empty, the first user to register is automatically granted Admin status.
+
+### 2. Schema Evolution & Resilience
+Due to the constraints of live development on certain environments (e.g., Windows file locks during `prisma generate`), the security layer uses a **Raw SQL Fallback** mechanism. 
+- It leverages `prisma.$queryRaw` and `prisma.$executeRaw` for allowlist checks.
+- This ensures that security logic remains functional even if the high-level Prisma Client is temporarily stale or out-of-sync with the underlying database schema.
+
 ---
 *Created with focus on Reliability and Neural Depth.*

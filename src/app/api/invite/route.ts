@@ -15,14 +15,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
         }
 
-        // Add to allowlist
-        const allowed = await prisma.allowedUser.upsert({
-            where: { email },
-            update: {},
-            create: { email }
-        });
+        // Add to allowlist using raw query to bypass stale client
+        const id = Math.random().toString(36).substring(7);
+        await prisma.$executeRaw`
+            INSERT INTO "AllowedUser" ("id", "email", "createdAt")
+            VALUES (${id}, ${email}, NOW())
+            ON CONFLICT ("email") DO NOTHING
+        `;
 
-        return NextResponse.json({ success: true, allowed });
+        return NextResponse.json({ success: true });
 
     } catch (error: any) {
         console.error("Invite User Error:", error);
@@ -31,17 +32,21 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-    const session = await auth();
-    if (!session || !session.user || !session.user.id) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     try {
-        const allowedUsers = await prisma.allowedUser.findMany({
-            orderBy: { createdAt: 'desc' }
-        });
+        const session = await auth();
+        console.log("Invite API Session:", !!session);
+
+        if (!session || !session.user || !session.user.id) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const allowedUsers = await prisma.$queryRaw`SELECT * FROM "AllowedUser" ORDER BY "createdAt" DESC`.catch(() => []);
         return NextResponse.json({ allowedUsers });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error("Invite API GET Error:", error);
+        return NextResponse.json({
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        }, { status: 500 });
     }
 }
