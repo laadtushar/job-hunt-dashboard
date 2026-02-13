@@ -12,11 +12,13 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { RefreshCw, Plus, Search } from "lucide-react"
+import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
 
 export default function DashboardClient({ jobs }: { jobs: any[] }) {
     const [syncLimit, setSyncLimit] = useState(50)
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("ALL")
+    const [sortOrder, setSortOrder] = useState("NEWEST")
     const [isSyncing, setIsSyncing] = useState(false)
     const [syncLogs, setSyncLogs] = useState<{ message: string, type: 'info' | 'success' | 'error' }[]>([])
 
@@ -73,6 +75,19 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
         const matchesStatus = statusFilter === "ALL" || job.status === statusFilter
 
         return matchesSearch && matchesStatus
+    }).sort((a, b) => {
+        switch (sortOrder) {
+            case "NEWEST":
+                return new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime();
+            case "OLDEST":
+                return new Date(a.appliedDate).getTime() - new Date(b.appliedDate).getTime();
+            case "UPDATED":
+                return new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime();
+            case "COMPANY":
+                return (a.company || "").localeCompare(b.company || "");
+            default:
+                return 0;
+        }
     })
 
     const stats = {
@@ -131,6 +146,17 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                                 <SelectItem value="GHOSTED">Ghosted</SelectItem>
                             </SelectContent>
                         </Select>
+                        <Select value={sortOrder} onValueChange={setSortOrder}>
+                            <SelectTrigger className="w-[140px]">
+                                <SelectValue placeholder="Sort By" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="NEWEST">Newest First</SelectItem>
+                                <SelectItem value="OLDEST">Oldest First</SelectItem>
+                                <SelectItem value="UPDATED">Last Updated</SelectItem>
+                                <SelectItem value="COMPANY">Company (A-Z)</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
 
                     <div className="flex gap-2 items-center w-full md:w-auto">
@@ -153,6 +179,7 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                             <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
                             {isSyncing ? 'Syncing...' : 'Sync Emails'}
                         </Button>
+                        <MaintenanceControls />
                     </div>
                 </div>
 
@@ -162,8 +189,8 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                         {syncLogs.length === 0 && <div className="text-muted-foreground animate-pulse">Connecting to sync service...</div>}
                         {syncLogs.map((log, i) => (
                             <div key={i} className={`mb-1 ${log.type === 'error' ? 'text-red-500' :
-                                    log.type === 'success' ? 'text-green-600 font-semibold' :
-                                        'text-muted-foreground'
+                                log.type === 'success' ? 'text-green-600 font-semibold' :
+                                    'text-muted-foreground'
                                 }`}>
                                 <span className="opacity-50 mr-2">[{new Date().toLocaleTimeString()}]</span>
                                 {log.message}
