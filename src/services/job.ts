@@ -164,7 +164,7 @@ export class JobService {
                 jobId: data.jobId,
                 status: data.status || "APPLIED",
                 source: source,
-                appliedDate: new Date(),
+                appliedDate: data.receivedDate ? new Date(data.receivedDate) : new Date(),
                 location: data.location,
                 salaryRange: data.salary ? JSON.stringify(data.salary) : null,
                 companyDomain: data.companyInfo?.domain,
