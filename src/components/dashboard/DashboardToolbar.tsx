@@ -1,4 +1,4 @@
-
+import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -29,32 +29,45 @@ export function DashboardToolbar({
     setSearchTerm,
     statusFilter,
     setStatusFilter,
-    sortOrder,
-    setSortOrder,
     syncLimit,
     setSyncLimit,
     isSyncing,
     handleSync
 }: DashboardToolbarProps) {
+    const [mounted, setMounted] = React.useState(false)
+
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return (
+            <div className="mb-10 p-6 rounded-3xl bg-white/50 border border-dashed animate-pulse" />
+        )
+    }
+
     return (
-        <div className="flex flex-col gap-6 bg-card p-6 rounded-xl border shadow-sm">
-            <div className="flex flex-col xl:flex-row gap-6 items-center justify-between">
-                {/* Search & Filter Group */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
-                    <div className="relative w-full sm:w-80">
-                        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            placeholder="Search companies or roles..."
-                            className="pl-10 h-10"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
+        <div className="mb-10 space-y-4">
+            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 bg-white/60 dark:bg-slate-900/40 p-3 md:p-2 rounded-3xl md:rounded-[3rem] border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl shadow-2xl shadow-blue-500/5 transition-all duration-500">
+                {/* Search - Primary focus */}
+                <div className="relative flex-1 group min-w-0">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 transition-colors group-focus-within:text-blue-500" />
+                    <Input
+                        placeholder="Search applications..."
+                        className="pl-12 h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+
+                {/* Filters & Actions Group */}
+                <div className="flex flex-wrap items-center gap-3">
+                    {/* Status Filter */}
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
-                        <SelectTrigger className="w-full sm:w-[160px] h-10">
+                        <SelectTrigger className="flex-1 md:flex-none w-full md:w-[160px] h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] shadow-inner font-bold text-slate-600 dark:text-slate-300">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800">
                             <SelectItem value="ALL">All Status</SelectItem>
                             <SelectItem value="APPLIED">Applied</SelectItem>
                             <SelectItem value="SCREEN">Screening</SelectItem>
@@ -64,44 +77,34 @@ export function DashboardToolbar({
                             <SelectItem value="GHOSTED">Ghosted</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Select value={sortOrder} onValueChange={setSortOrder}>
-                        <SelectTrigger className="w-full sm:w-[160px] h-10">
-                            <SelectValue placeholder="Sort By" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="NEWEST">Newest First</SelectItem>
-                            <SelectItem value="OLDEST">Oldest First</SelectItem>
-                            <SelectItem value="UPDATED">Last Updated</SelectItem>
-                            <SelectItem value="COMPANY">Company (A-Z)</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
 
-                {/* Sync & Maintenance Actions */}
-                <div className="flex flex-col sm:flex-row gap-4 items-center w-full xl:w-auto">
-                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-                        <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">Sync Limit:</span>
-                        <Input
-                            type="number"
-                            className="w-24 h-10"
-                            value={syncLimit}
-                            onChange={(e) => setSyncLimit(Number(e.target.value))}
-                            min={1}
-                            max={500}
-                        />
-                    </div>
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
-                        <Button
-                            onClick={handleSync}
-                            disabled={isSyncing}
-                            className={`flex-1 sm:w-auto h-10 px-6 ${isSyncing ? "opacity-80" : ""}`}
-                        >
-                            <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
-                            {isSyncing ? 'Syncing...' : 'Sync Emails'}
-                        </Button>
-                        <div className="sm:w-auto">
-                            <MaintenanceControls />
+                    {/* Limit, Settings, Sync Group - Better wrap handling */}
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <div className="flex items-center gap-3 bg-white dark:bg-slate-950 px-4 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner flex-1 md:flex-none">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Limit</span>
+                            <Input
+                                type="number"
+                                className="w-10 h-8 border-none bg-transparent shadow-none focus:ring-0 p-0 font-black text-blue-600 dark:text-blue-400 text-center text-sm"
+                                value={syncLimit}
+                                onChange={(e) => setSyncLimit(Number(e.target.value))}
+                                min={1}
+                                max={500}
+                            />
                         </div>
+
+                        <MaintenanceControls />
+
+                        <Button
+                            disabled={isSyncing}
+                            className={`h-14 md:h-12 px-6 md:px-8 rounded-2xl md:rounded-[2rem] font-black text-xs md:text-sm uppercase tracking-wider gap-2 shadow-xl transition-all active:scale-95 flex-1 md:flex-none ${isSyncing
+                                ? 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-500/25'
+                                }`}
+                            onClick={handleSync}
+                        >
+                            <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+                            {isSyncing ? 'Syncing...' : 'Sync Gmail'}
+                        </Button>
                     </div>
                 </div>
             </div>

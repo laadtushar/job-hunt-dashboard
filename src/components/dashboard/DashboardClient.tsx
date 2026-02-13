@@ -5,6 +5,7 @@ import { JobCard } from "@/components/dashboard/JobCard"
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 import { DashboardToolbar } from "@/components/dashboard/DashboardToolbar"
 import { SyncLogs } from "@/components/dashboard/SyncLogs"
+import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
 
 export default function DashboardClient({ jobs }: { jobs: any[] }) {
     const [syncLimit, setSyncLimit] = useState(50)
@@ -101,6 +102,7 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
 
     return (
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+            <AIInsightsPanel jobs={jobs} />
             <DashboardHeader stats={stats} />
 
             <div className="space-y-6">
@@ -125,10 +127,15 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                     <JobCard key={job.id} job={job} />
                 ))}
                 {filteredJobs.length === 0 && (
-                    <div className="col-span-full flex flex-col items-center justify-center py-16 text-muted-foreground bg-muted/20 rounded-xl border border-dashed">
-                        <div className="text-4xl mb-2">🔍</div>
-                        <p className="text-lg font-medium">No applications found</p>
-                        <p className="text-sm">Try adjusting your filters or search.</p>
+                    <div className="col-span-full flex flex-col items-center justify-center py-20 px-4 text-center bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-slate-200">
+                        <div className="h-20 w-20 rounded-full bg-slate-50 flex items-center justify-center mb-6 shadow-inner">
+                            <span className="text-4xl text-slate-300">📁</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">No results matching your pulse</h3>
+                        <p className="text-slate-500 max-w-sm mx-auto leading-relaxed">
+                            We couldn't find any job applications that match your current search or filters.
+                            Try broadening your scope or syncing new roles!
+                        </p>
                     </div>
                 )}
             </div>
