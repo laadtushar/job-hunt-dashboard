@@ -22,6 +22,10 @@ interface DashboardToolbarProps {
     setSortOrder: (order: string) => void
     syncLimit: number
     setSyncLimit: (limit: number) => void
+    afterDate: string
+    setAfterDate: (date: string) => void
+    beforeDate: string
+    setBeforeDate: (date: string) => void
     isSyncing: boolean
     handleSync: () => void
 }
@@ -33,6 +37,10 @@ export function DashboardToolbar({
     setStatusFilter,
     syncLimit,
     setSyncLimit,
+    afterDate,
+    setAfterDate,
+    beforeDate,
+    setBeforeDate,
     isSyncing,
     handleSync
 }: DashboardToolbarProps) {
@@ -66,7 +74,7 @@ export function DashboardToolbar({
                 <div className="flex flex-wrap items-center gap-3">
                     {/* Status Filter */}
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
-                        <SelectTrigger className="flex-1 md:flex-none w-full md:w-[160px] h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] shadow-inner font-bold text-slate-600 dark:text-slate-300">
+                        <SelectTrigger className="flex-1 md:flex-none w-full md:w-[150px] h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] shadow-inner font-bold text-slate-600 dark:text-slate-300">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800">
@@ -80,9 +88,47 @@ export function DashboardToolbar({
                         </SelectContent>
                     </Select>
 
-                    {/* Limit, Settings, Sync Group - Better wrap handling */}
-                    <div className="flex items-center gap-2 w-full md:w-auto">
+                    {/* Date Range & Limit Group */}
+                    <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar py-2 md:py-0">
                         <TooltipProvider>
+                            {/* After (From) */}
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className="flex items-center gap-2 bg-white dark:bg-slate-950 px-3 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner min-w-[140px]">
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">From</span>
+                                        <Input
+                                            type="date"
+                                            className="border-none bg-transparent shadow-none focus:ring-0 p-0 font-bold text-slate-700 dark:text-slate-300 text-xs w-full"
+                                            value={afterDate}
+                                            onChange={(e) => setAfterDate(e.target.value)}
+                                        />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                    Start scanning from this date
+                                </TooltipContent>
+                            </Tooltip>
+
+                            {/* Before (To) */}
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className="flex items-center gap-2 bg-white dark:bg-slate-950 px-3 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner min-w-[140px]">
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">To</span>
+                                        <Input
+                                            type="date"
+                                            className="border-none bg-transparent shadow-none focus:ring-0 p-0 font-bold text-slate-700 dark:text-slate-300 text-xs w-full"
+                                            value={beforeDate}
+                                            onChange={(e) => setBeforeDate(e.target.value)}
+                                            placeholder="Optional"
+                                        />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
+                                    End scan at this date (Optional)
+                                </TooltipContent>
+                            </Tooltip>
+
+                            {/* Sync Limit */}
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <div className="flex items-center gap-3 bg-white dark:bg-slate-950 px-4 h-14 md:h-12 rounded-2xl md:rounded-[2rem] shadow-inner flex-1 md:flex-none cursor-help">
@@ -93,12 +139,12 @@ export function DashboardToolbar({
                                             value={syncLimit}
                                             onChange={(e) => setSyncLimit(Number(e.target.value))}
                                             min={1}
-                                            max={500}
+                                            max={1000}
                                         />
                                     </div>
                                 </TooltipTrigger>
                                 <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
-                                    Number of emails to scan
+                                    Max emails to fetch from Gmail
                                 </TooltipContent>
                             </Tooltip>
 

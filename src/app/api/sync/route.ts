@@ -30,7 +30,13 @@ export async function POST(req: Request) {
     if (body.action === 'prepare') {
         const gmailService = new GmailService(account.access_token!, account.refresh_token as string);
         const limit = body.limit || 365;
-        const messages = await gmailService.listEmails(userId, "label:inbox subject:application OR subject:job OR subject:interview after:2024/01/01", limit);
+        const afterDate = body.after || "2024/01/01";
+        const beforeDate = body.before;
+
+        let query = `label:inbox subject:application OR subject:job OR subject:interview after:${afterDate}`;
+        if (beforeDate) query += ` before:${beforeDate}`;
+
+        const messages = await gmailService.listEmails(userId, query, limit);
 
         // Return only IDs not processed yet
         const gmailIds = messages.map(m => m.id).filter((id): id is string => !!id);
