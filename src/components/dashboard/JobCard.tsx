@@ -73,8 +73,8 @@ export function JobCard({ job }: JobCardProps) {
                     </div>
 
                     <div className="flex flex-col items-end gap-1">
-                        <div className="text-sm text-muted-foreground">
-                            {new Date(job.lastUpdate).toLocaleDateString('en-US')}
+                        <div className="text-xs text-muted-foreground" title={`Updated: ${new Date(job.lastUpdate).toLocaleDateString()}`}>
+                            {new Date(job.appliedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </div>
                         <Button
                             variant="ghost"
@@ -104,8 +104,14 @@ export function JobCard({ job }: JobCardProps) {
                             </div>
                         )}
                         {job.people?.recruiterName && (
-                            <div className="flex items-center">
+                            <div className="flex items-center" title="Recruiter">
                                 <Mail className="h-4 w-4 mr-1" /> {job.people.recruiterName}
+                            </div>
+                        )}
+                        {!job.people?.recruiterName && job.emailLogs?.[0]?.sender && (
+                            <div className="flex items-center" title="Last Sender">
+                                <Mail className="h-4 w-4 mr-1 text-muted-foreground/70" />
+                                <span className="text-muted-foreground/70">{job.emailLogs[0].sender.split('<')[0].replace(/"/g, '').trim()}</span>
                             </div>
                         )}
                         {job.dates?.interview && (
@@ -124,8 +130,8 @@ export function JobCard({ job }: JobCardProps) {
                                 </Badge>
                             )}
                         </div>
-                        <div>
-                            Updated {new Date(job.lastUpdate).toLocaleDateString()}
+                        <div className="flex flex-col items-end text-[10px] text-muted-foreground/60">
+                            <div>Last Activity: {new Date(job.lastUpdate).toLocaleDateString()}</div>
                         </div>
                     </div>
                 </CardContent>

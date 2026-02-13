@@ -136,6 +136,10 @@ model EmailLog {
   
   createdAt       DateTime @default(now())
   isIgnored       Boolean @default(false)
+  
+  // Meta extraction for easier querying/feedback
+  sender          String?
+  subject         String?
 }
 
 model UserFeedback {

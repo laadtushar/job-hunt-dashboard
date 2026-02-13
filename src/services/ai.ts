@@ -18,6 +18,7 @@ export interface ExtractedJobData {
     sentiment?: string; // positive, negative, neutral
     sentimentScore?: number; // 0-1
     feedback?: string;
+    receivedDate?: string; // ISO Date of the email
     _meta?: {
         model: string;
         provider: string;
@@ -135,7 +136,7 @@ export class AIService {
         }
     }
 
-    async parseEmail(emailBody: string, subject: string, sender?: string): Promise<ExtractedJobData> {
+    async parseEmail(emailBody: string, subject: string, sender: string | undefined, receivedDate?: Date): Promise<ExtractedJobData> {
         // Fetch USER FEEDBACK for False Positives
         let feedbackContext = "";
         try {
@@ -144,12 +145,12 @@ export class AIService {
                 take: 20
             });
             if (falsePositives.length > 0) {
-                const examples = falsePositives.map(fp => {
+                const examples = falsePositives.map((fp: any) => {
                     try {
                         const input = JSON.parse(fp.input);
                         return `- Sender: "${input.sender}", Subject: "${input.subject}" -> NOT JOB RELATED`;
                     } catch (e) { return ""; }
-                }).filter(s => s).join("\n");
+                }).filter((s: string) => s).join("\n");
 
                 if (examples) {
                     feedbackContext = `
@@ -179,8 +180,10 @@ export class AIService {
         7.  **Next Steps**: Summarize strict next actions.
         8.  **Sender Domain**: Use the Sender email to infer company domain if it's a corporate address (not gmail/yahoo).
         
+        
         Sender: ${sender || "Unknown"}
         Subject: ${subject}
+        Received Date: ${receivedDate ? receivedDate.toISOString().split('T')[0] : "Unknown"}
         Body: ${emailBody.substring(0, 8000)} 
         
         Return ONLY valid JSON:
@@ -203,6 +206,7 @@ export class AIService {
 
         try {
             const result = await this._generateJson<ExtractedJobData>(prompt);
+            result.receivedDate = receivedDate ? receivedDate.toISOString() : undefined;
             result._meta = {
                 provider: this.provider,
                 model: this.provider === 'GEMINI' ? 'gemini-2.0-flash' : (process.env.OPENROUTER_MODEL || 'unknown')
@@ -225,13 +229,13 @@ export class AIService {
                 take: 20
             });
             if (mergePatterns.length > 0) {
-                const examples = mergePatterns.map(mp => {
+                const examples = mergePatterns.map((mp: any) => {
                     try {
                         const input = JSON.parse(mp.input);
                         // input might be { roleA: "...", roleB: "...", company: "..." }
                         return `- At "${input.company}", "${input.roleA}" IS THE SAME AS "${input.roleB}"`;
                     } catch (e) { return ""; }
-                }).filter(s => s).join("\n");
+                }).filter((s: string) => s).join("\n");
 
                 if (examples) {
                     feedbackContext = `
@@ -257,6 +261,7 @@ export class AIService {
         Company: ${newJob.company}
         Role: ${newJob.role}
         Status: ${newJob.status}
+        Date: ${newJob.receivedDate ? newJob.receivedDate.split('T')[0] : "Unknown"}
         
         EXISTING CANDIDATES:
         ${candidatesDesc}
@@ -265,7 +270,7 @@ export class AIService {
         - Analyze semantic similarity. "Senior Engineer" == "SDE III".
         - If the new update is just a status change (e.g. "We are moving forward" email) for a candidate, MATCH IT.
         - If roles are different (e.g. "Product Manager" vs "Engineer"), DO NOT MATCH.
-        - If the candidate is old (> 6 months) and this looks like a fresh application, DO NOT MATCH.
+        - If the candidate is old (> 6 months) and this looks like a new application (based on Date), DO NOT MATCH.
         
         Return JSON:
         {
