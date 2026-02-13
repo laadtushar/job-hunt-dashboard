@@ -61,71 +61,95 @@ export async function POST(req: Request) {
 
                 sendLog(`Processing ${messages.length - existingIdsSet.size} new emails...`, "info");
 
+                const startTime = Date.now();
+                const TIME_LIMIT = 55000; // 55 seconds (safe margin for 60s limit)
+
                 let processedCount = 0;
                 let newJobsCount = 0;
 
-                for (const [index, msg] of messages.entries()) {
-                    if (!msg.id || !msg.threadId) continue;
+                const newMessages = messages.filter(m => m.id && m.threadId && !existingIdsSet.has(m.id));
+                const BATCH_SIZE = 5;
 
-                    if (existingIdsSet.has(msg.id)) {
-                        continue;
+                for (let i = 0; i < newMessages.length; i += BATCH_SIZE) {
+                    // Check if we are approaching the time limit
+                    if (Date.now() - startTime > TIME_LIMIT) {
+                        sendLog(`Stopping early to avoid timeout. ${newMessages.length - i} emails remaining. Please sync again.`, "info");
+                        break;
                     }
 
-                    // Get details
-                    const fullMsg = await gmailService.getEmailDetails(msg.id);
-                    if (!fullMsg || !fullMsg.payload) continue;
+                    const batch = newMessages.slice(i, i + BATCH_SIZE);
+                    sendLog(`Processing batch ${Math.floor(i / BATCH_SIZE) + 1} (${batch.length} emails)...`, "info");
 
-                    const subjectHeader = fullMsg.payload.headers?.find((h: any) => h.name === "Subject");
-                    const subject = subjectHeader?.value || "No Subject";
-                    const fromHeader = fullMsg.payload.headers?.find((h: any) => h.name === "From");
-                    const sender = fromHeader?.value || "";
-                    const body = GmailService.getBody(fullMsg.payload) || "";
-
-                    sendLog(`${index + 1}/${messages.length}: Analyzing "${subject.substring(0, 40)}..."`, "info");
-
-
-                    // AI Parse
-                    const extractedData = await aiService.parseEmail(body, subject || "No Subject", sender);
-
-                    if (extractedData.isJobRelated) {
-                        sendLog(`  ✨ Job Found: ${extractedData.company} - ${extractedData.status}`, "success");
-
-                        // Save Job
+                    const results = await Promise.all(batch.map(async (msg) => {
                         try {
-                            const savedJob = await jobService.createOrUpdateApplication(userId, extractedData, msg.threadId, aiService);
+                            const fullMsg = await gmailService.getEmailDetails(msg.id!);
+                            if (!fullMsg || !fullMsg.payload) return null;
 
-                            // Log Email
+                            const subjectHeader = fullMsg.payload.headers?.find((h: any) => h.name === "Subject");
+                            const subject = subjectHeader?.value || "No Subject";
+                            const fromHeader = fullMsg.payload.headers?.find((h: any) => h.name === "From");
+                            const sender = fromHeader?.value || "";
+                            const body = GmailService.getBody(fullMsg.payload) || "";
+
+                            // AI Parse
+                            const extractedData = await aiService.parseEmail(body, subject, sender);
+
+                            if (extractedData.isJobRelated) {
+                                // Save Job
+                                const savedJob = await jobService.createOrUpdateApplication(userId, extractedData, msg.threadId!, aiService);
+
+                                // Log Email
+                                await prisma.emailLog.create({
+                                    data: {
+                                        gmailId: msg.id!,
+                                        threadId: msg.threadId!,
+                                        receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
+                                        snippet: fullMsg.snippet || null,
+                                        body: body,
+                                        applicationId: savedJob.id,
+                                        aiModel: extractedData._meta?.model,
+                                        aiProvider: extractedData._meta?.provider,
+                                        aiOutput: JSON.stringify(extractedData),
+                                        sender: sender,
+                                        subject: subject
+                                    }
+                                });
+                                return { success: true, company: extractedData.company, status: extractedData.status };
+                            }
+
+                            // If not job related, we still log it as ignored to avoid re-processing
                             await prisma.emailLog.create({
                                 data: {
-                                    gmailId: msg.id,
-                                    threadId: msg.threadId,
+                                    gmailId: msg.id!,
+                                    threadId: msg.threadId!,
                                     receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
                                     snippet: fullMsg.snippet || null,
                                     body: body,
-                                    applicationId: savedJob.id,
-                                    aiModel: extractedData._meta?.model,
-                                    aiProvider: extractedData._meta?.provider,
-                                    aiOutput: JSON.stringify(extractedData)
+                                    isIgnored: true,
+                                    aiOutput: JSON.stringify(extractedData),
+                                    sender: sender,
+                                    subject: subject
                                 }
                             });
-                            newJobsCount++;
-                        } catch (e) {
-                            console.error("Failed to save job:", e);
-                            sendLog(`  ❌ Failed to save job: ${e}`, "error");
+                            return { success: false };
+                        } catch (e: any) {
+                            console.error(`Error processing email ${msg.id}:`, e);
+                            return { error: e.message };
                         }
+                    }));
 
-                    } else {
-                        if (extractedData.feedback && extractedData.feedback.includes("OpenRouter API Error")) {
-                            sendLog(`  ❌ AI Error: ${extractedData.feedback}`, "error");
-                        } else if (extractedData.feedback) {
-                            // Optional: log other feedback if needed, currently just OpenRouter errors are critical
-                            // sendLog(`  ℹ️ Skipped: ${extractedData.feedback}`, "info");
+                    for (const res of results) {
+                        if (res?.success) {
+                            newJobsCount++;
+                            sendLog(`  ✨ Found: ${res.company} (${res.status})`, "success");
+                        } else if (res?.error) {
+                            sendLog(`  ❌ Error: ${res.error}`, "error");
                         }
+                        processedCount++;
                     }
-                    processedCount++;
                 }
 
-                sendLog(`Sync Complete! Processed ${processedCount} emails. Found ${newJobsCount} new job updates.`, "success");
+                sendLog(`Sync Complete! Found ${newJobsCount} new job updates.`, "success");
 
             } catch (error: any) {
                 console.error("Sync Error:", error);
