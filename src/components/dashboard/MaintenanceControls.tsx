@@ -40,7 +40,9 @@ export function MaintenanceControls() {
         }
     };
 
-    const handleIgnore = async (log: any) => {
+    const handleIgnore = async (e: React.MouseEvent, log: any) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (!log.applicationId) return;
         if (!confirm("Are you sure? This will remove the job and mark the email as 'Not a Job'. AI will learn from this.")) return;
 
@@ -219,7 +221,7 @@ export function MaintenanceControls() {
                                                             variant="ghost"
                                                             size="sm"
                                                             className="rounded-xl text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 font-bold text-[11px] h-8 px-4 transition-all opacity-0 group-hover:opacity-100"
-                                                            onClick={() => handleIgnore(log)}
+                                                            onClick={(e) => handleIgnore(e, log)}
                                                         >
                                                             Filter Out
                                                         </Button>
