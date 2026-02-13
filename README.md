@@ -11,6 +11,14 @@ A premium, AI-powered job application tracker that syncs with your Gmail to auto
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
 ![Gemini](https://img.shields.io/badge/Powered%20by-Gemini%202.0-blue)
 
+## 🖼️ Visual Tour
+
+### Dashboard Overview
+![Dashboard Overview](./public/screenshots/dashboard.png)
+
+### Automated Gmail Sync (Agentic Flow)
+![Sync Running](./public/screenshots/sync_running.png)
+
 ## ✨ Features
 
 - **📬 Automated Gmail Sync**: Scans your inbox for job applications, interview invites, and rejections.
@@ -23,12 +31,31 @@ A premium, AI-powered job application tracker that syncs with your Gmail to auto
 
 ## 🚀 Tech Stack
 
-- **Framework**: [Next.js 15 App Router](https://nextjs.org/)
-- **Database**: SQLite with [Prisma ORM](https://www.prisma.io/)
+- **Framework**: [Next.js 16 App Router](https://nextjs.org/)
+- **Database**: PostgreSQL (Vercel Postgres) with [Prisma ORM](https://www.prisma.io/)
 - **AI**: Google [Gemini 2.0 Flash](https://aistudio.google.com/) (Direct or via OpenRouter)
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/) (Google Provider)
 - **UI Components**: [Shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+
+## 🧠 Agentic AI Flow
+
+The core of Meridian is a multi-stage agentic workflow designed to handle the noise of a real inbox:
+
+1. **Extraction Agent (Front-Line)**: 
+   - Scans incoming emails and structures unstructured text into a standard Job schema.
+   - Uses **Self-Correction Logic**: It fetches "Learned Rules" from the database (rules established by your previous "Ignore" or "Correction" actions) to avoid repeating mistakes like classifying newsletters as applications.
+
+2. **The AI Judge (Identity Resolution)**:
+   - When new data arrives, a context-aware agent determines if it belongs to an existing application or is a fresh one. 
+   - It performs **Semantic Reasoning** (understanding that "SDE" at Google and "Software Dev" at Alphabet might be the same job) and **Time-Based Logic** (distinguishing a status update from a re-application months later).
+
+3. **Reflexion Loop (Self-Healing)**:
+   - Triggered when you request a "Deep Refresh". The AI re-analyzes original emails plus any follow-up threads.
+   - It performs **Critique and Correction**: Identifying why the previous attempt was incorrect and using your direct feedback as the ultimate ground truth.
+
+4. **Maintenance Agent (Consolidation)**:
+   - Automatically runs across your database to merge legacy duplicates or fragmented threads into a cohesive career timeline.
 
 ## 🛠️ Getting Started
 
