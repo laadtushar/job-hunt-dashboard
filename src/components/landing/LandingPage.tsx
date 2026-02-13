@@ -14,7 +14,8 @@ import {
     Search,
     BrainCircuit,
     Layers,
-    Bot
+    Bot,
+    Terminal
 } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -209,6 +210,82 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Trust & Transparency Section */}
+            <section className="py-32 bg-white dark:bg-slate-950 px-6">
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+                        <div className="order-2 md:order-1 grid grid-cols-1 gap-8">
+                            <motion.div
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                                className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 p-2 bg-slate-50 dark:bg-slate-900 shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500"
+                            >
+                                <Image
+                                    src="/screenshots/Log.png"
+                                    alt="Neural Logs"
+                                    width={600}
+                                    height={400}
+                                    className="rounded-[1.5rem] shadow-inner"
+                                />
+                                <div className="absolute -bottom-6 -right-6 bg-slate-900 text-white p-4 rounded-2xl shadow-xl font-bold text-xs flex items-center gap-3 border border-white/10">
+                                    <Terminal className="h-4 w-4 text-blue-400" />
+                                    Real-time Neural Trace
+                                </div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                className="relative rounded-[2rem] border border-slate-200 dark:border-slate-800 p-2 bg-slate-50 dark:bg-slate-900 shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 ml-12"
+                            >
+                                <Image
+                                    src="/screenshots/trust_list.png"
+                                    alt="Trust List"
+                                    width={600}
+                                    height={400}
+                                    className="rounded-[1.5rem] shadow-inner"
+                                />
+                                <div className="absolute -bottom-6 -left-6 bg-blue-600 text-white p-4 rounded-2xl shadow-xl font-bold text-xs flex items-center gap-3 border border-white/10">
+                                    <ShieldCheck className="h-4 w-4 text-white" />
+                                    Invite-Only Security
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        <div className="order-1 md:order-2 space-y-10">
+                            <div className="space-y-4 text-center md:text-left">
+                                <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.3em]">Governance</h2>
+                                <h3 className="text-4xl md:text-6xl font-black text-slate-950 dark:text-white leading-tight">Trust through <br /><span className="text-blue-500 italic">Total Visibility.</span></h3>
+                                <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-xl">
+                                    We believe AI shouldn't be a black box. Meridian provides surgical logs for every neural decision and a robust permission system to keep your data exclusively yours.
+                                </p>
+                            </div>
+
+                            <div className="space-y-6">
+                                {[
+                                    { title: "Neural Protocol Logging", desc: "Audit every extraction, match, and AI decision in real-time.", icon: Terminal },
+                                    { title: "Zero-Knowledge Trust", desc: "Invite-only architecture ensures only authorized users touch the system.", icon: ShieldCheck }
+                                ].map((feature, i) => (
+                                    <div key={i} className="flex gap-6 p-6 rounded-3xl hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                                        <div className="h-12 w-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                                            <feature.icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-wider text-xs">{feature.title}</h4>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{feature.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
