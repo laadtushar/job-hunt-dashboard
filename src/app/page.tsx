@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Compass, Mail, Sparkles, Clock } from "lucide-react"
 import { loginAction } from "@/lib/actions"
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const session = await auth()
 
