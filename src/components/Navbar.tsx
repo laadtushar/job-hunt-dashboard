@@ -9,14 +9,14 @@ export default async function Navbar() {
     return (
         <nav className="sticky top-0 z-50 border-b bg-white/70 dark:bg-slate-950/70 backdrop-blur-md px-6 py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <div className="flex items-center gap-3 group cursor-pointer">
+                <a href="/" className="flex items-center gap-3 group cursor-pointer">
                     <div className="h-10 w-10 flex items-center justify-center rounded-xl overflow-hidden shadow-lg shadow-blue-500/20 dark:shadow-blue-500/10 transition-transform group-hover:rotate-12 duration-300">
                         <img src="/logo.png" alt="Meridian Logo" className="h-full w-full object-cover" />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-500 dark:from-blue-400 dark:via-indigo-400 dark:to-blue-300 bg-clip-text text-transparent">
                         Meridian
                     </h1>
-                </div>
+                </a>
 
                 <div className="flex items-center gap-4 sm:gap-6">
                     <ModeToggle />

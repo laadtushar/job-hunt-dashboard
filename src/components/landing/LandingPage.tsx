@@ -24,7 +24,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
     return (
         <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-900 overflow-x-hidden">
             {/* Hero Section */}
-            <section className="relative pt-20 pb-0 md:pt-32 flex flex-col items-center px-6">
+            <section id="home" className="relative pt-20 pb-0 md:pt-32 flex flex-col items-center px-6">
                 {/* Background Gradients */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10 overflow-hidden pointer-events-none">
                     <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
@@ -67,7 +67,12 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
                             </Button>
                         </form>
-                        <Button variant="outline" size="lg" className="h-16 px-10 rounded-2xl border-2 font-bold hover:bg-slate-50 dark:hover:bg-slate-900">
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="h-16 px-10 rounded-2xl border-2 font-bold hover:bg-slate-50 dark:hover:bg-slate-900"
+                        >
                             View Demo
                         </Button>
                     </div>
@@ -109,7 +114,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
             </section>
 
             {/* Workflow section */}
-            <section className="py-32 px-6">
+            <section id="workflow" className="py-32 px-6">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-20 space-y-4">
                         <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.3em]">Agentic Pipeline</h2>
@@ -145,12 +150,12 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
             </section>
 
             {/* Deep Dive Features */}
-            <section className="py-32 bg-slate-950 text-white relative overflow-hidden">
+            <section id="features" className="py-32 bg-slate-950 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-blue-500/10 rounded-full blur-[150px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
                 <div className="max-w-6xl mx-auto px-6 space-y-40">
                     {/* Feature 1 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div id="sync" className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
                             <Badge className="bg-blue-600 text-white border-none py-1.5 px-4 rounded-full font-black text-[10px] uppercase tracking-widest">Performance</Badge>
                             <h2 className="text-4xl md:text-6xl font-black leading-tight">Neural Batch <br /><span className="text-blue-500 italic">Parallel Sync</span></h2>
@@ -216,7 +221,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
             </section>
 
             {/* Trust & Transparency Section */}
-            <section className="py-32 bg-white dark:bg-slate-950 px-6">
+            <section id="governance" className="py-32 bg-white dark:bg-slate-950 px-6">
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
                         <div className="order-2 md:order-1 grid grid-cols-1 gap-8">
@@ -339,7 +344,10 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
             <footer className="py-20 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
                 <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
                     <div className="col-span-1 md:col-span-2 space-y-6">
-                        <div className="flex items-center gap-2 group cursor-pointer">
+                        <div
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            className="flex items-center gap-2 group cursor-pointer w-fit"
+                        >
                             <div className="h-8 w-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black group-hover:rotate-12 transition-transform shadow-lg shadow-blue-500/20">M</div>
                             <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">Meridian</span>
                         </div>
@@ -350,9 +358,24 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                     <div>
                         <h5 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-6">Product</h5>
                         <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-400">
-                            <li className="hover:text-blue-500 cursor-pointer transition-colors">How it works</li>
-                            <li className="hover:text-blue-500 cursor-pointer transition-colors">Neural Sync</li>
-                            <li className="hover:text-blue-500 cursor-pointer transition-colors">Privacy Policy</li>
+                            <li
+                                onClick={() => document.getElementById('workflow')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="hover:text-blue-500 cursor-pointer transition-colors"
+                            >
+                                How it works
+                            </li>
+                            <li
+                                onClick={() => document.getElementById('sync')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="hover:text-blue-500 cursor-pointer transition-colors"
+                            >
+                                Neural Sync
+                            </li>
+                            <li
+                                onClick={() => document.getElementById('governance')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="hover:text-blue-500 cursor-pointer transition-colors"
+                            >
+                                Privacy & Trust
+                            </li>
                         </ul>
                     </div>
                     <div>
