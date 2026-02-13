@@ -49,7 +49,17 @@ export async function POST(req: Request) {
                 sendLog(`Fetching last ${syncLimit} emails...`, "info");
                 const messages = await gmailService.listEmails(userId, "label:inbox subject:application OR subject:job OR subject:interview after:2024/01/01", syncLimit);
 
-                sendLog(`Found ${messages.length} potential emails. Processing...`, "info");
+                sendLog(`Found ${messages.length} potential emails. Checking existing logs...`, "info");
+
+                // Bulk check for existing logs to save DB calls
+                const gmailIds = messages.map(m => m.id).filter((id): id is string => !!id);
+                const existingLogs = await prisma.emailLog.findMany({
+                    where: { gmailId: { in: gmailIds } },
+                    select: { gmailId: true }
+                });
+                const existingIdsSet = new Set(existingLogs.map(l => l.gmailId));
+
+                sendLog(`Processing ${messages.length - existingIdsSet.size} new emails...`, "info");
 
                 let processedCount = 0;
                 let newJobsCount = 0;
@@ -57,10 +67,7 @@ export async function POST(req: Request) {
                 for (const [index, msg] of messages.entries()) {
                     if (!msg.id || !msg.threadId) continue;
 
-                    // Quick check if already processed
-                    const existingLog = await prisma.emailLog.findUnique({ where: { gmailId: msg.id } });
-                    if (existingLog) {
-                        // sendLog(`Skipping ${index + 1}/${messages.length} (Already processed)`, "info");
+                    if (existingIdsSet.has(msg.id)) {
                         continue;
                     }
 
