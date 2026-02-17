@@ -22,7 +22,7 @@ const DemoSankeyNode = ({ x, y, width, height, index, payload, containerWidth }:
                 x={isOut ? x - 6 : x + width + 6}
                 y={y + height / 2}
                 fontSize="12"
-                fill="hsl(var(--muted-foreground))"
+                fill="var(--muted-foreground)"
                 strokeWidth={0} // 1
                 alignmentBaseline="middle" // "central"
             >

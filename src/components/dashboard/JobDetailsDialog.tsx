@@ -190,12 +190,20 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                                         </div>
                                     )}
 
-                                    {/* Next Steps / AI Assessment */}
-                                    {(job.nextSteps || job.sentimentScore !== null) && (
-                                        <div className="bg-blue-50/50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-lg p-4 space-y-3">
+                                    {/* Rejection Reason / Next Steps / AI Assessment */}
+                                    {(job.rejectionReason || job.nextSteps || job.sentimentScore !== null) && (
+                                        <div className="bg-blue-50/50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50 rounded-lg p-4 space-y-4">
                                             <h3 className="font-bold text-blue-900 dark:text-blue-300 flex items-center gap-2">
                                                 <Code className="h-4 w-4" /> AI Analysis
                                             </h3>
+
+                                            {job.status === 'REJECTED' && job.rejectionReason && (
+                                                <div className="space-y-1">
+                                                    <div className="text-[10px] font-black text-red-600 dark:text-red-400 uppercase tracking-[0.2em]">Rejection Reason</div>
+                                                    <p className="text-sm text-red-700 dark:text-red-300 font-bold leading-relaxed">{job.rejectionReason}</p>
+                                                </div>
+                                            )}
+
                                             {job.nextSteps && (
                                                 <div className="space-y-1">
                                                     <div className="text-[10px] font-black text-blue-700 dark:text-blue-400 uppercase tracking-[0.2em]">Next Steps</div>

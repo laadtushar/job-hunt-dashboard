@@ -8,7 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { RefreshCw, Search, LayoutGrid, List } from "lucide-react"
+import { RefreshCw, Search, LayoutGrid, List, KanbanSquare } from "lucide-react"
 import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -20,8 +20,8 @@ interface DashboardToolbarProps {
     setStatusFilter: (status: string) => void
     sortOrder: string
     setSortOrder: (order: string) => void
-    viewMode: 'BOARD' | 'GRID'
-    setViewMode: (mode: 'BOARD' | 'GRID') => void
+    viewMode: 'BOARD' | 'GRID' | 'PIPELINE'
+    setViewMode: (mode: 'BOARD' | 'GRID' | 'PIPELINE') => void
     syncLimit: number
     setSyncLimit: (limit: number) => void
     afterDate: string
@@ -122,8 +122,18 @@ export function DashboardToolbar({
                             size="icon"
                             onClick={() => setViewMode('GRID')}
                             className={`rounded-xl md:rounded-full h-10 w-10 transition-all ${viewMode === 'GRID' ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}
+                            title="Grid View"
                         >
                             <List className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setViewMode('PIPELINE')}
+                            className={`rounded-xl md:rounded-full h-10 w-10 transition-all ${viewMode === 'PIPELINE' ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}
+                            title="Pipeline View"
+                        >
+                            <KanbanSquare className="h-4 w-4" />
                         </Button>
                     </div>
 

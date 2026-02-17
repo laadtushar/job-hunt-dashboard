@@ -8,9 +8,16 @@ import { SyncLogs } from "@/components/dashboard/SyncLogs"
 import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
 import { AskAI } from "@/components/dashboard/AskAI"
 import { JobGridView } from "@/components/dashboard/JobGridView"
+import KanbanBoard from "@/components/kanban/KanbanBoard"
 
-export default function DashboardClient({ jobs }: { jobs: any[] }) {
-    const [viewMode, setViewMode] = useState<'BOARD' | 'GRID'>('BOARD')
+export default function DashboardClient({
+    jobs,
+    initialView = 'BOARD'
+}: {
+    jobs: any[],
+    initialView?: 'BOARD' | 'GRID' | 'PIPELINE'
+}) {
+    const [viewMode, setViewMode] = useState<'BOARD' | 'GRID' | 'PIPELINE'>(initialView)
     const [syncLimit, setSyncLimit] = useState(50)
     const [afterDate, setAfterDate] = useState("2024-01-01")
     const [beforeDate, setBeforeDate] = useState("")
@@ -187,8 +194,12 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                         </div>
                     )}
                 </div>
-            ) : (
+            ) : viewMode === 'GRID' ? (
                 <JobGridView jobs={filteredJobs} />
+            ) : (
+                <div className="bg-white/40 dark:bg-slate-900/40 p-4 rounded-3xl border border-slate-200/60 dark:border-slate-800/60 shadow-inner">
+                    <KanbanBoard initialJobs={filteredJobs} />
+                </div>
             )}
 
             <AskAI />

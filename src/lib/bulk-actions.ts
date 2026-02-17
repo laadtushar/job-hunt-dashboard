@@ -36,6 +36,7 @@ export async function saveBulkJobs(jobs: ExtractedJobData[]) {
                     appliedDate: new Date(),
                     source: "MANUAL",
                     salaryRange: job.salary ? JSON.stringify(job.salary) : null,
+                    rejectionReason: job.rejectionReason || null,
                     // Store the full extracted object as initial analysis
                     analysis: JSON.stringify(job)
                 }

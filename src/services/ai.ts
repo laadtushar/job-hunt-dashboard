@@ -20,6 +20,8 @@ export interface ExtractedJobData {
     feedback?: string;
     thoughtProcess?: string; // Explain your critique and correction (Reflexion)
     receivedDate?: string; // ISO Date of the email
+    analysis?: string; // Raw AI extraction JSON
+    rejectionReason?: string; // Concise reason if rejected
     _meta?: {
         model: string;
         provider: string;
@@ -187,6 +189,7 @@ export class AIService {
         6.  **Salary**: Extract ranges if available.
         7.  **Next Steps**: Summarize strict next actions.
         8.  **Sender Domain**: Use the Sender email to infer company domain if it's a corporate address (not gmail/yahoo).
+        9.  **Rejection Reason**: If the status is "REJECTED", extract a VERY CONCISE reason (max 10 words). Examples: "Generic rejection", "Role closed", "Skills mismatch", "Position put on hold", "Not specifying". If not rejected, leave null.
         
         
         Sender: ${sender || "Unknown"}
@@ -207,6 +210,7 @@ export class AIService {
             "people": { "recruiterName": "string", "recruiterEmail": "string", "hiringManager": "string" },
             "companyInfo": { "domain": "string", "linkedIn": "string" },
             "nextSteps": "string",
+            "rejectionReason": "string | null",
             "sentimentScore": number (0-1),
             "feedback": "string"
         }
@@ -398,6 +402,7 @@ export class AIService {
             - "Not moving forward" = REJECTED.
             - "Thanks for applying" = APPLIED.
             - IF User Directive says "Status is X", then Status IS X.
+            - IF Status is REJECTED, identify the "rejectionReason" (concise, max 10 words).
             
         4.  Return the CORRECTED JSON.
         
@@ -408,6 +413,7 @@ export class AIService {
             "role": "string",
             "status": "APPLIED" | "SCREEN" | "INTERVIEW" | "OFFER" | "REJECTED" | "GHOSTED",
             "nextSteps": "string",
+            "rejectionReason": "string | null",
             "salary": { "base": "string", "bonus": "string", "equity": "string" },
             "location": "string | null",
             "confidence": number (0-1),
@@ -489,6 +495,7 @@ export class AIService {
                 "status": "APPLIED" | "SCREEN" | "INTERVIEW" | "OFFER" | "REJECTED",
                 "location": "string | null",
                 "salary": { "base": "string" },
+                "rejectionReason": "string | null",
                 "notes": "string (any extra info found)"
             }
         ]

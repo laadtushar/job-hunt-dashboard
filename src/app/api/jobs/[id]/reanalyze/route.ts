@@ -138,6 +138,7 @@ export async function POST(
                     status: improvedData.status || job.status,
                     salaryRange: improvedData.salary ? JSON.stringify(improvedData.salary) : job.salaryRange,
                     location: improvedData.location || job.location,
+                    rejectionReason: improvedData.rejectionReason || job.rejectionReason,
                     // We don't overwrite source, but we could update 'lastUpdate'
                     updatedAt: new Date()
                 }

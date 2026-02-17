@@ -114,8 +114,11 @@ The Pipeline utilizes **Optimistic UI patterns** to provide 60fps interaction:
 ### 2. ETL Ingestion Pipeline (Bulk Import)
 A specialized **Extract-Transform-Load (ETL)** pipeline for unstructured text:
 1.  **Ingest**: Raw text buffer accepts multi-format input.
-2.  **Transform**: LLM Agent applies **Few-Shot Styling** to normalize data into the `JobApplication` schema.
+2.  **Transform**: LLM Agent applies **Few-Shot Styling** to normalize data into the `JobApplication` schema (including `rejectionReason` extraction).
 3.  **Load**: Batch transaction writes with deduplication logic.
+
+### 3. Unified View Architecture
+The `DashboardClient` uses a **Strategy Pattern** to swap between `JobCardView`, `JobGridView`, and `KanbanBoard` based on a centralized `viewMode` state. This ensures search, filter, and sync logic are shared across all visual representations.
 
 ---
 *Architected for Scalability, Observability, and Agentic Autonomy.*

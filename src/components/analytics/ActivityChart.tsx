@@ -13,7 +13,7 @@ export function ActivityChart({ data }: { data: { date: string, count: number }[
         <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                     <XAxis
                         dataKey="date"
                         tickLine={false}
@@ -26,18 +26,18 @@ export function ActivityChart({ data }: { data: { date: string, count: number }[
                                 day: "numeric",
                             })
                         }}
-                        stroke="hsl(var(--muted-foreground))"
+                        stroke="var(--muted-foreground)"
                         fontSize={12}
                     />
                     <YAxis
                         axisLine={false}
                         tickLine={false}
                         allowDecimals={false}
-                        stroke="hsl(var(--muted-foreground))"
+                        stroke="var(--muted-foreground)"
                         fontSize={12}
                     />
                     <Tooltip
-                        cursor={{ fill: 'hsl(var(--muted))', opacity: 0.2 }}
+                        cursor={{ fill: 'var(--muted)', opacity: 0.2 }}
                         content={({ active, payload, label }) => {
                             if (active && payload && payload.length && label) {
                                 return (
@@ -66,7 +66,7 @@ export function ActivityChart({ data }: { data: { date: string, count: number }[
                             return null
                         }}
                     />
-                    <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="count" fill="var(--primary)" radius={[4, 4, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
