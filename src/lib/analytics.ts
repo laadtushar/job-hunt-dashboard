@@ -77,3 +77,19 @@ export async function getKeyMetrics() {
         activeProcesses: (interviews + screens),
     };
 }
+
+export async function getSourceDistribution() {
+    const session = await auth();
+    if (!session?.user?.id) return [];
+
+    const sourceCounts = await prisma.jobApplication.groupBy({
+        by: ['source'],
+        where: { userId: session.user.id },
+        _count: { source: true },
+    });
+
+    return sourceCounts.map(item => ({
+        source: item.source || "UNKNOWN",
+        count: item._count.source,
+    }));
+}

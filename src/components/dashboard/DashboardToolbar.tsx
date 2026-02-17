@@ -8,7 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { RefreshCw, Search } from "lucide-react"
+import { RefreshCw, Search, LayoutGrid, List } from "lucide-react"
 import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -20,6 +20,8 @@ interface DashboardToolbarProps {
     setStatusFilter: (status: string) => void
     sortOrder: string
     setSortOrder: (order: string) => void
+    viewMode: 'BOARD' | 'GRID'
+    setViewMode: (mode: 'BOARD' | 'GRID') => void
     syncLimit: number
     setSyncLimit: (limit: number) => void
     afterDate: string
@@ -35,6 +37,10 @@ export function DashboardToolbar({
     setSearchTerm,
     statusFilter,
     setStatusFilter,
+    sortOrder,
+    setSortOrder,
+    viewMode,
+    setViewMode,
     syncLimit,
     setSyncLimit,
     afterDate,
@@ -87,6 +93,39 @@ export function DashboardToolbar({
                             <SelectItem value="GHOSTED">Ghosted</SelectItem>
                         </SelectContent>
                     </Select>
+
+                    {/* Sort Order */}
+                    <Select value={sortOrder} onValueChange={setSortOrder}>
+                        <SelectTrigger className="flex-1 md:flex-none w-full md:w-[150px] h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] shadow-inner font-bold text-slate-600 dark:text-slate-300">
+                            <SelectValue placeholder="Sort By" />
+                        </SelectTrigger>
+                        <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800">
+                            <SelectItem value="NEWEST">Newest First</SelectItem>
+                            <SelectItem value="OLDEST">Oldest First</SelectItem>
+                            <SelectItem value="UPDATED">Last Updated</SelectItem>
+                            <SelectItem value="COMPANY">Company Name</SelectItem>
+                        </SelectContent>
+                    </Select>
+
+                    {/* View Toggle */}
+                    <div className="flex items-center gap-1 bg-white dark:bg-slate-950 p-1 rounded-2xl md:rounded-[2rem] shadow-inner h-14 md:h-12">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setViewMode('BOARD')}
+                            className={`rounded-xl md:rounded-full h-10 w-10 transition-all ${viewMode === 'BOARD' ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}
+                        >
+                            <LayoutGrid className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setViewMode('GRID')}
+                            className={`rounded-xl md:rounded-full h-10 w-10 transition-all ${viewMode === 'GRID' ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}
+                        >
+                            <List className="h-4 w-4" />
+                        </Button>
+                    </div>
 
                     {/* Date Range & Limit Group */}
                     <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar py-2 md:py-0">

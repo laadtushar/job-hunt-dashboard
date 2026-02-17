@@ -7,8 +7,10 @@ import { DashboardToolbar } from "@/components/dashboard/DashboardToolbar"
 import { SyncLogs } from "@/components/dashboard/SyncLogs"
 import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
 import { AskAI } from "@/components/dashboard/AskAI"
+import { JobGridView } from "@/components/dashboard/JobGridView"
 
 export default function DashboardClient({ jobs }: { jobs: any[] }) {
+    const [viewMode, setViewMode] = useState<'BOARD' | 'GRID'>('BOARD')
     const [syncLimit, setSyncLimit] = useState(50)
     const [afterDate, setAfterDate] = useState("2024-01-01")
     const [beforeDate, setBeforeDate] = useState("")
@@ -152,6 +154,8 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                     setStatusFilter={setStatusFilter}
                     sortOrder={sortOrder}
                     setSortOrder={setSortOrder}
+                    viewMode={viewMode}
+                    setViewMode={setViewMode}
                     syncLimit={syncLimit}
                     setSyncLimit={setSyncLimit}
                     afterDate={afterDate}
@@ -165,23 +169,27 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                 <SyncLogs logs={syncLogs} isSyncing={isSyncing} />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {filteredJobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
-                ))}
-                {filteredJobs.length === 0 && (
-                    <div className="col-span-full flex flex-col items-center justify-center py-20 px-4 text-center bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-slate-200">
-                        <div className="h-20 w-20 rounded-full bg-slate-50 flex items-center justify-center mb-6 shadow-inner">
-                            <span className="text-4xl text-slate-300">📁</span>
+            {viewMode === 'BOARD' ? (
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {filteredJobs.map((job) => (
+                        <JobCard key={job.id} job={job} />
+                    ))}
+                    {filteredJobs.length === 0 && (
+                        <div className="col-span-full flex flex-col items-center justify-center py-20 px-4 text-center bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-slate-200">
+                            <div className="h-20 w-20 rounded-full bg-slate-50 flex items-center justify-center mb-6 shadow-inner">
+                                <span className="text-4xl text-slate-300">📁</span>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-2">No results matching your pulse</h3>
+                            <p className="text-slate-500 max-w-sm mx-auto leading-relaxed">
+                                We couldn't find any job applications that match your current search or filters.
+                                Try broadening your scope or syncing new roles!
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-2">No results matching your pulse</h3>
-                        <p className="text-slate-500 max-w-sm mx-auto leading-relaxed">
-                            We couldn't find any job applications that match your current search or filters.
-                            Try broadening your scope or syncing new roles!
-                        </p>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
+            ) : (
+                <JobGridView jobs={filteredJobs} />
+            )}
 
             <AskAI />
         </div>

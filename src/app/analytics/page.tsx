@@ -1,8 +1,10 @@
 
 import { auth } from "@/auth";
-import { getApplicationActivity, getJobFunnelData, getKeyMetrics } from "@/lib/analytics";
+import { getApplicationActivity, getJobFunnelData, getKeyMetrics, getSourceDistribution } from "@/lib/analytics";
 import { ActivityChart } from "@/components/analytics/ActivityChart";
 import { SankeyChart } from "@/components/analytics/SankeyChart";
+import { StatusDistributionChart } from "@/components/analytics/StatusDistributionChart";
+import { SourceBreakdownChart } from "@/components/analytics/SourceBreakdownChart";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -13,10 +15,11 @@ export default async function AnalyticsPage() {
     const session = await auth();
     if (!session?.user) redirect("/");
 
-    const [funnelData, activityData, metrics] = await Promise.all([
+    const [funnelData, activityData, metrics, sourceData] = await Promise.all([
         getJobFunnelData(),
         getApplicationActivity(),
         getKeyMetrics(),
+        getSourceDistribution(),
     ]);
 
     // Transform Funnel Data for Sankey
@@ -34,8 +37,6 @@ export default async function AnalyticsPage() {
     const total = noResponse + active + rejected;
 
     // Nodes
-    // 0: Applications, 1: No Response, 2: Active Process, 3: Rejected
-    // 4: Screen, 5: Interview, 6: Offer
     const nodes = [
         { name: 'Applications', color: '#6366f1' },       // Indigo-500
         { name: 'No Response', color: '#94a3b8' },        // Slate-400
@@ -55,12 +56,7 @@ export default async function AnalyticsPage() {
         { source: 2, target: 6, value: offer },
     ].filter(l => l.value > 0);
 
-    // If total is 0, provide dummy data or empty state handled by component,
-    // but filtering logic above handles zero values somewhat.
-    // If 'active' is 0, links from 2->X will be empty, which is correct.
-
     const sankeyData = { nodes, links };
-
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -79,51 +75,28 @@ export default async function AnalyticsPage() {
 
                 {/* Key Metrics */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Applications</CardTitle>
-                            <Users className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{metrics.totalApplications}</div>
-                            <p className="text-xs text-muted-foreground">All time tracked</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Active Processes</CardTitle>
-                            <Clock className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{metrics.activeProcesses}</div>
-                            <p className="text-xs text-muted-foreground">Screening or Interviewing</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Interview Rate</CardTitle>
-                            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{metrics.interviewRate}%</div>
-                            <p className="text-xs text-muted-foreground">Applications to Interview</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Offer Rate</CardTitle>
-                            <CheckCircle className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">{metrics.offerRate}%</div>
-                            <p className="text-xs text-muted-foreground">Interviews to Offer</p>
-                        </CardContent>
-                    </Card>
+                    {[
+                        { title: "Total Applications", value: metrics.totalApplications, sub: "All time tracked", icon: Users },
+                        { title: "Active Processes", value: metrics.activeProcesses, sub: "In Screening/Interview", icon: Clock },
+                        { title: "Interview Rate", value: `${metrics.interviewRate}%`, sub: "Applications to Interview", icon: TrendingUp },
+                        { title: "Offer Rate", value: `${metrics.offerRate}%`, sub: "Interviews to Offer", icon: CheckCircle },
+                    ].map((m, i) => (
+                        <Card key={i} className="border-none shadow-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl overflow-hidden group">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">{m.title}</CardTitle>
+                                <m.icon className="h-4 w-4 text-slate-300 group-hover:text-primary transition-colors" />
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-3xl font-black tracking-tighter">{m.value}</div>
+                                <p className="text-[10px] text-muted-foreground mt-1 uppercase font-bold tracking-tight">{m.sub}</p>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Activity Chart */}
-                    <Card className="col-span-1 lg:col-span-1">
+                    <Card className="col-span-1 border-none shadow-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl">
                         <CardHeader>
                             <CardTitle>Application Activity</CardTitle>
                             <CardDescription>Applications sent over the last 30 days</CardDescription>
@@ -134,13 +107,35 @@ export default async function AnalyticsPage() {
                     </Card>
 
                     {/* Funnel / Sankey */}
-                    <Card className="col-span-1 lg:col-span-1">
+                    <Card className="col-span-1 border-none shadow-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl">
                         <CardHeader>
                             <CardTitle>Job Hunt Funnel</CardTitle>
                             <CardDescription>Flow of applications through different stages</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <SankeyChart data={sankeyData} />
+                        </CardContent>
+                    </Card>
+
+                    {/* Status Distribution (Pie) */}
+                    <Card className="col-span-1 border-none shadow-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl">
+                        <CardHeader>
+                            <CardTitle>Status Distribution</CardTitle>
+                            <CardDescription>Current state of all applications</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <StatusDistributionChart data={funnelData} />
+                        </CardContent>
+                    </Card>
+
+                    {/* Source Breakdown (Bar) */}
+                    <Card className="col-span-1 border-none shadow-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl">
+                        <CardHeader>
+                            <CardTitle>Source Breakdown</CardTitle>
+                            <CardDescription>Where your applications are coming from</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <SourceBreakdownChart data={sourceData} />
                         </CardContent>
                     </Card>
                 </div>
