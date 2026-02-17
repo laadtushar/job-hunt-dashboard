@@ -81,13 +81,13 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                 {children}
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0">
-                <DialogHeader className="p-6 pb-4 border-b shrink-0">
+                <DialogHeader className="p-4 md:p-6 pb-3 md:pb-4 border-b shrink-0">
                     <div className="flex justify-between items-start gap-4">
                         <div>
-                            <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+                            <DialogTitle className="text-xl md:text-2xl font-bold flex items-center gap-2">
                                 {job.role}
                             </DialogTitle>
-                            <DialogDescription className="text-base mt-1 flex items-center gap-2">
+                            <DialogDescription className="text-sm md:text-base mt-1 flex items-center gap-2">
                                 <Building className="h-4 w-4" />
                                 <span className="font-semibold text-foreground">{job.company}</span>
                                 {job.location && (
@@ -108,16 +108,16 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                     <Tabs defaultValue="details" className="flex-1 flex flex-col min-h-0">
                         <div className="px-6 pt-6 shrink-0">
                             <TabsList className="grid w-full grid-cols-4">
-                                <TabsTrigger value="details">Details</TabsTrigger>
-                                <TabsTrigger value="emails">Emails</TabsTrigger>
-                                <TabsTrigger value="timeline">Timeline</TabsTrigger>
-                                <TabsTrigger value="raw">Raw</TabsTrigger>
+                                <TabsTrigger value="details" className="text-xs md:text-sm">Details</TabsTrigger>
+                                <TabsTrigger value="emails" className="text-xs md:text-sm">Emails</TabsTrigger>
+                                <TabsTrigger value="timeline" className="text-xs md:text-sm">Timeline</TabsTrigger>
+                                <TabsTrigger value="raw" className="text-xs md:text-sm">Raw</TabsTrigger>
                             </TabsList>
                         </div>
 
                         <div className="flex-1 overflow-hidden min-h-0">
                             {/* DETAILS TAB */}
-                            <TabsContent value="details" className="h-full m-0 overflow-y-auto p-6 custom-scrollbar">
+                            <TabsContent value="details" className="h-full m-0 overflow-y-auto p-4 md:p-6 custom-scrollbar">
                                 <div className="space-y-6">
                                     {/* Key Info Grid */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -67,7 +67,7 @@ export function AskAI() {
     }
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-4">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
