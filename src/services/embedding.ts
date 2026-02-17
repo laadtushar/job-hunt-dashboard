@@ -2,7 +2,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export class EmbeddingService {
-    private genAI: GoogleGenerativeAI;
+    private genAI?: GoogleGenerativeAI;
     private model: any;
     private provider: 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE';
 
@@ -10,21 +10,17 @@ export class EmbeddingService {
         this.provider = (process.env.EMBEDDING_PROVIDER as 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE') ||
             (process.env.AI_PROVIDER as 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE') ||
             'GEMINI';
-        const apiKey = process.env.GEMINI_API_KEY;
 
         if (this.provider === 'GEMINI') {
+            const apiKey = process.env.GEMINI_API_KEY;
             if (!apiKey) {
                 console.warn("GEMINI_API_KEY is missing but provider is set to GEMINI.");
-                // Initialize dummy to prevent crash, calls will fail later
-                this.genAI = new GoogleGenerativeAI("missing_key");
             } else {
                 this.genAI = new GoogleGenerativeAI(apiKey);
                 this.model = this.genAI.getGenerativeModel({ model: "text-embedding-004" });
             }
-        } else {
-            // For OPENROUTER and HUGGINGFACE, we don't need GoogleGenerativeAI initialization
-            this.genAI = new GoogleGenerativeAI("dummy");
         }
+        // For OPENROUTER and HUGGINGFACE (mapped to local), we don't need to initialize anything here
     }
 
     async embed(text: string): Promise<number[]> {
@@ -42,12 +38,19 @@ export class EmbeddingService {
 
     private async embedWithGemini(text: string): Promise<number[]> {
         if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_API_KEY missing");
+        if (!this.model) {
+            throw new Error("Gemini model not initialized. Check GEMINI_API_KEY.");
+        }
         try {
             const result = await this.model.embedContent(text);
             return result.embedding.values;
         } catch (error: any) {
             if (error.status === 404 || error.message?.includes("404")) {
                 console.warn("Gemini text-embedding-004 not found. Trying models/embedding-001...");
+                // Ensure genAI is available for fallback
+                if (!this.genAI) {
+                    throw new Error("GoogleGenerativeAI not initialized for fallback.");
+                }
                 const fallback = this.genAI.getGenerativeModel({ model: "models/embedding-001" });
                 const res = await fallback.embedContent(text);
                 return res.embedding.values;
