@@ -64,6 +64,7 @@
 - **⚙️ Column Customization**: Tailor the Grid view to show exactly what you need (Salary, Hiring Manager, etc.).
 - **🛠️ Maintenance Tools**: Built-in controls for database consolidation and cleanup.
 - **🔒 Privacy First**: Your data stays on your local SQLite database/Vercel instance.
+- **🚀 Vercel Analytics**: Built-in performance and traffic tracking via `@vercel/analytics`.
 
 ## 🚀 Tech Stack
 

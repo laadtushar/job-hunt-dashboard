@@ -17,6 +17,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          String    @default("USER")
   accounts      Account[]
   sessions      Session[]
   applications  JobApplication[]
@@ -28,6 +29,14 @@ model User {
 model AllowedUser {
   id        String   @id @default(cuid())
   email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model InviteRequest {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  status    String   @default("PENDING") // PENDING, APPROVED, DENIED
   createdAt DateTime @default(now())
 }
 
