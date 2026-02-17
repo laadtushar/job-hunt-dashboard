@@ -149,6 +149,7 @@ export class JobService {
                     recruiterEmail: existing.recruiterEmail || data.people?.recruiterEmail,
                     hiringManager: existing.hiringManager || data.people?.hiringManager,
                     sentimentScore: data.sentimentScore ?? existing.sentimentScore,
+                    rejectionReason: data.rejectionReason || existing.rejectionReason,
                     feedback: data.feedback // Update feedback only if new one exists? 
                 }
             });
@@ -174,6 +175,7 @@ export class JobService {
                 recruiterEmail: data.people?.recruiterEmail,
                 hiringManager: data.people?.hiringManager,
                 nextSteps: data.nextSteps,
+                rejectionReason: data.rejectionReason,
                 sentimentScore: data.sentimentScore,
                 feedback: data.feedback,
             }

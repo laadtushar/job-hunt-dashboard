@@ -202,9 +202,24 @@ export function JobCard({ job }: JobCardProps) {
 
                     <CardContent className="px-6 pb-6 pt-4">
                         <div className="flex flex-wrap gap-2 mb-6">
-                            <span className={`px-4 py-1.5 rounded-xl text-[11px] font-bold tracking-tight ring-1 ${getStatusStyles(status)}`}>
-                                {status}
-                            </span>
+                            {status === 'REJECTED' && job.rejectionReason ? (
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span className={`px-4 py-1.5 rounded-xl text-[11px] font-bold tracking-tight ring-1 cursor-help ${getStatusStyles(status)}`}>
+                                                {status}
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="rounded-xl font-bold text-xs bg-red-600 text-white border-none px-3 py-1.5 shadow-xl max-w-[200px]">
+                                            {job.rejectionReason}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            ) : (
+                                <span className={`px-4 py-1.5 rounded-xl text-[11px] font-bold tracking-tight ring-1 ${getStatusStyles(status)}`}>
+                                    {status}
+                                </span>
+                            )}
                             {job.location && (
                                 <span className="px-4 py-1.5 rounded-xl text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/80 ring-1 ring-slate-200 dark:ring-slate-700">
                                     {job.location}

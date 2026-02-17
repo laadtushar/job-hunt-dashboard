@@ -40,7 +40,11 @@
 
 ### Pipeline Board (Kanban)
 ![Kanban Board](./public/screenshots/kanban.png)
-*Interactive state management system featuring **dnd-kit** integration and **Optimistic UI** patterns for sub-millisecond interaction latency.*
+*Interactive state management system featuring **dnd-kit** integration and **Optimistic UI** patterns. Now integrated into the main Dashboard for seamless switching.*
+
+### Advanced Grid View
+![Grid View Selection](./public/screenshots/grid_selection.png)
+*A high-density **Tabular Grid** with **Column Selection** capabilities. Toggle visibility for Salary, Recruiter, Hiring Manager, and **AI-Extracted Rejection Reasons**.*
 
 ### AI Bulk Import
 ![Bulk Import](./public/screenshots/import.png)
@@ -53,11 +57,11 @@
 - **🔍 RAG-Enhanced Reflexion**: A **Self-Healing Module** that critiques its own outputs against a vector database of "Learned Rules" to correct hallucinations.
 - **📂 Semantic Threading**: Uses **Fuzzy Logic** and **Time-Series Analysis** to cluster related events into a unified lifecycle.
 - **🛠️ Self-Maintaining Database**: Automated cron jobs for **Schema Normalization** and orphan data cleanup.
-- **📊 Analytics Dashboard**: Comprehensive funnel visualization (Sankey) and activity tracking.
-- **📋 Kanban Pipeline**: Drag-and-drop board to manage application statuses with "stale" visual cues.
+- **📊 Analytics Dashboard**: Comprehensive funnel visualization (Sankey) and activity tracking with **Dark Mode Optimization**.
+- **📋 Unified Pipeline**: Switch between Card, Grid, and Kanban views from a centralized mission control.
 - **📥 AI Bulk Import**: Parse unstructured text lists (Excel, LinkedIn) into structured job data.
-- **🔍 Deep Re-analysis (Reflexion)**: A "Deep Flow" feature that performs iterative Gmail searches and uses AI to critique previous extractions based on new email context.
-- **📂 Smart Threading**: Automatically groups follow-up emails (interviews, offers) into the original application timeline.
+- **🚫 Rejection Extraction**: Automatically identifies and summarizes rejection reasons from candidate communications.
+- **⚙️ Column Customization**: Tailor the Grid view to show exactly what you need (Salary, Hiring Manager, etc.).
 - **🛠️ Maintenance Tools**: Built-in controls for database consolidation and cleanup.
 - **🔒 Privacy First**: Your data stays on your local SQLite database/Vercel instance.
 

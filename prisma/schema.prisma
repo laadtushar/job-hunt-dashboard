@@ -114,6 +114,7 @@ model JobApplication {
   nextSteps       String?
   feedback        String?
   analysis        String? // Raw AI extraction JSON
+  rejectionReason String? // Concise reason if rejected
   
   // Sync Status
   googleSheetRowId String?
