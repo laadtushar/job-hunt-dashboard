@@ -33,8 +33,48 @@ export async function POST(req: Request) {
         const afterDate = body.after || "2024/01/01";
         const beforeDate = body.before;
 
-        let query = `label:inbox subject:application OR subject:job OR subject:interview after:${afterDate}`;
+        // Extensive Keyword List to capture all missed emails
+        const subjectKeywords = [
+            "application", "job", "interview", "offer", "hiring",
+            "career", "position", "vacancy", "candidacy", "status",
+            "update", "qualifications", "recruiting", "talent",
+            "assessment", "referral", "opportunity", "candidature",
+            "submission", "competency"
+        ];
+
+        // Specific phrases often found in body of rejection/update emails
+        const bodyPhrases = [
+            "\"thank you for applying\"",
+            "\"thank you for your interest\"",
+            "\"not moving forward\"",
+            "\"unable to offer\"",
+            "\"pursuing other candidates\"",
+            "\"schedule a chat\"",
+            "\"availability\"",
+            "\"interview invite\"",
+            "\"hiring team\"",
+            "\"talent acquisition\"",
+            "\"human resources\""
+        ];
+
+        // Senders that are likely relevant (generic)
+        const senderKeywords = [
+            "no-reply", "noreply", "talent", "careers",
+            "recruiting", "recruitment", "hiring", "jobs", "people"
+        ];
+
+        const subjectQuery = `subject:(${subjectKeywords.join(" OR ")})`;
+        const bodyQuery = bodyPhrases.join(" OR "); // Body search doesn't need "body:" prefix in Gmail, just the terms
+        const senderQuery = `from:(${senderKeywords.join(" OR ")})`;
+
+        // Combined Query: 
+        // We use grouping () to ensure label:inbox applies to the whole set
+        // Logic: INBOX AND (SubjectMatch OR BodyMatch OR SenderMatch)
+        let query = `label:inbox (${subjectQuery} OR ${bodyQuery} OR ${senderQuery}) after:${afterDate}`;
+
         if (beforeDate) query += ` before:${beforeDate}`;
+
+        console.log(`[Gmail Service] Generated Query: ${query}`);
 
         const messages = await gmailService.listEmails(userId, query, limit);
 
