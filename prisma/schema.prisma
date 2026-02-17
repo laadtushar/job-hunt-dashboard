@@ -167,7 +167,7 @@ model JobEmbedding {
   id        String   @id @default(cuid())
   jobId     String   @unique
   job       JobApplication @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  vector    Unsupported("vector(768)") // Gemini 1.5/2.0 dimensions
+  vector    Unsupported("vector(1024)") // Octen-Embedding-0.6B dimensions
   content   String   // The text chunk embedded
   createdAt DateTime @default(now())
 }
@@ -176,7 +176,7 @@ model EmailEmbedding {
   id        String   @id @default(cuid())
   emailId   String   @unique
   email     EmailLog @relation(fields: [emailId], references: [id], onDelete: Cascade)
-  vector    Unsupported("vector(768)")
+  vector    Unsupported("vector(1024)")
   content   String   // Subject + Sender + Snippet/Body
   type      String   // "POSITIVE" (Job Related) or "NEGATIVE" (Not Job Related)
   createdAt DateTime @default(now())

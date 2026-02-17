@@ -4,10 +4,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export class EmbeddingService {
     private genAI: GoogleGenerativeAI;
     private model: any;
-    private provider: 'GEMINI' | 'OPENROUTER';
+    private provider: 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE';
 
     constructor() {
-        this.provider = (process.env.AI_PROVIDER as 'GEMINI' | 'OPENROUTER') || 'GEMINI';
+        this.provider = (process.env.EMBEDDING_PROVIDER as 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE') ||
+            (process.env.AI_PROVIDER as 'GEMINI' | 'OPENROUTER' | 'HUGGINGFACE') ||
+            'GEMINI';
         const apiKey = process.env.GEMINI_API_KEY;
 
         if (this.provider === 'GEMINI') {
@@ -20,18 +22,19 @@ export class EmbeddingService {
                 this.model = this.genAI.getGenerativeModel({ model: "text-embedding-004" });
             }
         } else {
-            // If provider is OPENROUTER, we don't need GoogleGenerativeAI initialization here
-            // Initialize dummy to satisfy TypeScript, as genAI is not used for OpenRouter
+            // For OPENROUTER and HUGGINGFACE, we don't need GoogleGenerativeAI initialization
             this.genAI = new GoogleGenerativeAI("dummy");
         }
     }
 
     async embed(text: string): Promise<number[]> {
         if (!text) return [];
-        const cleanText = text.replace(/\n/g, " ").substring(0, 9000);
+        const cleanText = text.replace(/\n/g, " ").substring(0, 8000); // reduced slightly for safety
 
         if (this.provider === 'OPENROUTER') {
             return await this.embedWithOpenRouter(cleanText);
+        } else if (this.provider === 'HUGGINGFACE') {
+            return await this.embedWithHuggingFace(cleanText);
         } else {
             return await this.embedWithGemini(cleanText);
         }
@@ -57,11 +60,12 @@ export class EmbeddingService {
         const apiKey = process.env.OPENROUTER_API_KEY;
         if (!apiKey) throw new Error("OPENROUTER_API_KEY is not set");
 
-        // Default to a free model if not specified. 
-        // Note: Check OpenRouter for the latest free embedding model.
-        const model = process.env.OPENROUTER_EMBEDDING_MODEL || "google/text-embedding-004"; // Gemini 004 is often free/low cost on Google directly, check OpenRouter availability.
-        // If the user wants a definitely free "OpenAI compatible" one:
-        // const model = process.env.OPENROUTER_EMBEDDING_MODEL || "jinaai/jina-embeddings-v2-base-en"; 
+        // Default to a free or low-cost model. 
+        // Valid OpenRouter embedding models as of Feb 2026:
+        // - openai/text-embedding-3-small (Standard, cheap)
+        // - openai/text-embedding-3-large (High precision)
+        // - qwen/qwen-embedding-v1 (Often free)
+        const model = process.env.OPENROUTER_EMBEDDING_MODEL || "openai/text-embedding-3-small";
 
         const response = await fetch("https://openrouter.ai/api/v1/embeddings", {
             method: "POST",
@@ -88,6 +92,41 @@ export class EmbeddingService {
             return data.data[0].embedding;
         }
         throw new Error("Invalid response structure from OpenRouter");
+    }
+
+    // Singleton pipeline instance to avoid reloading model on every request
+    private static pipelineInstance: any = null;
+
+    private async getPipeline() {
+        if (!EmbeddingService.pipelineInstance) {
+            const { pipeline } = await import('@xenova/transformers');
+            // 'Xenova/bge-large-en-v1.5' is a high-quality 1024-dimension model
+            // It runs locally in the node process.
+            console.log("Loading local embedding model (Xenova/bge-large-en-v1.5)...");
+            EmbeddingService.pipelineInstance = await pipeline('feature-extraction', 'Xenova/bge-large-en-v1.5');
+        }
+        return EmbeddingService.pipelineInstance;
+    }
+
+    private async embedWithHuggingFace(text: string): Promise<number[]> {
+        try {
+            const pipe = await this.getPipeline();
+
+            // Generate embedding
+            const output = await pipe(text, { pooling: 'mean', normalize: true });
+
+            // Output is a Tensor, we need to convert to array
+            // output.data is a Float32Array
+            if (output && output.data) {
+                return Array.from(output.data);
+            }
+
+            throw new Error(`Invalid local embedding output`);
+
+        } catch (error: any) {
+            console.error("Local Embedding Error:", error);
+            throw new Error(`Local Embedding Error: ${error.message}`);
+        }
     }
 
     // Helper to format Job Data into a single chunk
