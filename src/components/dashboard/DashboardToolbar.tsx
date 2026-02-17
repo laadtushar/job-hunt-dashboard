@@ -71,7 +71,7 @@ export function DashboardToolbar({
                 </div>
 
                 {/* Filters & Actions Group */}
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="relative flex flex-wrap items-center gap-3 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700 scrollbar-track-transparent">
                     {/* Status Filter */}
                     <Select value={statusFilter} onValueChange={setStatusFilter}>
                         <SelectTrigger className="flex-1 md:flex-none w-full md:w-[150px] h-14 md:h-12 bg-white dark:bg-slate-950 border-none rounded-2xl md:rounded-[2rem] shadow-inner font-bold text-slate-600 dark:text-slate-300">
