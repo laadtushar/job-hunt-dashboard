@@ -39,7 +39,7 @@ export function ActivityChart({ data }: { data: { date: string, count: number }[
                     <Tooltip
                         cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }}
                         content={({ active, payload, label }) => {
-                            if (active && payload && payload.length) {
+                            if (active && payload && payload.length && label) {
                                 return (
                                     <div className="rounded-lg border bg-background p-2 shadow-sm">
                                         <div className="grid grid-cols-2 gap-4">
