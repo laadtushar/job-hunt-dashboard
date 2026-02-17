@@ -1,7 +1,8 @@
 import { auth } from "@/auth"
-import { Compass, LogOut, User } from "lucide-react"
+import { Compass, LogOut, User, BarChart3, KanbanSquare } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
 import { loginAction, logoutAction } from "@/lib/actions"
+import Link from "next/link"
 
 export default async function Navbar() {
     const session = await auth()
@@ -22,6 +23,12 @@ export default async function Navbar() {
                     <ModeToggle />
                     {session?.user ? (
                         <div className="flex items-center gap-2 sm:gap-4">
+                            <Link href="/kanban" className="hidden sm:flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400" title="Pipeline (Kanban)">
+                                <KanbanSquare className="h-4 w-4 md:h-5 md:w-5" />
+                            </Link>
+                            <Link href="/analytics" className="hidden sm:flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400" title="Analytics Dashboard">
+                                <BarChart3 className="h-4 w-4 md:h-5 md:w-5" />
+                            </Link>
                             <div className="hidden md:flex flex-col items-end">
                                 <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Account</span>
                                 <span className="text-sm font-medium text-slate-600 dark:text-slate-300">

@@ -462,4 +462,47 @@ export class AIService {
             return { answer: "Sorry, I encountered an error while analyzing your data.", suggestedQuestions: [] };
         }
     }
+
+    // BULK IMPORT
+    async parseBulkJobs(rawText: string): Promise<ExtractedJobData[]> {
+        const prompt = `
+        You are a Data Parsing Specialist.
+        Convert the following unstructured text into a structured list of Job Applications.
+        The text might be a copy-paste from Excel, a LinkedIn list, or an email summary.
+
+        RAW TEXT:
+        "${rawText.substring(0, 15000)}"
+
+        INSTRUCTIONS:
+        1. Identify individual job entries.
+        2. Extract: Company, Role, Status (default to APPLIED if unknown), Location, Salary.
+        3. If data is missing (e.g. Salary), leave it null.
+        4. Clean up company names (remove "Inc.", "Ltd." unless necessary).
+        5. Infer Status from context (e.g. "Interviewed last week" -> INTERVIEW).
+
+        Return JSON Array:
+        [
+            {
+                "isJobRelated": true,
+                "company": "string",
+                "role": "string",
+                "status": "APPLIED" | "SCREEN" | "INTERVIEW" | "OFFER" | "REJECTED",
+                "location": "string | null",
+                "salary": { "base": "string" },
+                "notes": "string (any extra info found)"
+            }
+        ]
+        `;
+
+        try {
+            const result = await this._generateJson<{ jobs: ExtractedJobData[] } | ExtractedJobData[]>(prompt);
+            // Handle both object wrapper or direct array
+            if (Array.isArray(result)) return result;
+            if ('jobs' in result && Array.isArray((result as any).jobs)) return (result as any).jobs;
+            return [];
+        } catch (e: any) {
+            console.error("Bulk Parsing Error:", e);
+            return [];
+        }
+    }
 }
