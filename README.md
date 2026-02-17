@@ -1,45 +1,63 @@
-# 👔 Meridian
+# 👔 Meridian: Agentic Career Orchestration Platform
 
-A premium, AI-powered job application tracker that syncs with your Gmail to automatically organize your career search. Stop manual entry and let AI do the work.
+**Meridian** is an enterprise-grade, **LLM-driven job application tracker** that leverages **Agentic Workflows** and **Chain-of-Thought (CoT) reasoning** to autonomously synchronize your career search. It replaces manual data entry with a **multi-agent system** that ingests, cleans, and structures unstructured data from Gmail.
 
-[**Architecture Walkthrough 🏗️**](./ARCHITECTURE.md)
+[**Architecture Deep Dive 🏗️**](./ARCHITECTURE.md)
 
 **Live Demo:** [meridian-job-sync.vercel.app](https://meridian-job-sync.vercel.app)
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC)
-![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
-![Gemini](https://img.shields.io/badge/Powered%20by-Gemini%202.0-blue)
+![Next.js 15](https://img.shields.io/badge/Next.js-15-black)
+![Agent Architecture](https://img.shields.io/badge/Architecture-Agentic-purple)
+![RAG](https://img.shields.io/badge/AI-RAG%20%26%20CoT-blue)
+![Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748)
+![Gemini 2.0](https://img.shields.io/badge/LLM-Gemini%202.0%20Flash-orange)
 
 ## 🖼️ Visual Tour
 
 ### Dashboard Overview
 ![Dashboard Overview](./public/screenshots/dashboard.png)
-*The premium Meridian command center featuring real-time career stats (Total Pulsed, Live Pipeline, Neural Screens), advanced status filtering, and a sleek glassmorphic UI.*
+*A **mission-control interface** featuring real-time telemetry, **Optimistic UI** updates, and **Semantic Search** capabilities.*
 
-### Automated Gmail Sync (Agentic Flow)
+### Autonomous Ingestion Engine
 ![Sync Running](./public/screenshots/sync_running.png)
-*Behold the **Neural Batch Sync Engine** in action. This high-performance pipeline processes Gmail data in parallel batches of 25, utilizing surgical date-range filters to scan months of history without hitting platform timeouts.*
+*The **Neural Batch Pipeline** processes high-volume unstructured email streams using **Concurrent Rate-Limited Queues**, bypassing serverless timeouts via client-side orchestration.*
 
-### Smart Identity Consolidation
+### Semantic Identity Resolution
 ![Smart Consolidation](./public/screenshots/Smart_consolidation.png)
-*Precision data resolution at work. Meridian uses L1-L4 identity layers to automatically merge fragmented email threads (interviews, offers, role updates) into a single, cohesive timeline for each application.*
+*Meridian uses **L4 Semantic Matching** (a proprietary ranking algorithm) to merge fragmented signals (updates, interviews) into a single **Canonical Application Entity**.*
 
-### Neural Protocol Logs
+### Neural Decision Logs
 ![Neural Logs](./public/screenshots/Log.png)
-*Full transparency into the AI's "thought process." Every decision, match, and extraction is logged in a real-time console, allowing you to audit the agentic flow.*
+*Full observability into the **LLM's reasoning trace**. Audit the **Chain-of-Thought** steps as the agent evaluates candidates and resolves edge cases.*
 
 ### Authorized Access Control
 ![Trust List](./public/screenshots/trust_list.png)
-*Meridian is invite-only by default. Manage your trust list through a dedicated admin interface, ensuring only authorized users can access your career data.*
+*Enterprise-ready **RBAC (Role-Based Access Control)** pattern ensuring data sovereignty and tenant isolation.*
 
-## ✨ Features
+### Analytics & Insights
+![Analytics Dashboard](./public/screenshots/analytics.png)
+*Data visualization layer using **Server-Side Aggregation** to compute funnel conversion rates and activity velocity metrics.*
 
-- **📬 Automated Gmail Sync**: Scans your inbox for job applications, interview invites, and rejections.
-- **🧠 AI-Powered Extraction**: Uses Google Gemini to extract company details, roles, salaries, recruiter info, and next steps.
+### Pipeline Board (Kanban)
+![Kanban Board](./public/screenshots/kanban.png)
+*Interactive state management system featuring **dnd-kit** integration and **Optimistic UI** patterns for sub-millisecond interaction latency.*
+
+### AI Bulk Import
+![Bulk Import](./public/screenshots/import.png)
+*ETL Pipeline for unstructured text. Uses **Few-Shot Prompting** to parse legacy data formats (Excel, LinkedIn) into standardized schemas.*
+
+## ✨ Key Capabilities
+
+- **🤖 Autonomous Ingestion Agent**: A background worker that polls Gmail APIs using **Incremental Sync** strategies.
+- **🧠 LLM Entity Extraction**: Uses **Zero-Shot Extraction** to parse multi-modal email content into structured JSON schemas.
+- **🔍 RAG-Enhanced Reflexion**: A **Self-Healing Module** that critiques its own outputs against a vector database of "Learned Rules" to correct hallucinations.
+- **📂 Semantic Threading**: Uses **Fuzzy Logic** and **Time-Series Analysis** to cluster related events into a unified lifecycle.
+- **🛠️ Self-Maintaining Database**: Automated cron jobs for **Schema Normalization** and orphan data cleanup.
+- **📊 Analytics Dashboard**: Comprehensive funnel visualization (Sankey) and activity tracking.
+- **📋 Kanban Pipeline**: Drag-and-drop board to manage application statuses with "stale" visual cues.
+- **📥 AI Bulk Import**: Parse unstructured text lists (Excel, LinkedIn) into structured job data.
 - **🔍 Deep Re-analysis (Reflexion)**: A "Deep Flow" feature that performs iterative Gmail searches and uses AI to critique previous extractions based on new email context.
 - **📂 Smart Threading**: Automatically groups follow-up emails (interviews, offers) into the original application timeline.
-- **📊 Interactive Dashboard**: Visualize your pipeline with status badges, stale application alerts, and advanced filters.
 - **🛠️ Maintenance Tools**: Built-in controls for database consolidation and cleanup.
 - **🔒 Privacy First**: Your data stays on your local SQLite database/Vercel instance.
 
