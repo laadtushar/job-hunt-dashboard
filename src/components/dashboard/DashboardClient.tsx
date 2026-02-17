@@ -6,6 +6,7 @@ import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 import { DashboardToolbar } from "@/components/dashboard/DashboardToolbar"
 import { SyncLogs } from "@/components/dashboard/SyncLogs"
 import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
+import { AskAI } from "@/components/dashboard/AskAI"
 
 export default function DashboardClient({ jobs }: { jobs: any[] }) {
     const [syncLimit, setSyncLimit] = useState(50)
@@ -181,6 +182,8 @@ export default function DashboardClient({ jobs }: { jobs: any[] }) {
                     </div>
                 )}
             </div>
+
+            <AskAI />
         </div>
     )
 }

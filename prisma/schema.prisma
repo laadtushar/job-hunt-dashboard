@@ -1,12 +1,14 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  extensions = [vector]
 }
 
 model User {
@@ -123,6 +125,8 @@ model JobApplication {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  embedding JobEmbedding?
+
   @@index([company, role])
 }
 
@@ -148,11 +152,32 @@ model EmailLog {
   // Meta extraction for easier querying/feedback
   sender          String?
   subject         String?
+
+  embedding       EmailEmbedding?
 }
 
 model UserFeedback {
   id        String   @id @default(cuid())
   type      String   // "MERGE_PATTERN", "FALSE_POSITIVE"
   input     String   // JSON content
+  createdAt DateTime @default(now())
+}
+
+model JobEmbedding {
+  id        String   @id @default(cuid())
+  jobId     String   @unique
+  job       JobApplication @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  vector    Unsupported("vector(768)") // Gemini 1.5/2.0 dimensions
+  content   String   // The text chunk embedded
+  createdAt DateTime @default(now())
+}
+
+model EmailEmbedding {
+  id        String   @id @default(cuid())
+  emailId   String   @unique
+  email     EmailLog @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  vector    Unsupported("vector(768)")
+  content   String   // Subject + Sender + Snippet/Body
+  type      String   // "POSITIVE" (Job Related) or "NEGATIVE" (Not Job Related)
   createdAt DateTime @default(now())
 }

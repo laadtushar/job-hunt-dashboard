@@ -430,4 +430,36 @@ export class AIService {
             throw e;
         }
     }
+
+    async answerQuestion(query: string, context: string): Promise<{ answer: string, suggestedQuestions?: string[] }> {
+        const prompt = `
+        You are an intelligent Job Hunt Assistant. 
+        Your goal is to answer the user's question based STRICTLY on the provided context (their job applications and emails).
+        
+        USER QUESTION: "${query}"
+        
+        CONTEXT (Retrieved from Database):
+        ${context}
+        
+        INSTRUCTIONS:
+        1. Answer the question clearly and concisely.
+        2. Cite specific companies or roles if mentioned in the context.
+        3. If the context doesn't contain the answer, say "I couldn't find information about that in your tracked jobs."
+        4. Be encouraging and professional.
+        5. (Optional) formatting: Use Markdown (bolding, lists) for readability.
+        
+        Return JSON:
+        {
+            "answer": "markdown string",
+            "suggestedQuestions": ["follow up 1", "follow up 2"]
+        }
+        `;
+
+        try {
+            return await this._generateJson(prompt);
+        } catch (e: any) {
+            console.error("RAG Answer Error:", e);
+            return { answer: "Sorry, I encountered an error while analyzing your data.", suggestedQuestions: [] };
+        }
+    }
 }
