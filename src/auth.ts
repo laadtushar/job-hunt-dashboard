@@ -8,6 +8,8 @@ import prisma from "@/lib/prisma"
 console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "Set" : "Not Set");
 console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "Set" : "Not Set");
 
+const SUPERADMIN_EMAIL = process.env.SUPERADMIN_EMAIL;
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -28,11 +30,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             try {
                 if (!user.email) return false
 
-                // 1. Check if email is explicitly on the allowlist (using Raw Query to bypass stale client)
+                // 1. Check if user is the superadmin
+                if (SUPERADMIN_EMAIL && user.email === SUPERADMIN_EMAIL) {
+                    // Ensure superadmin has SUPERADMIN role
+                    const existingUser: any[] = await prisma.$queryRaw`SELECT * FROM "User" WHERE "email" = ${user.email} LIMIT 1`;
+                    if (existingUser && existingUser.length > 0) {
+                        await prisma.$executeRaw`UPDATE "User" SET "role" = 'SUPERADMIN' WHERE "email" = ${user.email}`;
+                    }
+                    return true;
+                }
+
+                // 2. Check if email is explicitly on the allowlist
                 const allowed: any[] = await prisma.$queryRaw`SELECT * FROM "AllowedUser" WHERE "email" = ${user.email} LIMIT 1`;
                 if (allowed && allowed.length > 0) return true
 
-                // 2. Check if user already exists in the database (grandfather them in)
+                // 3. Check if user already exists in the database (grandfather them in)
                 const existingUser: any[] = await prisma.$queryRaw`SELECT * FROM "User" WHERE "email" = ${user.email} LIMIT 1`;
                 if (existingUser && existingUser.length > 0) {
                     // Also add them to AllowedUser table for consistency
@@ -45,18 +57,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     return true
                 }
 
-                // 3. Bootstrap: If no allowed users exist yet, allow the first user
-                const countResult: any[] = await prisma.$queryRaw`SELECT COUNT(*)::int as count FROM "AllowedUser"`;
-                const count = countResult[0]?.count || 0;
+                // 4. Bootstrap: If no allowed users exist yet AND no superadmin is configured, allow the first user
+                if (!SUPERADMIN_EMAIL) {
+                    const countResult: any[] = await prisma.$queryRaw`SELECT COUNT(*)::int as count FROM "AllowedUser"`;
+                    const count = countResult[0]?.count || 0;
 
-                if (count === 0) {
-                    const id = Math.random().toString(36).substring(7);
-                    await prisma.$executeRaw`
-                        INSERT INTO "AllowedUser" ("id", "email", "createdAt")
-                        VALUES (${id}, ${user.email}, NOW())
-                    `;
-                    return true
+                    if (count === 0) {
+                        const id = Math.random().toString(36).substring(7);
+                        await prisma.$executeRaw`
+                            INSERT INTO "AllowedUser" ("id", "email", "createdAt")
+                            VALUES (${id}, ${user.email}, NOW())
+                        `;
+                        return true
+                    }
                 }
+
+                // 5. User is not allowed - create an invite request
+                const id = Math.random().toString(36).substring(7);
+                await prisma.$executeRaw`
+                    INSERT INTO "InviteRequest" ("id", "email", "name", "status", "createdAt")
+                    VALUES (${id}, ${user.email}, ${user.name || null}, 'PENDING', NOW())
+                    ON CONFLICT ("email") DO NOTHING
+                `.catch(() => { });
 
                 return false
             } catch (e) {
@@ -65,9 +87,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
         },
         async session({ session, user }) {
-            // Pass the user ID to the session
+            // Pass the user ID and role to the session
             if (session.user) {
-                session.user.id = user.id
+                session.user.id = user.id;
+                // Fetch role from database
+                const dbUser: any[] = await prisma.$queryRaw`SELECT "role" FROM "User" WHERE "id" = ${user.id} LIMIT 1`;
+                session.user.role = dbUser[0]?.role || "USER";
             }
             return session
         },

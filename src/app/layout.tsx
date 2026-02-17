@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
   children,
@@ -44,6 +45,7 @@ export default function RootLayout({
           <TooltipProvider>
             {children}
             <Toaster />
+            <Analytics />
           </TooltipProvider>
         </ThemeProvider>
       </body>
