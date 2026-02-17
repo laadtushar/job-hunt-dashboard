@@ -22,7 +22,7 @@ const DemoSankeyNode = ({ x, y, width, height, index, payload, containerWidth }:
                 x={isOut ? x - 6 : x + width + 6}
                 y={y + height / 2}
                 fontSize="12"
-                fill="#666" // stroke="#fff"
+                fill="hsl(var(--muted-foreground))"
                 strokeWidth={0} // 1
                 alignmentBaseline="middle" // "central"
             >
@@ -50,7 +50,7 @@ export function SankeyChart({ data }: { data: { nodes: any[], links: any[] } }) 
                         top: 20,
                         bottom: 20,
                     }}
-                    link={{ stroke: '#77c878', strokeOpacity: 0.3 }}
+                    link={{ stroke: '#10b981', strokeOpacity: 0.5 }}
                 >
                     <Tooltip />
                 </Sankey>

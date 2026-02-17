@@ -37,25 +37,25 @@ export function ActivityChart({ data }: { data: { date: string, count: number }[
                         fontSize={12}
                     />
                     <Tooltip
-                        cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }}
+                        cursor={{ fill: 'hsl(var(--muted))', opacity: 0.2 }}
                         content={({ active, payload, label }) => {
                             if (active && payload && payload.length && label) {
                                 return (
-                                    <div className="rounded-lg border bg-background p-2 shadow-sm">
+                                    <div className="rounded-xl border bg-background/80 backdrop-blur-sm p-3 shadow-xl">
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="flex flex-col">
-                                                <span className="text-[0.70rem] uppercase text-muted-foreground">
+                                                <span className="text-[0.6rem] uppercase font-black text-muted-foreground tracking-widest">
                                                     Date
                                                 </span>
-                                                <span className="font-bold text-foreground text-sm">
+                                                <span className="font-bold text-foreground text-xs">
                                                     {new Date(label).toLocaleDateString()}
                                                 </span>
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                                    Applications
+                                                <span className="text-[0.6rem] uppercase font-black text-muted-foreground tracking-widest">
+                                                    Apps
                                                 </span>
-                                                <span className="font-bold text-foreground text-sm">
+                                                <span className="font-bold text-primary text-xs">
                                                     {payload[0].value}
                                                 </span>
                                             </div>
