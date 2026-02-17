@@ -72,7 +72,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     }
                 }
 
-                // 5. User is not allowed - create an invite request
+                // 5. User is not allowed - create an invite request and allow sign-in
+                // The page-level logic will redirect them to /access-denied
                 const id = Math.random().toString(36).substring(7);
                 await prisma.$executeRaw`
                     INSERT INTO "InviteRequest" ("id", "email", "name", "status", "createdAt")
@@ -80,7 +81,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     ON CONFLICT ("email") DO NOTHING
                 `.catch(() => { });
 
-                return false
+                // Allow sign-in to complete so user can see the access-denied page
+                return true
             } catch (e) {
                 console.error("Auth SignIn Error:", e);
                 return false;
