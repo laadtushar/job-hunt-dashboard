@@ -113,6 +113,7 @@ model JobApplication {
   sentimentScore  Float?
   nextSteps       String?
   feedback        String?
+  analysis        String? // Raw AI extraction JSON
   
   // Sync Status
   googleSheetRowId String?
