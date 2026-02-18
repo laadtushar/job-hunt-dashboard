@@ -21,6 +21,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   applications  JobApplication[]
+  tasks         Task[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -137,6 +138,7 @@ model JobApplication {
   updatedAt DateTime @updatedAt
 
   embedding JobEmbedding?
+  tasks     Task[]
 
   @@index([company, role])
 }
@@ -191,4 +193,26 @@ model EmailEmbedding {
   content   String   // Subject + Sender + Snippet/Body
   type      String   // "POSITIVE" (Job Related) or "NEGATIVE" (Not Job Related)
   createdAt DateTime @default(now())
+}
+
+model Task {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId String?
+  application   JobApplication? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+
+  title         String
+  description   String?
+  priority      String   @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  status        String   @default("PENDING") // PENDING, IN_PROGRESS, DONE, DISMISSED
+  category      String?  // FOLLOW_UP, INTERVIEW_PREP, APPLICATION, RESEARCH, NETWORKING
+  dueDate       DateTime?
+
+  aiGenerated   Boolean  @default(false)
+  source        String?  // AI_SYNC, AI_STATUS_CHANGE, MANUAL
+
+  completedAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
