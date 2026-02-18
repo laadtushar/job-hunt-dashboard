@@ -1,4 +1,8 @@
 import * as React from "react"
+import { DateRangePicker } from "@/components/dashboard/DateRangePicker"
+import { format } from "date-fns"
+import { DateRange } from "react-day-picker"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -10,7 +14,6 @@ import {
 } from "@/components/ui/select"
 import { RefreshCw, Search, LayoutGrid, List, KanbanSquare } from "lucide-react"
 import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
-
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface DashboardToolbarProps {
@@ -55,6 +58,22 @@ export function DashboardToolbar({
     React.useEffect(() => {
         setMounted(true)
     }, [])
+
+    const handleDateRangeChange = (newDate: DateRange | undefined) => {
+        if (newDate?.from) {
+            setAfterDate(format(newDate.from, 'yyyy-MM-dd'))
+        }
+        if (newDate?.to) {
+            setBeforeDate(format(newDate.to, 'yyyy-MM-dd'))
+        } else {
+            setBeforeDate('')
+        }
+    }
+
+    const dateRange = {
+        from: afterDate ? new Date(afterDate) : undefined,
+        to: beforeDate ? new Date(beforeDate) : undefined
+    }
 
     if (!mounted) {
         return (
@@ -140,42 +159,12 @@ export function DashboardToolbar({
                     {/* Date Range & Limit Group */}
 
                     <TooltipProvider>
-                        {/* After (From) */}
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div className="shrink-0 flex items-center gap-2 bg-white dark:bg-slate-950 px-3 h-12 rounded-2xl md:rounded-[2rem] shadow-inner min-w-[140px]">
-                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">From</span>
-                                    <Input
-                                        type="date"
-                                        className="border-none bg-transparent shadow-none focus:ring-0 p-0 font-bold text-slate-700 dark:text-slate-300 text-xs w-full"
-                                        value={afterDate}
-                                        onChange={(e) => setAfterDate(e.target.value)}
-                                    />
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
-                                Start scanning from this date
-                            </TooltipContent>
-                        </Tooltip>
+                        <DateRangePicker
+                            date={dateRange}
+                            setDate={handleDateRangeChange}
+                            className="shrink-0"
+                        />
 
-                        {/* Before (To) */}
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div className="shrink-0 flex items-center gap-2 bg-white dark:bg-slate-950 px-3 h-12 rounded-2xl md:rounded-[2rem] shadow-inner min-w-[140px]">
-                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">To</span>
-                                    <Input
-                                        type="date"
-                                        className="border-none bg-transparent shadow-none focus:ring-0 p-0 font-bold text-slate-700 dark:text-slate-300 text-xs w-full"
-                                        value={beforeDate}
-                                        onChange={(e) => setBeforeDate(e.target.value)}
-                                        placeholder="Optional"
-                                    />
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="rounded-xl font-bold text-xs bg-slate-900 text-white border-none px-3 py-1.5 shadow-xl">
-                                End scan at this date (Optional)
-                            </TooltipContent>
-                        </Tooltip>
 
                         {/* Sync Limit */}
                         <Tooltip>
