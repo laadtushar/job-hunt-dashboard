@@ -44,7 +44,7 @@ function getClientIdentifier(request: NextRequest): string {
     return ip;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const identifier = getClientIdentifier(request);
 
