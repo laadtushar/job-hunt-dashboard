@@ -33,7 +33,10 @@ export default function DashboardClient({
 
         try {
             // Step 1: Prepare (Get IDs)
-            setSyncLogs(prev => [...prev, { message: "Identifying pending job updates (Last 365 days)...", type: 'info' }]);
+            const dateRange = beforeDate
+                ? `${afterDate} to ${beforeDate}`
+                : `since ${afterDate}`;
+            setSyncLogs(prev => [...prev, { message: `Identifying pending job updates (${dateRange})...`, type: 'info' }]);
             const prepareRes = await fetch('/api/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
