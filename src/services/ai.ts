@@ -512,4 +512,78 @@ export class AIService {
             return [];
         }
     }
+
+    // TASK GENERATION
+    async generateTasks(applications: {
+        id: string;
+        company: string;
+        role: string;
+        status: string;
+        lastUpdate: Date;
+        nextSteps?: string | null;
+        feedback?: string | null;
+        interviewDate?: Date | null;
+        offerDeadline?: Date | null;
+        recruiterName?: string | null;
+        recruiterEmail?: string | null;
+        emailLogs?: { subject?: string | null; snippet?: string | null; receivedDate: Date }[];
+    }[]): Promise<{
+        title: string;
+        description: string;
+        priority: string;
+        category: string;
+        dueDate: string | null;
+        applicationId: string | null;
+    }[]> {
+        const today = new Date().toISOString().split('T')[0];
+        const appSummaries = applications.slice(0, 30).map(app => {
+            const recentEmail = app.emailLogs?.[0];
+            return `- ID: ${app.id} | ${app.company} (${app.role}) | Status: ${app.status} | Last Update: ${app.lastUpdate.toISOString().split('T')[0]}${app.nextSteps ? ` | Next Steps: ${app.nextSteps}` : ''}${app.interviewDate ? ` | Interview: ${app.interviewDate.toISOString().split('T')[0]}` : ''}${app.offerDeadline ? ` | Offer Deadline: ${app.offerDeadline.toISOString().split('T')[0]}` : ''}${recentEmail ? ` | Latest Email: "${recentEmail.subject}" (${recentEmail.receivedDate.toISOString().split('T')[0]})` : ''}`;
+        }).join('\n');
+
+        const prompt = `
+        You are a career coach AI. Today is ${today}.
+        Based on the following job applications, generate a list of specific, actionable tasks the job seeker should do.
+
+        APPLICATIONS:
+        ${appSummaries}
+
+        TASK GENERATION RULES:
+        1. Generate 5-15 tasks total. Focus on the most impactful actions.
+        2. For INTERVIEW status: create "Prepare for interview at [Company]" tasks (HIGH priority).
+        3. For OFFER status: create "Review and respond to offer from [Company]" tasks (URGENT priority).
+        4. For SCREEN status: create "Research [Company] before screening call" tasks (MEDIUM priority).
+        5. For APPLIED (no update in 7+ days): create "Follow up with [Company] on [Role] application" tasks (LOW priority).
+        6. For REJECTED: create "Send thank-you / request feedback from [Company]" tasks (LOW priority).
+        7. If an interview date is set, create a preparation task due 1 day before.
+        8. If an offer deadline is set, create a decision task due on that date.
+        9. Do NOT create tasks for GHOSTED applications older than 30 days.
+        10. Deduplicate — don't create multiple identical tasks for the same company.
+
+        CATEGORIES: FOLLOW_UP, INTERVIEW_PREP, APPLICATION, RESEARCH, NETWORKING
+        PRIORITIES: LOW, MEDIUM, HIGH, URGENT
+
+        Return ONLY valid JSON array:
+        [
+            {
+                "title": "string (concise, action-oriented)",
+                "description": "string (1-2 sentences with specific context)",
+                "priority": "LOW" | "MEDIUM" | "HIGH" | "URGENT",
+                "category": "FOLLOW_UP" | "INTERVIEW_PREP" | "APPLICATION" | "RESEARCH" | "NETWORKING",
+                "dueDate": "YYYY-MM-DD or null",
+                "applicationId": "string (the application ID from above) or null"
+            }
+        ]
+        `;
+
+        try {
+            const result = await this._generateJson<{ tasks: any[] } | any[]>(prompt);
+            if (Array.isArray(result)) return result;
+            if ('tasks' in result && Array.isArray((result as any).tasks)) return (result as any).tasks;
+            return [];
+        } catch (e: any) {
+            console.error("Task Generation Error:", e);
+            return [];
+        }
+    }
 }

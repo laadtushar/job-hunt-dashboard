@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import { Compass, LogOut, User, BarChart3, KanbanSquare, Shield } from "lucide-react"
+import { Compass, LogOut, User, BarChart3, KanbanSquare, Shield, CheckSquare } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
 import { loginAction, logoutAction } from "@/lib/actions"
 import Link from "next/link"
@@ -25,6 +25,9 @@ export default async function Navbar() {
                         <div className="flex items-center gap-2 sm:gap-4">
                             <Link href="/kanban" className="hidden sm:flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400" title="Pipeline (Kanban)">
                                 <KanbanSquare className="h-4 w-4 md:h-5 md:w-5" />
+                            </Link>
+                            <Link href="/tasks" className="hidden sm:flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 hover:text-green-600 dark:text-slate-400 dark:hover:text-green-400" title="Task Manager">
+                                <CheckSquare className="h-4 w-4 md:h-5 md:w-5" />
                             </Link>
                             {session.user.role === "SUPERADMIN" && (
                                 <Link href="/admin" className="hidden sm:flex items-center justify-center h-8 w-8 md:h-10 md:w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 hover:text-purple-600 dark:text-slate-400 dark:hover:text-purple-400" title="Admin Dashboard">
