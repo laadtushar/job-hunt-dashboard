@@ -25,6 +25,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
+import CookieConsent from "@/components/CookieConsent";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -46,7 +48,9 @@ export default function RootLayout({
             {children}
             <Toaster />
             <Analytics />
+            <CookieConsent />
           </TooltipProvider>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
