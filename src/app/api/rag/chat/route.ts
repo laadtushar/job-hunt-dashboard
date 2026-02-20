@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { EmbeddingService } from "@/services/embedding";
 import { AIService } from "@/services/ai";
+import { GmailService } from "@/services/gmail";
+import { JobService } from "@/services/job";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
@@ -21,6 +23,144 @@ export async function POST(req: Request) {
 
         // 1. Generate Embedding for Query
         const embeddingService = new EmbeddingService();
+        const ai = new AIService();
+
+        // ** AGENTIC STEP 1: Detect Intent **
+        const { intent, company } = await ai.detectIntent(message);
+
+        if (intent === 'MISSING_JOB' && company) {
+            // Find account
+            const account = await prisma.account.findFirst({
+                where: { userId: session.user.id, provider: "google" },
+            });
+
+            if (account?.access_token) {
+                const gmail = new GmailService(account.access_token, account.refresh_token as string);
+                const jobService = new JobService();
+
+                // Agentic Step 2: High-Precision Search
+                const gmailQuery = await ai.generateGmailQuery(company, message);
+                const messages = await gmail.listEmails(session.user.id, gmailQuery, 5);
+
+                const foundEmails: any[] = [];
+                const foundJobs: any[] = [];
+
+                if (messages.length > 0) {
+                    for (const m of messages) {
+                        try {
+                            const fullMsg = await gmail.getEmailDetails(m.id!);
+                            const subjectHeader = fullMsg.payload?.headers?.find((h: any) => h.name === "Subject");
+                            const fromHeader = fullMsg.payload?.headers?.find((h: any) => h.name === "From");
+                            const subject = subjectHeader?.value || "No Subject";
+                            const sender = fromHeader?.value || "Unknown";
+                            const bodyText = GmailService.getBody(fullMsg.payload) || "";
+
+                            foundEmails.push({ subject, sender, body: bodyText });
+
+                            const extracted = await ai.parseEmail(bodyText, subject, sender);
+                            if (extracted.isJobRelated) {
+                                const saved = await jobService.createOrUpdateApplication(session.user.id, extracted, fullMsg.threadId!, ai);
+                                foundJobs.push(saved);
+
+                                // Log Email
+                                await prisma.emailLog.upsert({
+                                    where: { gmailId: m.id! },
+                                    update: { applicationId: saved.id },
+                                    create: {
+                                        gmailId: m.id!,
+                                        threadId: fullMsg.threadId!,
+                                        receivedDate: new Date(parseInt(fullMsg.internalDate || "0")),
+                                        snippet: fullMsg.snippet || null,
+                                        body: bodyText,
+                                        applicationId: saved.id,
+                                        sender,
+                                        subject
+                                    }
+                                });
+                            }
+                        } catch (e) {
+                            console.error("[Agent Sync] Item Error:", e);
+                        }
+                    }
+                }
+
+                // Agentic Step 3: Self-Reflection
+                const reflection = await ai.reflectOnSearch(message, foundEmails, foundJobs);
+
+                // Agentic Step 4: Persistent Log
+                await prisma.agentSearchLog.create({
+                    data: {
+                        userId: session.user.id,
+                        userMessage: message,
+                        detectedIntent: intent,
+                        detectedCompany: company,
+                        gmailQuery,
+                        foundEmailsCount: foundEmails.length,
+                        foundJobsCount: foundJobs.length,
+                        reflection,
+                        status: 'COMPLETED'
+                    }
+                });
+
+                return NextResponse.json({
+                    answer: reflection,
+                    suggestedQuestions: ["Show me my new jobs", "What did you learn?"]
+                });
+            }
+        }
+
+        // ** HANDLERS FOR NEW AGENTIC INTENTS **
+        const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+        if (intent === 'CHECK_GHOSTS') {
+            const res = await fetch(`${baseUrl}/api/agent/ghost-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
+            const data = await res.json();
+            const answer = data.ghostedApps.length > 0
+                ? `I analyzed your stale applications and found ${data.ghostedApps.length} potential ghosts:\n\n` +
+                data.ghostedApps.map((g: any) => `- **${g.company}** (${g.role}): ${g.reasoning}`).join('\n')
+                : "I checked your stale applications, and everyone seems to be within standard processing times! No ghosts detected.";
+            return NextResponse.json({ answer, suggestedQuestions: ["How do I follow up?", "Check my status drift"] });
+        }
+
+        if (intent === 'CHECK_DRIFT') {
+            const res = await fetch(`${baseUrl}/api/agent/drift-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
+            const data = await res.json();
+            const answer = data.corrections.length > 0
+                ? `I found and corrected ${data.corrections.length} status discrepancies by re-evaluating ignored emails:\n\n` +
+                data.corrections.map((c: any) => `- **${c.company}**: ${c.oldStatus} → **${c.newStatus}** (${c.reasoning})`).join('\n')
+                : "I re-evaluated your recently ignored emails and everything looks accurate. No status drift detected!";
+            return NextResponse.json({ answer, suggestedQuestions: ["Show me recent emails", "Any ghost jobs?"] });
+        }
+
+        if (intent === 'CHECK_DUPLICATES') {
+            const res = await fetch(`${baseUrl}/api/agent/duplicate-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
+            const data = await res.json();
+            const answer = data.duplicates.length > 0
+                ? `I identified ${data.duplicates.length} potential duplicate application pairs:\n\n` +
+                data.duplicates.map((d: any) => `- Pair: IDs ${d.id1} and ${d.id2}\n  Reasoning: ${d.reasoning} (Confidence: ${Math.round(d.confidence * 100)}%)`).join('\n') +
+                "\n\nShould I merge any of these for you?"
+                : "Your application list looks clean! No duplicates found.";
+            return NextResponse.json({ answer, suggestedQuestions: ["Merge all duplicates", "Check for ghosts"] });
+        }
+
+        if (intent === 'CHECK_THREADS') {
+            const res = await fetch(`${baseUrl}/api/agent/thread-watch`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
+            const data = await res.json();
+            const answer = data.alerts.length > 0
+                ? `I found ${data.alerts.length} conversations where they're waiting for your reply:\n\n` +
+                data.alerts.map((a: any) => `- **${a.company}** (${a.urgency}): ${a.reasoning}`).join('\n')
+                : "You're all caught up! No unanswered recruiter messages detected.";
+            return NextResponse.json({ answer, suggestedQuestions: ["Draft a follow-up for Stripe", "What else should I do?"] });
+        }
+
+        if (intent === 'SHOW_LEARNINGS') {
+            const res = await fetch(`${baseUrl}/api/agent/learnings`, { method: 'GET', headers: { cookie: req.headers.get('cookie') || "" } });
+            const data = await res.json();
+            const answer = `### Agent Intelligence Report\n\n**Stats:**\n- Ghosts Detected: ${data.stats.ghostsDetected}\n- Drifts Corrected: ${data.stats.driftsCorrected}\n- Duplicates Identified: ${data.stats.duplicatesFound}\n\n**Recent Reflections:**\n` +
+                data.recentLearnings.map((l: any) => `- [${l.category}] ${l.reflection}`).join('\n');
+            return NextResponse.json({ answer, suggestedQuestions: ["How do you learn?", "Run all scans"] });
+        }
+
         const vector = await embeddingService.embed(message);
 
         if (vector.length === 0) {
@@ -78,7 +218,6 @@ export async function POST(req: Request) {
         }
 
         // 4. Generate Answer
-        const ai = new AIService();
         const response = await ai.answerQuestion(message, contextText);
 
         return NextResponse.json({ ...response });

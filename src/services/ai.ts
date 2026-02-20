@@ -586,4 +586,202 @@ export class AIService {
             return [];
         }
     }
+
+    // MISSING JOB SYNC AGENT LOGIC
+    async detectIntent(message: string): Promise<{ intent: 'MISSING_JOB' | 'CHECK_GHOSTS' | 'CHECK_DRIFT' | 'CHECK_DUPLICATES' | 'CHECK_THREADS' | 'SHOW_LEARNINGS' | 'GENERAL', company?: string }> {
+        const prompt = `
+        Analyze the user message and determine their intent.
+        
+        INTENTS:
+        - MISSING_JOB: Reporting a sync error or missing application. (e.g., "I applied to Stripe but it's not here")
+        - CHECK_GHOSTS: Asking to check for stale/ghosted applications. (e.g., "Check for ghost jobs", "Any companies ghosting me?")
+        - CHECK_DRIFT: Asking to re-validate status or find missed emails. (e.g., "Check my status drift", "Did I miss any interview emails?")
+        - CHECK_DUPLICATES: Asking to find duplicates. (e.g., "Any duplicate applications?", "Merge duplicates")
+        - CHECK_THREADS: Asking about unanswered messages. (e.g., "Who haven't I replied to?", "Check my thread watch")
+        - SHOW_LEARNINGS: Asking what the agent has learned. (e.g., "What have you learned?", "Show me your agent learnings")
+        - GENERAL: Any other question about jobs or status.
+        
+        Message: "${message}"
+        
+        Return JSON:
+        {
+            "intent": "MISSING_JOB" | "CHECK_GHOSTS" | "CHECK_DRIFT" | "CHECK_DUPLICATES" | "CHECK_THREADS" | "SHOW_LEARNINGS" | "GENERAL",
+            "company": "string | null (only for MISSING_JOB)"
+        }
+        `;
+        try {
+            const res = await this._generateJson<any>(prompt);
+            const validIntents = ['MISSING_JOB', 'CHECK_GHOSTS', 'CHECK_DRIFT', 'CHECK_DUPLICATES', 'CHECK_THREADS', 'SHOW_LEARNINGS', 'GENERAL'];
+            return {
+                intent: validIntents.includes(res.intent) ? res.intent : 'GENERAL',
+                company: res.company || undefined
+            };
+        } catch (e) {
+            return { intent: 'GENERAL' };
+        }
+    }
+
+    async generateGmailQuery(company: string, userMessage: string): Promise<string> {
+        const prompt = `
+        Generate a high-precision Gmail search query to find job application emails for a specific company based on the user's report.
+        User said: "${userMessage}"
+        Company: "${company}"
+        
+        Rules:
+        1. Use "subject:(...)" for company name and job keywords.
+        2. Include common job-related terms to avoid noise.
+        3. Exclude query labels if not sure, but use "after:2024/01/01" as a baseline.
+        
+        Return JSON:
+        { "query": "string" }
+        `;
+        try {
+            const res = await this._generateJson<any>(prompt);
+            return res.query || `subject:(${company}) label:inbox after:2024/01/01`;
+        } catch (e) {
+            return `subject:(${company}) label:inbox after:2024/01/01`;
+        }
+    }
+
+    async reflectOnSearch(userMessage: string, foundEmails: any[], foundJobs: any[]): Promise<string> {
+        const emailSummaries = foundEmails.map(e => `Subject: ${e.subject} | From: ${e.sender}`).join('\n');
+        const jobSummaries = foundJobs.map(j => `Company: ${j.company} | Role: ${j.role} | Status: ${j.status}`).join('\n');
+
+        const prompt = `
+        You are a self-reflecting AI Agent. A user reported a missing job sync: "${userMessage}".
+        You searched Gmail and found:
+        
+        EMAILS FOUND:
+        ${emailSummaries || "None"}
+        
+        JOBS SUCCESSFULLY INGESTED:
+        ${jobSummaries || "None"}
+        
+        TASK:
+        Provide a detailed, helpful, and transparent reflection to the user.
+        1. If found: Explain what you found and that it's now synced.
+        2. If not found: Explain that you searched but couldn't find a clear match, and why (e.g., maybe the company name in the email is different).
+        3. Self-reflection: Mention what you learned (e.g., "I missed this earlier because the sender was generic") or how you will improve.
+        4. Be supportive.
+        
+        Return JSON:
+        { "reflection": "markdown string" }
+        `;
+        try {
+            const res = await this._generateJson<any>(prompt);
+            return res.reflection || "I've searched your Gmail but couldn't find any new matching applications. I'll continue to improve my detection logic.";
+        } catch (e) {
+            return "Search complete. No new applications were found that matched your request.";
+        }
+    }
+
+    async detectGhostApplications(apps: any[]): Promise<any[]> {
+        const appInfo = apps.map(app => `- ${app.company} (${app.role}) | Applied: ${app.appliedDate.toISOString().split('T')[0]} | Last Update: ${app.lastUpdate.toISOString().split('T')[0]}`).join('\n');
+        const prompt = `
+        Analyze the following stale job applications and determine which ones are likely "ghost jobs" (no activity for 2+ weeks).
+        Today is ${new Date().toISOString().split('T')[0]}.
+        
+        APPLICATIONS:
+        ${appInfo}
+        
+        For each application, decide if it's GHOSTED, and provide a short reasoning.
+        Reasoning could be: "High probability of ghosting due to 3+ weeks silence", "Standard processing time for this sector", etc.
+        
+        Return JSON array:
+        [
+            {
+                "company": "string",
+                "role": "string",
+                "isGhosted": boolean,
+                "reasoning": "string"
+            }
+        ]
+        `;
+        try {
+            return await this._generateJson<any[]>(prompt);
+        } catch (e) {
+            console.error("Ghost Detection Error:", e);
+            return [];
+        }
+    }
+
+    async reClassifyEmail(email: any, app: any): Promise<{ shouldReclassify: boolean, reasoning: string, newStatus?: string }> {
+        const prompt = `
+        Reflexion Loop: A previously ignored email might be relevant to a job application.
+        
+        APPLICATION:
+        Company: ${app.company} | Role: ${app.role} | Current Status: ${app.status}
+        
+        EMAIL:
+        Subject: ${email.subject} | From: ${email.sender} | Snippet: ${email.snippet}
+        
+        TASK:
+        Determine if this email is actually job-related and if it should change the application status.
+        Specifically, look for interview invites, rejections, or requests for more info.
+        
+        Return JSON:
+        {
+            "shouldReclassify": boolean,
+            "reasoning": "string",
+            "newStatus": "APPLIED" | "SCREEN" | "INTERVIEW" | "OFFER" | "REJECTED" | null
+        }
+        `;
+        try {
+            return await this._generateJson<any>(prompt);
+        } catch (e) {
+            return { shouldReclassify: false, reasoning: "Error in reclassification logic." };
+        }
+    }
+
+    async detectDuplicates(apps: any[]): Promise<any[]> {
+        const appInfo = apps.map(app => `- [ID: ${app.id}] ${app.company} | ${app.role} | Applied: ${app.appliedDate.toISOString().split('T')[0]}`).join('\n');
+        const prompt = `
+        Fuzzy Matching: Identify potential duplicate job applications from the list below.
+        Applications might have slightly different names (e.g., "Google" vs "Alphabet") or roles (e.g., "SDE" vs "Software Engineer").
+        
+        APPLICATIONS:
+        ${appInfo}
+        
+        Return JSON array of duplicate pairs:
+        [
+            {
+                "id1": "string",
+                "id2": "string",
+                "reasoning": "string",
+                "confidence": number (0-1)
+            }
+        ]
+        `;
+        try {
+            const res = await this._generateJson<any[]>(prompt);
+            return Array.isArray(res) ? res : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    async assessUnansweredThreads(threads: any[]): Promise<any[]> {
+        const threadInfo = threads.map(t => `- Company: ${t.company} | Role: ${t.role} | Last Sender: ${t.lastSender} | Last Message Date: ${t.lastDate}`).join('\n');
+        const prompt = `
+        Proactive Thread Analysis: Identify threads where the user HAS NOT replied to a company message and it's been > 24h.
+        
+        THREADS:
+        ${threadInfo}
+        
+        Return JSON array of threads needing attention:
+        [
+            {
+                "company": "string",
+                "role": "string",
+                "urgency": "LOW" | "MEDIUM" | "HIGH" | "URGENT",
+                "reasoning": "string"
+            }
+        ]
+        `;
+        try {
+            return await this._generateJson<any[]>(prompt);
+        } catch (e) {
+            return [];
+        }
+    }
 }
