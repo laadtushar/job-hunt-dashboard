@@ -22,6 +22,8 @@ model User {
   sessions      Session[]
   applications  JobApplication[]
   tasks         Task[]
+  searchLogs    AgentSearchLog[]
+  auditLogs     AgentAuditLog[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -139,6 +141,7 @@ model JobApplication {
 
   embedding JobEmbedding?
   tasks     Task[]
+  extractionConfidence Float?  // 0-1 confidence from AI extraction
 
   @@index([company, role])
 }
@@ -215,4 +218,36 @@ model Task {
   completedAt   DateTime?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model AgentSearchLog {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  userMessage     String   // The user's query about a missing job
+  detectedIntent  String?  // The intent extracted by AI
+  detectedCompany String?  // The company name extracted
+  
+  gmailQuery      String?  // The generated high-precision query
+  foundEmailsCount Int     @default(0)
+  foundJobsCount  Int      @default(0)
+  
+  reflection      String?  @db.Text // The agent's self-reflection/learning
+  status          String   @default("COMPLETED") // COMPLETED, FAILED
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AgentAuditLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   // GHOST_DETECT, DRIFT_CORRECT, DUPLICATE_MERGE, MISSING_SYNC, THREAD_WATCH
+  targetId    String?  // applicationId or emailId
+  payload     String?  @db.Text // JSON: details, before/after, reasoning
+  reflection  String?  @db.Text
+  status      String   @default("COMPLETED")
+  createdAt   DateTime @default(now())
 }
