@@ -21,7 +21,17 @@ interface Message {
 export function AskAI() {
     const [isOpen, setIsOpen] = useState(false)
     const [messages, setMessages] = useState<Message[]>([
-        { id: 'intro', role: 'assistant', content: "Hi! I'm your Job Hunt AI. I can search your applications and analysis. Ask me anything like \"What's the status of Google?\" or \"Show me high salary jobs\"." }
+        {
+            id: 'intro',
+            role: 'assistant',
+            content: "Hi! I'm your Job Hunt AI. I can search your applications, detect ghost jobs, fix status drift, and more. Try one of the prompts below:",
+            suggestedQuestions: [
+                "Check for ghost jobs (Proactive detection)",
+                "Check status drift (Fix data precision)",
+                "Enable thread watch (Unanswered messages)",
+                "Show latest intelligence report"
+            ]
+        }
     ])
     const [input, setInput] = useState("")
     const [isLoading, setIsLoading] = useState(false)

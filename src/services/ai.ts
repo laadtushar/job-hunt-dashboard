@@ -549,16 +549,15 @@ export class AIService {
         ${appSummaries}
 
         TASK GENERATION RULES:
-        1. Generate 5-15 tasks total. Focus on the most impactful actions.
-        2. For INTERVIEW status: create "Prepare for interview at [Company]" tasks (HIGH priority).
-        3. For OFFER status: create "Review and respond to offer from [Company]" tasks (URGENT priority).
-        4. For SCREEN status: create "Research [Company] before screening call" tasks (MEDIUM priority).
-        5. For APPLIED (no update in 7+ days): create "Follow up with [Company] on [Role] application" tasks (LOW priority).
-        6. For REJECTED: create "Send thank-you / request feedback from [Company]" tasks (LOW priority).
-        7. If an interview date is set, create a preparation task due 1 day before.
-        8. If an offer deadline is set, create a decision task due on that date.
-        9. Do NOT create tasks for GHOSTED applications older than 30 days.
-        10. Deduplicate — don't create multiple identical tasks for the same company.
+        1. Generate 5-15 tasks total. DO NOT BE SHY - if there is any plausible action, include it.
+        2. For INTERVIEW status: create "Prepare for interview at [Company]" (HIGH priority).
+        3. For OFFER status: create "Review and respond to offer from [Company]" (URGENT priority).
+        4. For SCREEN status: create "Research [Company] before screening call" (MEDIUM priority).
+        5. For APPLIED (no update in 3+ days): create "Follow up with [Company] on [Role] application" (HIGH priority).
+        6. For REJECTED: create "Request detailed feedback from [Company]" (LOW priority).
+        7. For all active jobs: create "Research recent news for [Company]" (MEDIUM priority, every 14 days).
+        8. If an interview date is set, create preparation task due 1 day before.
+        9. Deduplicate — don't create multiple identical tasks for the same company.
 
         CATEGORIES: FOLLOW_UP, INTERVIEW_PREP, APPLICATION, RESEARCH, NETWORKING
         PRIORITIES: LOW, MEDIUM, HIGH, URGENT
