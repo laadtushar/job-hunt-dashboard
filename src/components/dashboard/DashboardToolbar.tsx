@@ -133,13 +133,14 @@ export function DashboardToolbar({
 
                         <MaintenanceControls />
                     </div>
+
                 </div>
 
                 {/* Secondary Row: Filters (Desktop) & Mobile Actions */}
                 <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
 
-                    {/* Mobile Only: Action Bar */}
                     <div className="flex md:hidden items-center gap-2">
+                        <MaintenanceControls />
                         <Sheet>
                             <SheetTrigger asChild>
                                 <Button variant="outline" className="flex-1 h-11 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300">
@@ -234,10 +235,6 @@ export function DashboardToolbar({
                                                 onChange={(e) => setSyncLimit(Number(e.target.value))}
                                             />
                                         </div>
-                                    </div>
-
-                                    <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
-                                        <MaintenanceControls />
                                     </div>
                                 </div>
                             </SheetContent>
