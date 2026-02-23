@@ -69,8 +69,9 @@ export function AskAI() {
             };
             setMessages(prev => [...prev, aiMsg]);
 
-        } catch (e) {
-            setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Sorry, I had trouble connecting to the neural network. Please try again." }]);
+        } catch (e: any) {
+            const errorMessage = e.message || "An unexpected error occurred.";
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: `Sorry, something went wrong: ${errorMessage}. Please try again.` }]);
         } finally {
             setIsLoading(false);
         }

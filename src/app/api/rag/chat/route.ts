@@ -5,6 +5,7 @@ import { EmbeddingService } from "@/services/embedding";
 import { AIService } from "@/services/ai";
 import { GmailService } from "@/services/gmail";
 import { JobService } from "@/services/job";
+import { AgentService } from "@/services/agent";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
@@ -24,6 +25,7 @@ export async function POST(req: Request) {
         // 1. Generate Embedding for Query
         const embeddingService = new EmbeddingService();
         const ai = new AIService();
+        const agentService = new AgentService();
 
         // ** AGENTIC STEP 1: Detect Intent **
         const { intent, company } = await ai.detectIntent(message);
@@ -109,12 +111,10 @@ export async function POST(req: Request) {
             }
         }
 
-        // ** HANDLERS FOR NEW AGENTIC INTENTS **
-        const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+        // ** HANDLERS FOR AGENTIC INTENTS — Direct Service Calls (no fetch) **
 
         if (intent === 'CHECK_GHOSTS') {
-            const res = await fetch(`${baseUrl}/api/agent/ghost-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
-            const data = await res.json();
+            const data = await agentService.ghostScan(session.user.id);
             const answer = data.ghostedApps.length > 0
                 ? `I analyzed your stale applications and found ${data.ghostedApps.length} potential ghosts:\n\n` +
                 data.ghostedApps.map((g: any) => `- **${g.company}** (${g.role}): ${g.reasoning}`).join('\n')
@@ -123,8 +123,7 @@ export async function POST(req: Request) {
         }
 
         if (intent === 'CHECK_DRIFT') {
-            const res = await fetch(`${baseUrl}/api/agent/drift-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
-            const data = await res.json();
+            const data = await agentService.driftScan(session.user.id);
             const answer = data.corrections.length > 0
                 ? `I found and corrected ${data.corrections.length} status discrepancies by re-evaluating ignored emails:\n\n` +
                 data.corrections.map((c: any) => `- **${c.company}**: ${c.oldStatus} → **${c.newStatus}** (${c.reasoning})`).join('\n')
@@ -133,8 +132,7 @@ export async function POST(req: Request) {
         }
 
         if (intent === 'CHECK_DUPLICATES') {
-            const res = await fetch(`${baseUrl}/api/agent/duplicate-scan`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
-            const data = await res.json();
+            const data = await agentService.duplicateScan(session.user.id);
             const answer = data.duplicates.length > 0
                 ? `I identified ${data.duplicates.length} potential duplicate application pairs:\n\n` +
                 data.duplicates.map((d: any) => `- Pair: IDs ${d.id1} and ${d.id2}\n  Reasoning: ${d.reasoning} (Confidence: ${Math.round(d.confidence * 100)}%)`).join('\n') +
@@ -144,8 +142,18 @@ export async function POST(req: Request) {
         }
 
         if (intent === 'CHECK_THREADS') {
-            const res = await fetch(`${baseUrl}/api/agent/thread-watch`, { method: 'POST', headers: { cookie: req.headers.get('cookie') || "" } });
-            const data = await res.json();
+            const account = await prisma.account.findFirst({
+                where: { userId: session.user.id, provider: "google" },
+            });
+
+            if (!account?.access_token) {
+                return NextResponse.json({
+                    answer: "I can't check your threads because Gmail access isn't connected. Please sign in with Google first.",
+                    suggestedQuestions: ["Check for ghosts", "Show latest intelligence report"]
+                });
+            }
+
+            const data = await agentService.threadWatch(session.user.id, account.access_token, account.refresh_token as string);
             const answer = data.alerts.length > 0
                 ? `I found ${data.alerts.length} conversations where they're waiting for your reply:\n\n` +
                 data.alerts.map((a: any) => `- **${a.company}** (${a.urgency}): ${a.reasoning}`).join('\n')
@@ -154,20 +162,20 @@ export async function POST(req: Request) {
         }
 
         if (intent === 'SHOW_LEARNINGS') {
-            const res = await fetch(`${baseUrl}/api/agent/learnings`, { method: 'GET', headers: { cookie: req.headers.get('cookie') || "" } });
-            const data = await res.json();
+            const data = await agentService.getLearnings(session.user.id);
             const answer = `### Agent Intelligence Report\n\n**Stats:**\n- Ghosts Detected: ${data.stats.ghostsDetected}\n- Drifts Corrected: ${data.stats.driftsCorrected}\n- Duplicates Identified: ${data.stats.duplicatesFound}\n\n**Recent Reflections:**\n` +
                 data.recentLearnings.map((l: any) => `- [${l.category}] ${l.reflection}`).join('\n');
             return NextResponse.json({ answer, suggestedQuestions: ["How do you learn?", "Run all scans"] });
         }
 
+        // ** GENERAL RAG SEARCH **
         const vector = await embeddingService.embed(message);
 
         if (vector.length === 0) {
             return NextResponse.json({ error: "Failed to understand query" }, { status: 500 });
         }
 
-        // 2. Retrieve Relevant Context (Hybrid Search: Vector + Keyword? Just Vector for now)
+        // 2. Retrieve Relevant Context (Vector Search)
         const vectorString = `[${vector.join(",")}]`;
 
         // Search Jobs
@@ -179,10 +187,7 @@ export async function POST(req: Request) {
             LIMIT 5;
         `;
 
-        // Search Emails (optional, if relevant?)
-        // Let's mix them or just use jobs for now as per task.
-        // But the plan mentioned Email Classification RAG. 
-        // For "Ask Dashboard", emails might be useful context (e.g. "Did Google reply?").
+        // Search Emails
         const emailResults: any[] = await prisma.$queryRaw`
             SELECT el.subject, el.sender, el.snippet, e.type, e.vector <=> ${vectorString}::vector as distance
             FROM "EmailLog" el
