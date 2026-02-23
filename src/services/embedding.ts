@@ -27,13 +27,24 @@ export class EmbeddingService {
         if (!text) return [];
         const cleanText = text.replace(/\n/g, " ").substring(0, 8000); // reduced slightly for safety
 
+        let vector: number[] = [];
         if (this.provider === 'OPENROUTER') {
-            return await this.embedWithOpenRouter(cleanText);
+            vector = await this.embedWithOpenRouter(cleanText);
         } else if (this.provider === 'HUGGINGFACE') {
-            return await this.embedWithHuggingFace(cleanText);
+            vector = await this.embedWithHuggingFace(cleanText);
         } else {
-            return await this.embedWithGemini(cleanText);
+            vector = await this.embedWithGemini(cleanText);
         }
+
+        // --- Post-Processing: Dimensionality Alignment ---
+        // The current database table (JobEmbedding) is locked to 768 dimensions (likely from Gemini text-embedding-004).
+        // If we use OpenAI/OpenRouter (1536), we must truncate to avoid database errors.
+        if (vector.length > 768) {
+            console.log(`[EmbeddingService] Truncating vector from ${vector.length} to 768 dimensions.`);
+            return vector.slice(0, 768);
+        }
+
+        return vector;
     }
 
     private async embedWithGemini(text: string): Promise<number[]> {
