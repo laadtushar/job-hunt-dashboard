@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { GmailService } from "@/services/gmail";
 import { AIService } from "@/services/ai";
 import { JobService } from "@/services/job";
+import { EmbeddingService } from "@/services/embedding";
 import { GoogleSheetsService } from "@/services/sheets";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
@@ -108,6 +109,7 @@ export async function POST(req: Request) {
                 const gmailService = new GmailService(account.access_token!, account.refresh_token as string);
                 const aiService = new AIService();
                 const jobService = new JobService();
+                const embeddingService = new EmbeddingService();
 
                 // Process these specific IDs in batches of 10 within this request
                 const BATCH_SIZE = 10;
@@ -131,7 +133,7 @@ export async function POST(req: Request) {
 
                             if (extractedData.isJobRelated) {
                                 const savedJob = await jobService.createOrUpdateApplication(userId, extractedData, fullMsg.threadId!, aiService);
-                                await prisma.emailLog.upsert({
+                                const emailLog = await prisma.emailLog.upsert({
                                     where: { gmailId: msgId },
                                     update: {
                                         applicationId: savedJob.id,
@@ -152,10 +154,26 @@ export async function POST(req: Request) {
                                         subject: subject
                                     }
                                 });
+
+                                // --- Add Email Embedding ---
+                                try {
+                                    const text = EmbeddingService.formatEmailForEmbedding(emailLog);
+                                    const vector = await embeddingService.embed(text);
+                                    if (vector.length > 0) {
+                                        await prisma.$executeRaw`
+                                            INSERT INTO "EmailEmbedding" ("id", "emailId", "vector", "content", "type", "createdAt")
+                                            VALUES (gen_random_uuid(), ${emailLog.id}, ${vector}::vector, ${text}, 'POSITIVE', NOW())
+                                            ON CONFLICT ("emailId") DO UPDATE SET "vector" = ${vector}::vector, "content" = ${text}, "type" = 'POSITIVE';
+                                        `;
+                                    }
+                                } catch (e) {
+                                    console.error(`Failed to embed email ${msgId}`, e);
+                                }
+
                                 newJobsCount++;
                                 sendLog(`✨ Found: ${extractedData.company}`, "success");
                             } else {
-                                await prisma.emailLog.upsert({
+                                const emailLog = await prisma.emailLog.upsert({
                                     where: { gmailId: msgId },
                                     update: {
                                         aiOutput: JSON.stringify(extractedData),
@@ -173,6 +191,21 @@ export async function POST(req: Request) {
                                         subject: subject
                                     }
                                 });
+
+                                // --- Add Email Embedding (Ignored) ---
+                                try {
+                                    const text = EmbeddingService.formatEmailForEmbedding(emailLog);
+                                    const vector = await embeddingService.embed(text);
+                                    if (vector.length > 0) {
+                                        await prisma.$executeRaw`
+                                            INSERT INTO "EmailEmbedding" ("id", "emailId", "vector", "content", "type", "createdAt")
+                                            VALUES (gen_random_uuid(), ${emailLog.id}, ${vector}::vector, ${text}, 'NEGATIVE', NOW())
+                                            ON CONFLICT ("emailId") DO UPDATE SET "vector" = ${vector}::vector, "content" = ${text}, "type" = 'NEGATIVE';
+                                        `;
+                                    }
+                                } catch (e) {
+                                    console.error(`Failed to embed ignored email ${msgId}`, e);
+                                }
                             }
                         } catch (e: any) {
                             console.error(`Error processing ${msgId}:`, e);

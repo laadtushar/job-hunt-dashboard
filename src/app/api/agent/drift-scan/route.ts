@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { AIService } from "@/services/ai";
+import { JobService } from "@/services/job";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -11,6 +12,7 @@ export async function POST(req: Request) {
 
     try {
         const ai = new AIService();
+        const jobService = new JobService();
 
         // 1. Get recent ignored emails
         const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
@@ -43,11 +45,8 @@ export async function POST(req: Request) {
             if (candidateApp) {
                 const result = await ai.reClassifyEmail(email, candidateApp);
                 if (result.shouldReclassify && result.newStatus && result.newStatus !== candidateApp.status) {
-                    // Correct the status
-                    await prisma.jobApplication.update({
-                        where: { id: candidateApp.id },
-                        data: { status: result.newStatus }
-                    });
+                    // Correct the status using JobService to ensure embedding refresh
+                    await jobService.updateJobStatus(candidateApp.id, result.newStatus);
 
                     // Update EmailLog
                     await prisma.emailLog.update({

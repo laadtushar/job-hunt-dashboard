@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { ExtractedJobData, AIService } from './ai';
 import { Normalizer } from '@/lib/normalize';
 import { UrlUtils } from '@/lib/url';
+import { EmbeddingService } from './embedding';
 
 export class JobService {
 
@@ -128,12 +129,13 @@ export class JobService {
 
     async createOrUpdateApplication(userId: string, data: ExtractedJobData, threadId?: string, aiService?: AIService, source: string = 'GMAIL') {
         const existing = await this.findExistingApplication(data, threadId, aiService);
+        let savedJob;
 
         if (existing) {
             console.log(`[JobService] Merging with existing job: ${existing.id} (${existing.company} - ${existing.role})`);
 
             // Merge Logic
-            return await prisma.jobApplication.update({
+            savedJob = await prisma.jobApplication.update({
                 where: { id: existing.id },
                 data: {
                     status: data.status || existing.status,
@@ -153,32 +155,79 @@ export class JobService {
                     feedback: data.feedback // Update feedback only if new one exists? 
                 }
             });
+        } else {
+            console.log(`[JobService] Creating new application: ${data.company} - ${data.role}`);
+
+            savedJob = await prisma.jobApplication.create({
+                data: {
+                    userId,
+                    company: data.company || "Unknown Company",
+                    role: data.role || "Unknown Role",
+                    jobId: data.jobId,
+                    status: data.status || "APPLIED",
+                    source: source,
+                    appliedDate: data.receivedDate ? new Date(data.receivedDate) : new Date(),
+                    location: data.location,
+                    salaryRange: data.salary ? JSON.stringify(data.salary) : null,
+                    companyDomain: data.companyInfo?.domain,
+                    companyLinkedIn: data.companyInfo?.linkedIn,
+                    jobPostUrl: data.urls?.jobPost,
+                    recruiterName: data.people?.recruiterName,
+                    recruiterEmail: data.people?.recruiterEmail,
+                    hiringManager: data.people?.hiringManager,
+                    nextSteps: data.nextSteps,
+                    rejectionReason: data.rejectionReason,
+                    sentimentScore: data.sentimentScore,
+                    feedback: data.feedback,
+                }
+            });
         }
 
-        console.log(`[JobService] Creating new application: ${data.company} - ${data.role}`);
+        // --- Layer 5: Neural Indexing (RAG) ---
+        try {
+            const embeddingService = new EmbeddingService();
+            const text = EmbeddingService.formatJobForEmbedding(savedJob);
+            const vector = await embeddingService.embed(text);
 
-        return await prisma.jobApplication.create({
-            data: {
-                userId,
-                company: data.company || "Unknown Company",
-                role: data.role || "Unknown Role",
-                jobId: data.jobId,
-                status: data.status || "APPLIED",
-                source: source,
-                appliedDate: data.receivedDate ? new Date(data.receivedDate) : new Date(),
-                location: data.location,
-                salaryRange: data.salary ? JSON.stringify(data.salary) : null,
-                companyDomain: data.companyInfo?.domain,
-                companyLinkedIn: data.companyInfo?.linkedIn,
-                jobPostUrl: data.urls?.jobPost,
-                recruiterName: data.people?.recruiterName,
-                recruiterEmail: data.people?.recruiterEmail,
-                hiringManager: data.people?.hiringManager,
-                nextSteps: data.nextSteps,
-                rejectionReason: data.rejectionReason,
-                sentimentScore: data.sentimentScore,
-                feedback: data.feedback,
+            if (vector.length > 0) {
+                console.log(`[JobService] Upserting embedding for job: ${savedJob.id}`);
+                await prisma.$executeRaw`
+                    INSERT INTO "JobEmbedding" ("id", "jobId", "vector", "content", "createdAt")
+                    VALUES (gen_random_uuid(), ${savedJob.id}, ${vector}::vector, ${text}, NOW())
+                    ON CONFLICT ("jobId") DO UPDATE SET "vector" = ${vector}::vector, "content" = ${text};
+                `;
             }
+        } catch (e) {
+            console.error(`[JobService] Failed to generate embedding for job ${savedJob.id}:`, e);
+        }
+
+        return savedJob;
+    }
+
+    async updateJobStatus(jobId: string, newStatus: string) {
+        const updatedJob = await prisma.jobApplication.update({
+            where: { id: jobId },
+            data: { status: newStatus, lastUpdate: new Date() }
         });
+
+        // Refresh Embedding
+        try {
+            const embeddingService = new EmbeddingService();
+            const text = EmbeddingService.formatJobForEmbedding(updatedJob);
+            const vector = await embeddingService.embed(text);
+
+            if (vector.length > 0) {
+                console.log(`[JobService] Refreshing embedding for job: ${updatedJob.id} due to status change to ${newStatus}`);
+                await prisma.$executeRaw`
+                    INSERT INTO "JobEmbedding" ("id", "jobId", "vector", "content", "createdAt")
+                    VALUES (gen_random_uuid(), ${updatedJob.id}, ${vector}::vector, ${text}, NOW())
+                    ON CONFLICT ("jobId") DO UPDATE SET "vector" = ${vector}::vector, "content" = ${text};
+                `;
+            }
+        } catch (e) {
+            console.error(`[JobService] Failed to refresh embedding for job ${updatedJob.id}:`, e);
+        }
+
+        return updatedJob;
     }
 }
