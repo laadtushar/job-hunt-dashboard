@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">1. Introduction</h2>
                         <p>
-                            Welcome to Meridian ("we," "our," or "us"). We respect your privacy and are committed to protecting your personal data.
+                            Welcome to HyredLab ("we," "our," or "us"). We respect your privacy and are committed to protecting your personal data.
                             This privacy policy will inform you as to how we look after your personal data when you visit our website (regardless of where you visit it from)
                             and tell you about your privacy rights and how the law protects you.
                         </p>

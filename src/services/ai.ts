@@ -190,6 +190,7 @@ export class AIService {
         7.  **Next Steps**: Summarize strict next actions.
         8.  **Sender Domain**: Use the Sender email to infer company domain if it's a corporate address (not gmail/yahoo).
         9.  **Rejection Reason**: If the status is "REJECTED", extract a VERY CONCISE reason (max 10 words). Examples: "Generic rejection", "Role closed", "Skills mismatch", "Position put on hold", "Not specifying". If not rejected, leave null.
+        10. **Dates**: If the status is "INTERVIEW", attempt to extract the specific interview date/time in ISO 8601 format. If not found, leave null.
         
         
         Sender: ${sender || "Unknown"}
@@ -209,6 +210,7 @@ export class AIService {
             "urls": { "jobPost": "string", "applicationStatus": "string" },
             "people": { "recruiterName": "string", "recruiterEmail": "string", "hiringManager": "string" },
             "companyInfo": { "domain": "string", "linkedIn": "string" },
+            "dates": { "interview": "string (ISO 8601 date) | null", "offerDeadline": "string (ISO date) | null" },
             "nextSteps": "string",
             "rejectionReason": "string | null",
             "sentimentScore": number (0-1),
@@ -576,12 +578,21 @@ export class AIService {
         `;
 
         try {
-            const result = await this._generateJson<{ tasks: any[] } | any[]>(prompt);
+            const result = await this._generateJson<any>(prompt);
+            // Handle various response shapes from different LLMs
             if (Array.isArray(result)) return result;
-            if ('tasks' in result && Array.isArray((result as any).tasks)) return (result as any).tasks;
+            if (result && typeof result === 'object') {
+                // Try common wrapper keys
+                for (const key of ['tasks', 'items', 'data', 'generated_tasks']) {
+                    if (Array.isArray(result[key])) return result[key];
+                }
+                // If the result object has task-like properties, wrap in array
+                if (result.title && result.description) return [result];
+            }
+            console.warn("[TaskGen] Unexpected response shape:", JSON.stringify(result).substring(0, 200));
             return [];
         } catch (e: any) {
-            console.error("Task Generation Error:", e);
+            console.error("Task Generation Error:", e.message);
             return [];
         }
     }
@@ -780,6 +791,53 @@ export class AIService {
         try {
             return await this._generateJson<any[]>(prompt);
         } catch (e) {
+            return [];
+        }
+    }
+    // STRATEGY INSIGHTS for homepage contextual panel
+    async generateStrategyInsights(portfolioSummary: string): Promise<{
+        id: string;
+        category: string;
+        title: string;
+        description: string;
+        priority: number;
+    }[]> {
+        const prompt = `
+        You are an elite career strategist. Analyze this job hunt portfolio and generate 2-4 actionable strategy recommendations.
+
+        PORTFOLIO SUMMARY:
+        ${portfolioSummary}
+
+        RULES:
+        1. Each insight should be specific and actionable — not generic advice.
+        2. Focus on: what to do next, what pattern to change, where to double down, gaps in coverage.
+        3. Be data-driven — reference numbers from the portfolio.
+        4. Categories: STRATEGY, MARKET, FOLLOW_UP, OPTIMIZATION
+        5. Priority: 2 for important, 3 for good-to-know
+
+        Return ONLY valid JSON:
+        {
+            "insights": [
+                {
+                    "id": "strategy-1",
+                    "category": "STRATEGY",
+                    "title": "short title (max 8 words)",
+                    "description": "1-2 concise sentences of advice",
+                    "priority": 2
+                }
+            ]
+        }
+        `;
+
+        try {
+            const result = await this._generateJson<{ insights: any[] }>(prompt);
+            if (result.insights && Array.isArray(result.insights)) {
+                return result.insights;
+            }
+            if (Array.isArray(result)) return result;
+            return [];
+        } catch (e: any) {
+            console.error("[Strategy AI] Error:", e.message);
             return [];
         }
     }

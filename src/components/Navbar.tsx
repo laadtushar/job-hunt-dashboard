@@ -11,11 +11,22 @@ export default async function Navbar() {
         <nav className="sticky top-0 z-50 border-b bg-white/70 dark:bg-slate-950/70 backdrop-blur-md px-4 md:px-6 py-3 md:py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <a href="/" className="flex items-center gap-2 md:gap-3 group cursor-pointer">
-                    <div className="h-8 w-8 md:h-10 md:w-10 flex items-center justify-center rounded-xl overflow-hidden shadow-lg shadow-blue-500/20 dark:shadow-blue-500/10 transition-transform group-hover:rotate-12 duration-300">
-                        <img src="/logo.png" alt="Meridian Logo" className="h-full w-full object-cover" />
+                    <div className="h-8 w-8 md:h-10 md:w-10 flex items-center justify-center transition-transform group-hover:rotate-12 duration-300">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+                            <defs>
+                                <linearGradient id="nav-logo-g" gradientUnits="userSpaceOnUse" x1="16" y1="12" x2="48" y2="52">
+                                    <stop offset="0%" stopColor="#4d6bff" />
+                                    <stop offset="100%" stopColor="#22d3ee" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M16 12V52M48 12V52M16 32H48" stroke="url(#nav-logo-g)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" />
+                            <circle cx="16" cy="12" r="4" fill="#4d6bff" />
+                            <circle cx="48" cy="52" r="4" fill="#22d3ee" />
+                        </svg>
                     </div>
-                    <h1 className="text-xl md:text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-500 dark:from-blue-400 dark:via-indigo-400 dark:to-blue-300 bg-clip-text text-transparent">
-                        Meridian
+                    <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+                        <span className="text-slate-900 dark:text-white">Hyred</span>
+                        <span className="font-light text-slate-500 dark:text-slate-400">Lab</span>
                     </h1>
                 </a>
 

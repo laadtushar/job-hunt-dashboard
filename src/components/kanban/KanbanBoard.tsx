@@ -7,7 +7,7 @@ import { KanbanColumn } from "./KanbanColumn";
 import { KanbanCard } from "./KanbanCard";
 import { JobApplication } from "@prisma/client";
 import { updateJobStatus } from "@/lib/actions";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 interface KanbanBoardProps {
     initialJobs: JobApplication[];
@@ -24,7 +24,6 @@ const COLUMNS = [
 export default function KanbanBoard({ initialJobs }: KanbanBoardProps) {
     const [jobs, setJobs] = useState<JobApplication[]>(initialJobs);
     const [activeId, setActiveId] = useState<string | null>(null);
-    const { toast } = useToast();
 
     // Sensors
     const sensors = useSensors(
@@ -66,20 +65,13 @@ export default function KanbanBoard({ initialJobs }: KanbanBoardProps) {
 
             try {
                 await updateJobStatus(activeId, newStatus);
-                toast({
-                    title: "Status Updated",
-                    description: `Moved to ${newStatus}`,
-                    duration: 2000,
-                });
+                toast.success(`Moved to ${newStatus}`, { duration: 2000 });
             } catch (e) {
                 // Revert
                 setJobs(prev => prev.map(j =>
                     j.id === activeId ? { ...j, status: activeJob.status } : j
                 ));
-                toast({
-                    title: "Update Failed",
-                    variant: "destructive",
-                });
+                toast.error("Update failed, check connection");
             }
         }
 
