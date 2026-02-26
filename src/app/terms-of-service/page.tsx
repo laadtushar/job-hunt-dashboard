@@ -21,13 +21,13 @@ export default function TermsOfServicePage() {
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">2. Use License</h2>
                         <p>
-                            Permission is granted to temporarily download one copy of the materials (information or software) on Meridian's website for personal,
+                            Permission is granted to temporarily download one copy of the materials (information or software) on HyredLab's website for personal,
                             non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
                         </p>
                         <ul className="list-disc pl-6 space-y-2 mt-2">
                             <li>modify or copy the materials;</li>
                             <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                            <li>attempt to decompile or reverse engineer any software contained on Meridian's website;</li>
+                            <li>attempt to decompile or reverse engineer any software contained on HyredLab's website;</li>
                             <li>remove any copyright or other proprietary notations from the materials; or</li>
                             <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
                         </ul>
@@ -36,14 +36,14 @@ export default function TermsOfServicePage() {
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">3. Disclaimer</h2>
                         <p>
-                            The materials on Meridian's website are provided on an 'as is' basis. Meridian makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                            The materials on HyredLab's website are provided on an 'as is' basis. HyredLab makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">4. Limitations</h2>
                         <p>
-                            In no event shall Meridian or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Meridian's website, even if Meridian or a Meridian authorized representative has been notified orally or in writing of the possibility of such damage.
+                            In no event shall HyredLab or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on HyredLab's website, even if HyredLab or a HyredLab authorized representative has been notified orally or in writing of the possibility of such damage.
                         </p>
                     </section>
 

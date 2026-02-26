@@ -7,7 +7,7 @@ import { redirect } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 export const metadata = {
-    title: "Tasks | Meridian",
+    title: "Tasks | HyredLab",
     description: "AI-powered task management for your job search",
 }
 

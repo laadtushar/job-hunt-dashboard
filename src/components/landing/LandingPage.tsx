@@ -56,7 +56,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                     </h1>
 
                     <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-                        Stop the spreadsheet madness. Meridian automatically syncs your Gmail,
+                        Stop the spreadsheet madness. HyredLab automatically syncs your Gmail,
                         extracts details with Agentic AI, and builds a premium command center for your next big role.
                     </p>
 
@@ -96,7 +96,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                         <div className="relative h-full w-full">
                             <Image
                                 src="/screenshots/dashboard.png"
-                                alt="Meridian Dashboard"
+                                alt="HyredLab Dashboard"
                                 fill
                                 className="object-cover object-top p-4"
                                 priority
@@ -160,7 +160,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                             <Badge className="bg-blue-600 text-white border-none py-1.5 px-4 rounded-full font-black text-[10px] uppercase tracking-widest">Performance</Badge>
                             <h2 className="text-4xl md:text-6xl font-black leading-tight">Neural Batch <br /><span className="text-blue-500 italic">Parallel Sync</span></h2>
                             <p className="text-lg text-slate-400 font-medium leading-relaxed">
-                                Most trackers time out when you have 1000+ emails. Meridian uses a unique client-orchestrated parallel architecture that processes emails in concurrent batches of 25.
+                                Most trackers time out when you have 1000+ emails. HyredLab uses a unique client-orchestrated parallel architecture that processes emails in concurrent batches of 25.
                                 <br /><br />
                                 Sync months of history in seconds, with surgical precision using Gmail's native `after:` and `before:` query parameters.
                             </p>
@@ -204,7 +204,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                             <Badge className="bg-purple-600 text-white border-none py-1.5 px-4 rounded-full font-black text-[10px] uppercase tracking-widest">Data Integrity</Badge>
                             <h2 className="text-4xl md:text-6xl font-black leading-tight">Smart Identity <br /><span className="text-purple-500 italic">Resolution</span></h2>
                             <p className="text-lg text-slate-400 font-medium leading-relaxed">
-                                Career search is messy. Meridian identifies that "Recruiter John" from "Apple" and a generic "System Alert" for "SDE Role" are actually the same application.
+                                Career search is messy. HyredLab identifies that "Recruiter John" from "Apple" and a generic "System Alert" for "SDE Role" are actually the same application.
                                 <br /><br />
                                 Our L1-L4 matching layers use semantic reasoning to group interview invites, role updates, and offer letters into a single source of truth.
                             </p>
@@ -271,7 +271,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                                 <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.3em]">Governance</h2>
                                 <h3 className="text-4xl md:text-6xl font-black text-slate-950 dark:text-white leading-tight">Trust through <br /><span className="text-blue-500 italic">Total Visibility.</span></h3>
                                 <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-xl">
-                                    We believe AI shouldn't be a black box. Meridian provides surgical logs for every neural decision and a robust permission system to keep your data exclusively yours.
+                                    We believe AI shouldn't be a black box. HyredLab provides surgical logs for every neural decision and a robust permission system to keep your data exclusively yours.
                                 </p>
                             </div>
 
@@ -301,7 +301,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                 <div className="max-w-4xl mx-auto text-center space-y-16">
                     <div className="space-y-4">
                         <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.3em]">The Machine</h2>
-                        <h3 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white">Why Meridian Wins.</h3>
+                        <h3 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white">Why HyredLab Wins.</h3>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 text-left">
@@ -311,7 +311,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                                     <Bot className="h-6 w-6 text-blue-600" />
                                 </div>
                                 <h4 className="text-2xl font-black">Reflexion Loops</h4>
-                                <p className="text-slate-500 dark:text-slate-400 font-medium">When data is unclear, Meridian re-interrogates your inbox. Our "Improve AI" feature uses your feedback to critiques its previous analysis and self-correct.</p>
+                                <p className="text-slate-500 dark:text-slate-400 font-medium">When data is unclear, HyredLab re-interrogates your inbox. Our "Improve AI" feature uses your feedback to critiques its previous analysis and self-correct.</p>
                             </div>
                             <div className="space-y-4">
                                 <div className="p-3 bg-white dark:bg-slate-900 rounded-xl w-fit shadow-xl shadow-blue-500/5 ring-1 ring-slate-200 dark:ring-slate-800">
@@ -328,7 +328,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                             </div>
                             <div className="space-y-6 relative">
                                 <h4 className="text-4xl font-black leading-tight">Ready to reclaim your time?</h4>
-                                <p className="text-blue-100 font-medium">Join 500+ professionals using Meridian to land their next big opportunity.</p>
+                                <p className="text-blue-100 font-medium">Join 500+ professionals using HyredLab to land their next big opportunity.</p>
                             </div>
                             <form action={loginAction} className="relative mt-12">
                                 <Button size="lg" className="w-full h-14 bg-white text-blue-600 hover:bg-slate-100 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl cursor-pointer">
@@ -348,8 +348,20 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                             className="flex items-center gap-2 group cursor-pointer w-fit"
                         >
-                            <div className="h-8 w-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black group-hover:rotate-12 transition-transform shadow-lg shadow-blue-500/20">M</div>
-                            <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">Meridian</span>
+                            <div className="h-8 w-8 group-hover:rotate-12 transition-transform duration-300">
+                                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+                                    <defs>
+                                        <linearGradient id="footer-logo-g" gradientUnits="userSpaceOnUse" x1="16" y1="12" x2="48" y2="52">
+                                            <stop offset="0%" stopColor="#4d6bff" />
+                                            <stop offset="100%" stopColor="#22d3ee" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M16 12V52M48 12V52M16 32H48" stroke="url(#footer-logo-g)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" />
+                                    <circle cx="16" cy="12" r="4" fill="#4d6bff" />
+                                    <circle cx="48" cy="52" r="4" fill="#22d3ee" />
+                                </svg>
+                            </div>
+                            <span className="text-xl font-bold tracking-tighter"><span className="text-slate-900 dark:text-white">Hyred</span><span className="font-light text-slate-500 dark:text-slate-400">Lab</span></span>
                         </div>
                         <p className="max-w-xs text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                             Orchestrating the world's career hunts with autonomous AI and high-performance engineering.
@@ -387,7 +399,7 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                     </div>
                 </div>
                 <div className="max-w-6xl mx-auto px-6 mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">© 2026 Meridian Labs. Built for the ambitious.</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">© 2026 HyredLab. Built for the ambitious.</p>
                 </div>
             </footer>
         </div>

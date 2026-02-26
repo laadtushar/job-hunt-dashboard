@@ -4,11 +4,13 @@ import { useState } from "react"
 import { JobCard } from "@/components/dashboard/JobCard"
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 import { DashboardToolbar } from "@/components/dashboard/DashboardToolbar"
+import { ContextualInsights } from "@/components/dashboard/ContextualInsights"
 import { SyncLogs } from "@/components/dashboard/SyncLogs"
-import { AIInsightsPanel } from "@/components/dashboard/AIInsightsPanel"
+
 import { AskAI } from "@/components/dashboard/AskAI"
 import { JobGridView } from "@/components/dashboard/JobGridView"
 import KanbanBoard from "@/components/kanban/KanbanBoard"
+import { toast } from "sonner"
 
 export default function DashboardClient({
     jobs,
@@ -22,8 +24,10 @@ export default function DashboardClient({
     const [afterDate, setAfterDate] = useState("2024-01-01")
     const [beforeDate, setBeforeDate] = useState("")
     const [searchTerm, setSearchTerm] = useState("")
-    const [statusFilter, setStatusFilter] = useState("ALL")
+    const [statusFilters, setStatusFilters] = useState<string[]>([])
+    const [sourceFilter, setSourceFilter] = useState("ALL")
     const [sortOrder, setSortOrder] = useState("NEWEST")
+    const [hiddenJobs, setHiddenJobs] = useState<Set<string>>(new Set())
     const [isSyncing, setIsSyncing] = useState(false)
     const [syncLogs, setSyncLogs] = useState<{ message: string, type: 'info' | 'success' | 'error' }[]>([])
 
@@ -37,6 +41,7 @@ export default function DashboardClient({
                 ? `${afterDate} to ${beforeDate}`
                 : `since ${afterDate}`;
             setSyncLogs(prev => [...prev, { message: `Identifying pending job updates (${dateRange})...`, type: 'info' }]);
+
             const prepareRes = await fetch('/api/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -65,15 +70,19 @@ export default function DashboardClient({
                 batches.push(messageIds.slice(i, i + BATCH_SIZE));
             }
 
-            // Run batches in parallel
-            await Promise.all(batches.map(async (batchIds, batchIndex) => {
+            // Run batches sequentially for stability to not overwhelm API
+            let processedCount = 0;
+            let emailsFound = messages.length;
+
+            for (const batchIds of batches) {
                 const res = await fetch('/api/sync', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messageIds: batchIds })
+                    body: JSON.stringify({ action: 'process', messageIds: batchIds })
                 });
 
-                if (!res.body) return;
+                if (!res.body) continue;
+
                 const reader = res.body.getReader();
                 const decoder = new TextDecoder();
                 let buffer = "";
@@ -91,34 +100,49 @@ export default function DashboardClient({
                         if (line.trim()) {
                             try {
                                 const parsed = JSON.parse(line);
-                                // Prepend batch info to message to distinguish logs
-                                setSyncLogs(prev => [...prev, {
-                                    ...parsed,
-                                    message: `[Batch ${batchIndex + 1}] ${parsed.message}`
-                                }]);
-                            } catch (e) { }
+                                setSyncLogs(prev => [...prev, parsed]);
+                                if (parsed.type === 'success' && parsed.message.includes("Processed")) {
+                                    processedCount++;
+                                }
+                            } catch (e) {
+                                console.error("Error parsing sync log line:", e, line);
+                            }
                         }
                     }
                 }
-            }));
+            }
 
-            setSyncLogs(prev => [...prev, { message: "Sync Pulse Complete.", type: 'success' }]);
-            setTimeout(() => window.location.reload(), 1500);
+            setSyncLogs(prev => [...prev, { message: `Sync Pulse Complete. Processed ${processedCount} roles.`, type: 'success' }]);
+            setTimeout(() => window.location.reload(), 2000);
 
-        } catch (e) {
-            console.error(e)
+        } catch (error) {
             setSyncLogs(prev => [...prev, { message: "Neural Link Failed: Connection Interrupted", type: 'error' }]);
+            console.error("Sync failed:", error);
         } finally {
-            setIsSyncing(false)
+            setIsSyncing(false);
         }
     }
 
+    const handleHideJob = (jobId: string) => {
+        setHiddenJobs(prev => {
+            const next = new Set(prev)
+            if (next.has(jobId)) {
+                next.delete(jobId)
+            } else {
+                next.add(jobId)
+            }
+            return next
+        })
+    }
+
     const filteredJobs = jobs.filter(job => {
+        if (hiddenJobs.has(job.id)) return false
         const matchesSearch = (job.company?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
             (job.role?.toLowerCase() || "").includes(searchTerm.toLowerCase())
-        const matchesStatus = statusFilter === "ALL" || job.status === statusFilter
+        const matchesStatus = statusFilters.length === 0 || statusFilters.includes(job.status)
+        const matchesSource = sourceFilter === "ALL" || job.source === sourceFilter
 
-        return matchesSearch && matchesStatus
+        return matchesSearch && matchesStatus && matchesSource
     }).sort((a, b) => {
         switch (sortOrder) {
             case "NEWEST":
@@ -146,22 +170,27 @@ export default function DashboardClient({
 
     const stats = {
         total: jobs.length,
-        active: jobs.filter(j => ['APPLIED', 'SCREEN', 'INTERVIEW', 'OFFER'].includes(j.status)).length,
-        interviews: jobs.filter(j => j.status === 'INTERVIEW').length,
-        offers: jobs.filter(j => j.status === 'OFFER').length
+        applied: jobs.filter(j => j.status === 'APPLIED').length,
+        screen: jobs.filter(j => j.status === 'SCREEN').length,
+        interview: jobs.filter(j => j.status === 'INTERVIEW').length,
+        offer: jobs.filter(j => j.status === 'OFFER').length,
+        rejected: jobs.filter(j => j.status === 'REJECTED').length,
+        ghosted: jobs.filter(j => j.status === 'GHOSTED').length
     }
 
     return (
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
-            <AIInsightsPanel jobs={jobs} />
+            <ContextualInsights />
             <DashboardHeader stats={stats} />
 
             <div className="space-y-6">
                 <DashboardToolbar
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
-                    statusFilter={statusFilter}
-                    setStatusFilter={setStatusFilter}
+                    statusFilters={statusFilters}
+                    setStatusFilters={setStatusFilters}
+                    sourceFilter={sourceFilter}
+                    setSourceFilter={setSourceFilter}
                     sortOrder={sortOrder}
                     setSortOrder={setSortOrder}
                     viewMode={viewMode}
@@ -174,6 +203,8 @@ export default function DashboardClient({
                     setBeforeDate={setBeforeDate}
                     isSyncing={isSyncing}
                     handleSync={handleSync}
+                    hiddenCount={hiddenJobs.size}
+                    onClearHidden={() => setHiddenJobs(new Set())}
                 />
 
                 <SyncLogs logs={syncLogs} isSyncing={isSyncing} />
@@ -182,7 +213,7 @@ export default function DashboardClient({
             {viewMode === 'BOARD' ? (
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {filteredJobs.map((job) => (
-                        <JobCard key={job.id} job={job} />
+                        <JobCard key={job.id} job={job} onHide={() => handleHideJob(job.id)} />
                     ))}
                     {filteredJobs.length === 0 && (
                         <div className="col-span-full flex flex-col items-center justify-center py-20 px-4 text-center bg-white/50 backdrop-blur-sm rounded-3xl border-2 border-dashed border-slate-200">

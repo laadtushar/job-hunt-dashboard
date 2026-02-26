@@ -4,6 +4,7 @@ import { ExtractedJobData, AIService } from './ai';
 import { Normalizer } from '@/lib/normalize';
 import { UrlUtils } from '@/lib/url';
 import { EmbeddingService } from './embedding';
+import { insertCalendarEvent } from '@/lib/gcal';
 
 export class JobService {
 
@@ -181,6 +182,28 @@ export class JobService {
                     feedback: data.feedback,
                 }
             });
+        }
+
+        // --- Layer 4.5: Calendar Integration ---
+        // If the status is INTERVIEW and we extracted an interview date, try to sync it to Calendar
+        if (savedJob.status === 'INTERVIEW' && data.dates?.interview) {
+            try {
+                // Determine duration: Default to 1 hour (3600000 ms)
+                const startTime = new Date(data.dates.interview);
+                const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+
+                // Only insert if it's in the future (avoids spam on historic syncs)
+                if (startTime.getTime() > Date.now()) {
+                    await insertCalendarEvent(userId, {
+                        summary: `Interview: ${savedJob.company} - ${savedJob.role}`,
+                        description: `Interview Details sync'd from Job Hunt Dashboard.\n\nNext Steps: ${savedJob.nextSteps || 'None specified'}\n\nAutomated AI Notes: ${savedJob.feedback || 'None'}`,
+                        startTime: startTime.toISOString(),
+                        endTime: endTime.toISOString()
+                    });
+                }
+            } catch (e) {
+                console.error(`[JobService] Failed to insert calendar event for job ${savedJob.id}`, e);
+            }
         }
 
         // --- Layer 5: Neural Indexing (RAG) ---
