@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Briefcase, Zap, Users, CheckCircle, Search, XCircle, Ghost, Phone, Send, Calendar } from "lucide-react"
+import { Briefcase, Zap, Users, CheckCircle, Search, XCircle, Ghost, Phone, Send, Calendar, Flame } from "lucide-react"
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
@@ -13,8 +13,24 @@ export interface DashboardStats {
     ghosted: number
 }
 
-export function DashboardHeader({ stats }: { stats: DashboardStats }) {
+export function DashboardHeader({ stats, momentumData }: { stats: DashboardStats, momentumData?: any }) {
     const cards = [
+        {
+            title: "Momentum",
+            value: momentumData?.score || 0,
+            icon: Flame,
+            tooltip: `Velocity: ${momentumData?.trend?.toUpperCase() || 'COLD'} (Streak: ${momentumData?.streak || 0})`,
+            theme: {
+                ring: "ring-orange-500/20 dark:ring-orange-500/30",
+                blur: "bg-orange-500",
+                title: "text-orange-600 dark:text-orange-400 font-extrabold",
+                iconBg: "bg-gradient-to-br from-orange-400 to-red-500 border-none",
+                iconText: "text-white animate-pulse",
+                valueText: "text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-500 dark:from-orange-400 dark:to-red-400",
+                bar: "bg-gradient-to-r from-orange-400 to-red-500",
+                tooltipBg: "bg-gradient-to-r from-orange-600 to-red-600",
+            }
+        },
         {
             title: "Total Jobs",
             value: stats.total,
@@ -138,7 +154,7 @@ export function DashboardHeader({ stats }: { stats: DashboardStats }) {
 
     return (
         <TooltipProvider>
-            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4">
                 {cards.map((card, i) => {
                     const Icon = card.icon;
                     return (
@@ -155,7 +171,7 @@ export function DashboardHeader({ stats }: { stats: DashboardStats }) {
                                         </div>
                                     </CardHeader>
                                     <CardContent className="px-5 pb-5 relative">
-                                        <div className={`text-4xl font-black tracking-tighter tabular-nums leading-none ${card.theme.valueText}`}>
+                                        <div className={`text-3xl lg:text-4xl font-black tracking-tighter tabular-nums leading-none ${card.theme.valueText}`}>
                                             {card.value}
                                         </div>
                                         <div className={`h-1.5 w-8 rounded-full mt-3 group-hover:w-full transition-all duration-700 ${card.theme.bar}`} />

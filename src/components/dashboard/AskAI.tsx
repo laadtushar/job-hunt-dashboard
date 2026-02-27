@@ -20,6 +20,7 @@ interface Message {
 
 export function AskAI() {
     const [isOpen, setIsOpen] = useState(false)
+    const [contextJob, setContextJob] = useState<any>(null)
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 'intro',
@@ -36,6 +37,28 @@ export function AskAI() {
     const [input, setInput] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const scrollRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleOpenChat = (e: CustomEvent) => {
+            const job = e.detail;
+            setContextJob(job);
+            setIsOpen(true);
+            setMessages([
+                {
+                    id: Date.now().toString(),
+                    role: 'assistant',
+                    content: `I'm ready to help you with your application at **${job.company}** for the **${job.role}** position. What would you like to do?`,
+                    suggestedQuestions: [
+                        `Draft a follow-up email to ${job.company}`,
+                        `Summarize the interview process for ${job.role}`,
+                        `What are the most recent updates for this role?`
+                    ]
+                }
+            ]);
+        };
+        window.addEventListener('open-ai-chat', handleOpenChat as EventListener);
+        return () => window.removeEventListener('open-ai-chat', handleOpenChat as EventListener);
+    }, []);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -55,7 +78,7 @@ export function AskAI() {
             const res = await fetch('/api/rag/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: text, requiredJobContextId: contextJob?.id })
             });
             const data = await res.json();
 

@@ -32,7 +32,8 @@ import {
     CheckCircle2,
     XCircle,
     HelpCircle,
-    Code
+    Code,
+    Sparkles
 } from "lucide-react"
 import { useState, useEffect } from "react"
 
@@ -81,7 +82,7 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                 {children}
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0">
-                <DialogHeader className="p-4 md:p-6 pb-3 md:pb-4 border-b shrink-0">
+                <DialogHeader className="p-4 md:p-6 pb-3 md:pb-4 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
                     <div className="flex justify-between items-start gap-4">
                         <div>
                             <DialogTitle className="text-xl md:text-2xl font-bold flex items-center gap-2">
@@ -98,9 +99,23 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                                 )}
                             </DialogDescription>
                         </div>
-                        <Badge className={`px-3 py-1 text-sm border shadow-none ${getStatusColor(job.status)}`}>
-                            {job.status}
-                        </Badge>
+                        <div className="flex items-center gap-3">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-8 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 shadow-sm hover:shadow hover:border-blue-300 dark:hover:border-blue-700 transition-all font-bold group"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    window.dispatchEvent(new CustomEvent('open-ai-chat', { detail: job }))
+                                }}
+                            >
+                                <Sparkles className="h-3.5 w-3.5 mr-1.5 text-blue-500 group-hover:scale-110 transition-transform" />
+                                Copilot
+                            </Button>
+                            <Badge className={`px-3 py-1 text-sm border shadow-none ${getStatusColor(job.status)}`}>
+                                {job.status}
+                            </Badge>
+                        </div>
                     </div>
                 </DialogHeader>
 

@@ -9,17 +9,20 @@ import { SyncLogs } from "@/components/dashboard/SyncLogs"
 
 import { AskAI } from "@/components/dashboard/AskAI"
 import { JobGridView } from "@/components/dashboard/JobGridView"
+import { TimelineView } from "@/components/dashboard/TimelineView"
 import KanbanBoard from "@/components/kanban/KanbanBoard"
 import { toast } from "sonner"
 
 export default function DashboardClient({
     jobs,
+    momentumData,
     initialView = 'BOARD'
 }: {
     jobs: any[],
-    initialView?: 'BOARD' | 'GRID' | 'PIPELINE'
+    momentumData?: any,
+    initialView?: 'BOARD' | 'GRID' | 'PIPELINE' | 'TIMELINE'
 }) {
-    const [viewMode, setViewMode] = useState<'BOARD' | 'GRID' | 'PIPELINE'>(initialView)
+    const [viewMode, setViewMode] = useState<'BOARD' | 'GRID' | 'PIPELINE' | 'TIMELINE'>(initialView || 'BOARD')
     const [syncLimit, setSyncLimit] = useState(50)
     const [afterDate, setAfterDate] = useState("2024-01-01")
     const [beforeDate, setBeforeDate] = useState("")
@@ -181,7 +184,7 @@ export default function DashboardClient({
     return (
         <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
             <ContextualInsights />
-            <DashboardHeader stats={stats} />
+            <DashboardHeader stats={stats} momentumData={momentumData} />
 
             <div className="space-y-6">
                 <DashboardToolbar
@@ -230,6 +233,8 @@ export default function DashboardClient({
                 </div>
             ) : viewMode === 'GRID' ? (
                 <JobGridView jobs={filteredJobs} />
+            ) : viewMode === 'TIMELINE' ? (
+                <TimelineView jobs={filteredJobs} />
             ) : (
                 <div className="bg-white/40 dark:bg-slate-900/40 p-4 rounded-3xl border border-slate-200/60 dark:border-slate-800/60 shadow-inner">
                     <KanbanBoard initialJobs={filteredJobs} />

@@ -262,6 +262,18 @@ export function JobCard({ job, onHide }: JobCardProps) {
                                 </Button>
                             )}
 
+                            {(job.nextSteps || job.feedback) && (
+                                <div className="mb-4 p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100/50 dark:border-blue-800/50">
+                                    <div className="flex items-center gap-1.5 mb-1.5 text-blue-700 dark:text-blue-400">
+                                        <Sparkles className="h-3.5 w-3.5" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest">Live Status</span>
+                                    </div>
+                                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium line-clamp-2 leading-relaxed">
+                                        {job.nextSteps || job.feedback}
+                                    </p>
+                                </div>
+                            )}
+
                             <div className="flex items-center justify-between pt-5 border-t border-slate-100 dark:border-slate-800/80">
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
