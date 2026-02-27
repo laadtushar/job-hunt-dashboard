@@ -12,7 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { RefreshCw, Search, LayoutGrid, List, SlidersHorizontal, Filter, X, EyeOff, Plus } from "lucide-react"
+import { RefreshCw, Search, LayoutGrid, List, SlidersHorizontal, Filter, X, EyeOff, Plus, Activity } from "lucide-react"
 import { MaintenanceControls } from "@/components/dashboard/MaintenanceControls"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -37,8 +37,8 @@ interface DashboardToolbarProps {
     setSourceFilter: (source: string) => void
     sortOrder: string
     setSortOrder: (order: string) => void
-    viewMode: 'BOARD' | 'GRID' | 'PIPELINE'
-    setViewMode: (mode: 'BOARD' | 'GRID' | 'PIPELINE') => void
+    viewMode: 'BOARD' | 'GRID' | 'PIPELINE' | 'TIMELINE'
+    setViewMode: (mode: 'BOARD' | 'GRID' | 'PIPELINE' | 'TIMELINE') => void
     syncLimit: number
     setSyncLimit: (limit: number) => void
     afterDate: string
@@ -164,6 +164,15 @@ export function DashboardToolbar({
                             >
                                 <List className="h-4 w-4 mr-1.5" />
                                 Grid
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setViewMode('TIMELINE')}
+                                className={`rounded-lg h-8 px-3 transition-all ${viewMode === 'TIMELINE' ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-400'}`}
+                            >
+                                <Activity className="h-4 w-4 mr-1.5" />
+                                Timeline
                             </Button>
                         </div>
 
@@ -333,7 +342,7 @@ export function DashboardToolbar({
                             <div className="space-y-6 overflow-y-auto pb-20">
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-500 uppercase tracking-wider">View Mode</label>
-                                    <div className="grid grid-cols-2 gap-2">
+                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                                         <Button
                                             variant={viewMode === 'BOARD' ? 'default' : 'outline'}
                                             onClick={() => setViewMode('BOARD')}
@@ -347,6 +356,13 @@ export function DashboardToolbar({
                                             className="h-12 rounded-xl justify-start"
                                         >
                                             <List className="h-4 w-4 mr-2" /> Grid
+                                        </Button>
+                                        <Button
+                                            variant={viewMode === 'TIMELINE' ? 'default' : 'outline'}
+                                            onClick={() => setViewMode('TIMELINE')}
+                                            className="h-12 rounded-xl justify-start"
+                                        >
+                                            <Activity className="h-4 w-4 mr-2" /> Timeline
                                         </Button>
                                     </div>
                                 </div>

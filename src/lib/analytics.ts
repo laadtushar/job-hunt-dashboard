@@ -20,6 +20,78 @@ export async function getJobFunnelData() {
     }));
 }
 
+export async function getSankeyFunnelData() {
+    const session = await auth();
+    if (!session?.user?.id) return { nodes: [], links: [] };
+
+    const applications = await prisma.jobApplication.findMany({
+        where: { userId: session.user.id },
+        select: { status: true, interviewDate: true, offerDeadline: true }
+    });
+
+    let applied = 0, screen = 0, interview = 0, offer = 0;
+    let exitApplied = 0, exitScreen = 0, exitInterview = 0, exitOffer = 0;
+
+    applications.forEach(app => {
+        const status = app.status;
+        const isExited = status === 'REJECTED' || status === 'GHOSTED';
+
+        if (status === 'OFFER') {
+            applied++; screen++; interview++; offer++;
+        } else if (status === 'INTERVIEW') {
+            applied++; screen++; interview++;
+        } else if (status === 'SCREEN') {
+            applied++; screen++;
+        } else if (status === 'APPLIED') {
+            applied++;
+        } else if (isExited) {
+            if (app.offerDeadline) {
+                applied++; screen++; interview++; offer++; exitOffer++;
+            } else if (app.interviewDate) {
+                applied++; screen++; interview++; exitInterview++;
+            } else {
+                applied++; exitApplied++; // Or maybe they exited after screen, but we don't have a screenDate. We'll be conservative.
+            }
+        }
+    });
+
+    const nodes = [
+        { name: 'Applications', color: '#6366f1' },       // 0: Indigo-500
+        { name: 'Screen', color: '#3b82f6' },             // 1: Blue-500
+        { name: 'Interview', color: '#8b5cf6' },          // 2: Violet-500
+        { name: 'Offer', color: '#eab308' },              // 3: Yellow-500
+        { name: 'Exited', color: '#ef4444' },             // 4: Red-500
+        { name: 'Active/No Response', color: '#94a3b8' }, // 5: Slate-400
+    ];
+
+    // Calculate currently active at each stage
+    const activeApplied = applied - screen - exitApplied;
+    const activeScreen = screen - interview - exitScreen;
+    const activeInterview = interview - offer - exitInterview;
+    const activeOffer = offer - exitOffer; // Assuming an offer is active until accepted/rejected, but we don't track accepted yet.
+
+    const links = [
+        // Progression
+        { source: 0, target: 1, value: screen },
+        { source: 1, target: 2, value: interview },
+        { source: 2, target: 3, value: offer },
+
+        // Exits
+        { source: 0, target: 4, value: exitApplied },
+        { source: 1, target: 4, value: exitScreen },
+        { source: 2, target: 4, value: exitInterview },
+        { source: 3, target: 4, value: exitOffer },
+
+        // Active / No Response
+        { source: 0, target: 5, value: activeApplied },
+        { source: 1, target: 5, value: activeScreen },
+        { source: 2, target: 5, value: activeInterview },
+        { source: 3, target: 5, value: activeOffer },
+    ].filter(l => l.value > 0);
+
+    return { nodes, links };
+}
+
 export async function getApplicationActivity() {
     const session = await auth();
     if (!session?.user?.id) return [];
@@ -92,4 +164,75 @@ export async function getSourceDistribution() {
         source: item.source || "UNKNOWN",
         count: item._count.source,
     }));
+}
+
+export async function getMomentumScore() {
+    const session = await auth();
+    if (!session?.user?.id) return { score: 0, streak: 0, trend: 'cold' };
+
+    const fourteenDaysAgo = new Date();
+    fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
+
+    const applications = await prisma.jobApplication.findMany({
+        where: {
+            userId: session.user.id,
+            lastUpdate: { gte: fourteenDaysAgo },
+        },
+        select: { status: true }
+    });
+
+    let score = 0;
+    applications.forEach(app => {
+        score += 10; // Base points for recent activity
+        if (app.status === 'SCREEN') score += 50;
+        if (app.status === 'INTERVIEW') score += 100;
+        if (app.status === 'OFFER') score += 300;
+    });
+
+    // Proxy for streak based on score velocity
+    const streak = Math.floor(score / 50);
+
+    return {
+        score,
+        streak: streak > 14 ? 14 : streak,
+        trend: score > 200 ? 'hot' : score > 50 ? 'warm' : 'cold'
+    };
+}
+
+export async function getSalaryHeatmapData() {
+    const session = await auth();
+    if (!session?.user?.id) return [];
+
+    const applications = await prisma.jobApplication.findMany({
+        where: {
+            userId: session.user.id,
+            salaryMin: { not: null }
+        },
+        select: {
+            id: true,
+            company: true,
+            role: true,
+            status: true,
+            salaryMin: true,
+            salaryMax: true,
+        }
+    });
+
+    const data = applications.filter(app => app.salaryMin).map(app => {
+        const min = app.salaryMin || 0;
+        const max = app.salaryMax || min;
+        const avg = (min + max) / 2;
+
+        return {
+            id: app.id,
+            company: app.company,
+            role: app.role,
+            status: app.status,
+            min,
+            max,
+            avg
+        }
+    });
+
+    return data;
 }

@@ -1,10 +1,11 @@
 
 import { auth } from "@/auth";
-import { getApplicationActivity, getJobFunnelData, getKeyMetrics, getSourceDistribution } from "@/lib/analytics";
+import { getApplicationActivity, getJobFunnelData, getKeyMetrics, getSourceDistribution, getSankeyFunnelData, getSalaryHeatmapData } from "@/lib/analytics";
 import { ActivityChart } from "@/components/analytics/ActivityChart";
 import { SankeyChart } from "@/components/analytics/SankeyChart";
 import { StatusDistributionChart } from "@/components/analytics/StatusDistributionChart";
 import { SourceBreakdownChart } from "@/components/analytics/SourceBreakdownChart";
+import { SalaryHeatmap } from "@/components/analytics/SalaryHeatmap";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -15,48 +16,14 @@ export default async function AnalyticsPage() {
     const session = await auth();
     if (!session?.user) redirect("/");
 
-    const [funnelData, activityData, metrics, sourceData] = await Promise.all([
+    const [funnelData, sankeyData, activityData, metrics, sourceData, heatmapData] = await Promise.all([
         getJobFunnelData(),
+        getSankeyFunnelData(),
         getApplicationActivity(),
         getKeyMetrics(),
         getSourceDistribution(),
+        getSalaryHeatmapData()
     ]);
-
-    // Transform Funnel Data for Sankey
-    const getCount = (status: string) => funnelData.find(d => d.status === status)?.count || 0;
-
-    const applied = getCount('APPLIED');
-    const ghosted = getCount('GHOSTED');
-    const rejected = getCount('REJECTED');
-    const screen = getCount('SCREEN');
-    const interview = getCount('INTERVIEW');
-    const offer = getCount('OFFER');
-
-    const noResponse = applied + ghosted;
-    const active = screen + interview + offer;
-    const total = noResponse + active + rejected;
-
-    // Nodes
-    const nodes = [
-        { name: 'Applications', color: '#6366f1' },       // Indigo-500
-        { name: 'No Response', color: '#94a3b8' },        // Slate-400
-        { name: 'Active', color: '#22c55e' },             // Green-500
-        { name: 'Rejected', color: '#ef4444' },           // Red-500
-        { name: 'Screen', color: '#3b82f6' },             // Blue-500
-        { name: 'Interview', color: '#8b5cf6' },          // Violet-500
-        { name: 'Offer', color: '#eab308' },              // Yellow-500
-    ];
-
-    const links = [
-        { source: 0, target: 1, value: noResponse },
-        { source: 0, target: 2, value: active },
-        { source: 0, target: 3, value: rejected },
-        { source: 2, target: 4, value: screen },
-        { source: 2, target: 5, value: interview },
-        { source: 2, target: 6, value: offer },
-    ].filter(l => l.value > 0);
-
-    const sankeyData = { nodes, links };
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -138,6 +105,9 @@ export default async function AnalyticsPage() {
                             <SourceBreakdownChart data={sourceData} />
                         </CardContent>
                     </Card>
+
+                    {/* Salary Heatmap */}
+                    <SalaryHeatmap data={heatmapData} />
                 </div>
             </main>
         </div>
