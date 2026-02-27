@@ -313,7 +313,7 @@ export function JobCard({ job, onHide }: JobCardProps) {
                                     })()}
                                 </div>
 
-                                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                                <div className="flex items-center gap-1 transition-all md:opacity-0 md:group-hover:opacity-100 md:translate-x-2 md:group-hover:translate-x-0">
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger asChild>

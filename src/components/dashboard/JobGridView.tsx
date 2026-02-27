@@ -76,8 +76,8 @@ export function JobGridView({ jobs }: { jobs: any[] }) {
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-between items-center bg-white/40 dark:bg-slate-900/40 p-2 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-md">
-                <div className="flex items-center gap-2 pl-2">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/40 dark:bg-slate-900/40 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-md">
+                <div className="flex flex-wrap items-center gap-2 pl-2">
                     <CheckCircle2 className="h-4 w-4 text-blue-500" />
                     <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
                         {jobs.length} Applications <span className="mx-1 text-slate-300">|</span>
@@ -141,9 +141,9 @@ export function JobGridView({ jobs }: { jobs: any[] }) {
                                     {isVisible('status') && (
                                         <TableCell className="text-center">
                                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${job.status === 'OFFER' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
-                                                    job.status === 'REJECTED' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
-                                                        job.status === 'INTERVIEW' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
-                                                            'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                                                job.status === 'REJECTED' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                                                    job.status === 'INTERVIEW' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
+                                                        'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400'
                                                 }`}>
                                                 {job.status}
                                             </span>

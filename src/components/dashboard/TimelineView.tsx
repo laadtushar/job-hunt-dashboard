@@ -17,7 +17,7 @@ export function TimelineView({ jobs }: { jobs: any[] }) {
     const groups = useMemo(() => {
         const result: { [key: string]: any[] } = {};
         sortedJobs.forEach(job => {
-            const dateStr = format(parseISO(job.appliedDate), "MMMM yyyy");
+            const dateStr = format(new Date(job.appliedDate), "MMMM yyyy");
             if (!result[dateStr]) result[dateStr] = [];
             result[dateStr].push(job);
         });
@@ -94,7 +94,7 @@ export function TimelineView({ jobs }: { jobs: any[] }) {
                                                     {job.role}
                                                 </p>
                                                 <div className="mt-3 text-[10px] font-bold text-slate-400 tracking-wider">
-                                                    {format(parseISO(job.appliedDate), "MMM dd")}
+                                                    {format(new Date(job.appliedDate), "MMM dd")}
                                                 </div>
                                             </motion.div>
                                         </JobDetailsDialog>
