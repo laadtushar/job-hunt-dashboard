@@ -83,7 +83,7 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0">
                 <DialogHeader className="p-4 md:p-6 pb-3 md:pb-4 border-b shrink-0 bg-slate-50/50 dark:bg-slate-900/50">
-                    <div className="flex justify-between items-start gap-4">
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                         <div>
                             <DialogTitle className="text-xl md:text-2xl font-bold flex items-center gap-2">
                                 {job.role}
@@ -99,7 +99,7 @@ export function JobDetailsDialog({ job, children }: JobDetailsDialogProps) {
                                 )}
                             </DialogDescription>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 w-full md:w-auto">
                             <Button
                                 variant="outline"
                                 size="sm"

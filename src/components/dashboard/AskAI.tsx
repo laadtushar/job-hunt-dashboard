@@ -108,7 +108,7 @@ export function AskAI() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="w-[380px] h-[600px] max-h-[80vh] shadow-2xl rounded-2xl overflow-hidden"
+                        className="w-[calc(100vw-3rem)] sm:w-[380px] h-[600px] max-h-[80vh] shadow-2xl rounded-2xl overflow-hidden"
                     >
                         <Card className="h-full flex flex-col border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm">
                             {/* Header */}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { processBulkImport } from "@/lib/bulk-actions";
+
 import ImportReviewTable from "@/components/import/ImportReviewTable";
 import { Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -20,10 +20,21 @@ export default function ImportPage() {
         if (!rawText.trim()) return;
         setIsAnalyzing(true);
         try {
-            const jobs = await processBulkImport(rawText);
-            setParsedJobs(jobs);
+            const res = await fetch("/api/jobs/bulk-analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ rawText })
+            });
+
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error.error || "Failed to analyze jobs");
+            }
+
+            const data = await res.json();
+            setParsedJobs(data.jobs);
         } catch (e) {
-            console.error(e);
+            console.error("Bulk Import Error:", e);
         } finally {
             setIsAnalyzing(false);
         }

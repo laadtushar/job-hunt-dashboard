@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Check, Trash2 } from "lucide-react";
-import { saveBulkJobs } from "@/lib/bulk-actions";
+
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -35,12 +35,24 @@ export default function ImportReviewTable({ jobs: initialJobs }: ImportReviewTab
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            const result = await saveBulkJobs(jobs);
+            const res = await fetch("/api/jobs/bulk-save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jobs })
+            });
+
+            if (!res.ok) {
+                throw new Error("Failed to save jobs");
+            }
+
+            const result = await res.json();
+
             if (result.success) {
                 toast({
                     title: "Import Successful",
                     description: `Saved ${result.count} new job applications.`,
                 });
+                router.refresh();
                 router.push("/");
             }
         } catch (e) {

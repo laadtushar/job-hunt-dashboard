@@ -180,8 +180,8 @@ export function DashboardToolbar({
                     </div>
                 </div>
 
-                {/* Multi-select Status Pills */}
-                <div className="flex flex-wrap gap-2 items-center">
+                {/* Desktop Filters Row (Hidden on mobile) */}
+                <div className="hidden md:flex flex-wrap gap-2 items-center">
                     <Filter className="h-4 w-4 text-slate-400 shrink-0" />
                     {STATUS_OPTIONS.map((opt) => {
                         const isActive = statusFilters.includes(opt.value)
@@ -364,6 +364,56 @@ export function DashboardToolbar({
                                         >
                                             <Activity className="h-4 w-4 mr-2" /> Timeline
                                         </Button>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-slate-500 uppercase tracking-wider">Status</label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {STATUS_OPTIONS.map((opt) => {
+                                            const isActive = statusFilters.includes(opt.value)
+                                            return (
+                                                <button
+                                                    key={opt.value}
+                                                    onClick={() => toggleStatus(opt.value)}
+                                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${isActive ? `${opt.color} text-white border-transparent shadow-sm` : 'bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800'}`}
+                                                >
+                                                    <div className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-white/60' : opt.color}`} />
+                                                    {opt.label}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-slate-500 uppercase tracking-wider">Source</label>
+                                        <Select value={sourceFilter} onValueChange={setSourceFilter}>
+                                            <SelectTrigger className="w-full h-10 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium shadow-sm">
+                                                <SelectValue placeholder="Source" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="ALL">All Sources</SelectItem>
+                                                <SelectItem value="GMAIL">Gmail</SelectItem>
+                                                <SelectItem value="MANUAL">Manual</SelectItem>
+                                                <SelectItem value="LINKEDIN">LinkedIn</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-slate-500 uppercase tracking-wider">Sort By</label>
+                                        <Select value={sortOrder} onValueChange={setSortOrder}>
+                                            <SelectTrigger className="w-full h-10 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium shadow-sm">
+                                                <SelectValue placeholder="Sort" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="NEWEST">Newest First</SelectItem>
+                                                <SelectItem value="OLDEST">Oldest First</SelectItem>
+                                                <SelectItem value="UPDATED">Last Updated</SelectItem>
+                                                <SelectItem value="COMPANY">Company Name</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </div>
 

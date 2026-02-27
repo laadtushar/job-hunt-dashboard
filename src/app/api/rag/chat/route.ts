@@ -183,6 +183,7 @@ export async function POST(req: Request) {
             SELECT j.company, j.role, j.status, j."jobDescription", j.feedback, e.vector <=> ${vectorString}::vector as distance
             FROM "JobApplication" j
             JOIN "JobEmbedding" e ON j.id = e."jobId"
+            WHERE j."userId" = ${session.user.id}
             ORDER BY distance ASC
             LIMIT 5;
         `;
@@ -192,20 +193,36 @@ export async function POST(req: Request) {
             SELECT el.subject, el.sender, el.snippet, e.type, e.vector <=> ${vectorString}::vector as distance
             FROM "EmailLog" el
             JOIN "EmailEmbedding" e ON el.id = e."emailId"
-            WHERE e.type = 'POSITIVE'
+            JOIN "JobApplication" j ON el."applicationId" = j.id
+            WHERE e.type = 'POSITIVE' AND j."userId" = ${session.user.id}
             ORDER BY distance ASC
             LIMIT 3;
         `;
+
+        // Fallback: Recent Jobs for general questions
+        const recentJobs = await prisma.jobApplication.findMany({
+            where: { userId: session.user.id },
+            orderBy: { appliedDate: 'desc' },
+            take: 15,
+            select: { company: true, role: true, status: true, feedback: true, appliedDate: true }
+        });
 
         // 3. Format Context
         let contextText = "";
 
         if (jobResults.length > 0) {
-            contextText += "--- JOB APPLICATIONS ---\n";
+            contextText += "--- SEMANTIC MATCHES (Job Descriptions) ---\n";
             jobResults.forEach((j: any) => {
                 if (j.distance < 0.6) { // Only include relevant matches
                     contextText += `- [Status: ${j.status}] ${j.role} at ${j.company}. Notes: ${j.feedback || "None"}. Description Snippet: ${(j.jobDescription || "").substring(0, 200)}...\n`;
                 }
+            });
+        }
+
+        if (recentJobs.length > 0) {
+            contextText += "\n--- YOUR RECENT APPLICATIONS (General Context) ---\n";
+            recentJobs.forEach((j: any) => {
+                contextText += `- [Status: ${j.status}] ${j.role} at ${j.company} (Applied: ${j.appliedDate.toISOString().split('T')[0]}). Notes: ${j.feedback || "None"}\n`;
             });
         }
 
