@@ -15,10 +15,15 @@ import {
     BrainCircuit,
     Layers,
     Bot,
-    Terminal
+    Terminal,
+    Lock,
+    Eye,
+    DatabaseZap,
+    Trash2
 } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function LandingPage({ loginAction }: { loginAction: any }) {
     return (
@@ -296,6 +301,74 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                 </div>
             </section>
 
+            {/* Data Transparency Section — Google OAuth Compliance */}
+            <section id="data-transparency" className="py-32 bg-white dark:bg-slate-950 px-6 border-t border-slate-100 dark:border-slate-900">
+                <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-16 space-y-4">
+                        <h2 className="text-sm font-black text-blue-500 uppercase tracking-[0.3em]">Transparency</h2>
+                        <h3 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white leading-tight">Your Data, Explained.</h3>
+                        <p className="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                            HyredLab requests <strong className="text-slate-700 dark:text-slate-200">read-only access</strong> to your Gmail account. Here is exactly what we do — and don't do — with your data.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        {[
+                            {
+                                icon: Eye,
+                                title: "What We Access",
+                                desc: "We use the Gmail API (gmail.readonly scope) to scan your inbox for job-related emails — application confirmations, interview invites, recruiter messages, and status updates.",
+                                color: "blue"
+                            },
+                            {
+                                icon: BrainCircuit,
+                                title: "How We Use It",
+                                desc: "Emails are processed by our AI (Google Gemini) to extract structured job data: company name, role, status, and recruiter contact. This data populates your personal dashboard.",
+                                color: "indigo"
+                            },
+                            {
+                                icon: Lock,
+                                title: "What We Never Do",
+                                desc: "We never send emails on your behalf, share your data with third parties, or store raw email content. Your data stays between you and your HyredLab instance.",
+                                color: "green"
+                            },
+                            {
+                                icon: Trash2,
+                                title: "Your Control",
+                                desc: "You can revoke access at any time from your Google Account settings. You can also request full data deletion via our Data Request (GDPR) page.",
+                                color: "purple"
+                            }
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 space-y-4"
+                            >
+                                <div className={`h-12 w-12 rounded-xl bg-${item.color}-100 dark:bg-${item.color}-900/30 flex items-center justify-center`}>
+                                    <item.icon className={`h-6 w-6 text-${item.color}-600 dark:text-${item.color}-400`} />
+                                </div>
+                                <h4 className="text-lg font-black text-slate-900 dark:text-white">{item.title}</h4>
+                                <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="mt-12 text-center">
+                        <Link
+                            href="/privacy-policy"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline underline-offset-4"
+                        >
+                            <ShieldCheck className="h-4 w-4" />
+                            Read our full Privacy Policy
+                            <ArrowRight className="h-4 w-4" />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
             {/* Agentic Flow Diagram Section */}
             <section className="py-32 bg-slate-50 dark:bg-slate-950 px-6">
                 <div className="max-w-4xl mx-auto text-center space-y-16">
@@ -395,6 +468,14 @@ export default function LandingPage({ loginAction }: { loginAction: any }) {
                         <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-400">
                             <li><a href="https://github.com/laadtushar" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors cursor-pointer">GitHub</a></li>
                             <li><a href="https://www.linkedin.com/in/tusharlaad2002/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors cursor-pointer">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-6">Legal</h5>
+                        <ul className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-400">
+                            <li><Link href="/privacy-policy" className="hover:text-blue-500 transition-colors cursor-pointer">Privacy Policy</Link></li>
+                            <li><Link href="/terms-of-service" className="hover:text-blue-500 transition-colors cursor-pointer">Terms of Service</Link></li>
+                            <li><Link href="/data-request" className="hover:text-blue-500 transition-colors cursor-pointer">Data Request (GDPR)</Link></li>
                         </ul>
                     </div>
                 </div>
