@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { JobCard } from "@/components/dashboard/JobCard"
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
 import { DashboardToolbar } from "@/components/dashboard/DashboardToolbar"
@@ -11,6 +11,7 @@ import { AskAI } from "@/components/dashboard/AskAI"
 import { JobGridView } from "@/components/dashboard/JobGridView"
 import { TimelineView } from "@/components/dashboard/TimelineView"
 import KanbanBoard from "@/components/kanban/KanbanBoard"
+import { Pagination } from "@/components/ui/pagination"
 import { toast } from "sonner"
 
 export default function DashboardClient({
@@ -33,6 +34,8 @@ export default function DashboardClient({
     const [hiddenJobs, setHiddenJobs] = useState<Set<string>>(new Set())
     const [isSyncing, setIsSyncing] = useState(false)
     const [syncLogs, setSyncLogs] = useState<{ message: string, type: 'info' | 'success' | 'error' }[]>([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(24)
 
     const handleSync = async () => {
         setIsSyncing(true)
@@ -171,6 +174,23 @@ export default function DashboardClient({
         }
     })
 
+    // Reset page to 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, statusFilters, sourceFilter, sortOrder]);
+
+    const totalItems = filteredJobs.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+    const paginatedJobs = filteredJobs.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handleItemsPerPageChange = (newSize: number) => {
+        setItemsPerPage(newSize);
+        setCurrentPage(1);
+    };
+
     const stats = {
         total: jobs.length,
         applied: jobs.filter(j => j.status === 'APPLIED').length,
@@ -215,7 +235,7 @@ export default function DashboardClient({
 
             {viewMode === 'BOARD' ? (
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {filteredJobs.map((job) => (
+                    {paginatedJobs.map((job) => (
                         <JobCard key={job.id} job={job} onHide={() => handleHideJob(job.id)} />
                     ))}
                     {filteredJobs.length === 0 && (
@@ -232,14 +252,23 @@ export default function DashboardClient({
                     )}
                 </div>
             ) : viewMode === 'GRID' ? (
-                <JobGridView jobs={filteredJobs} />
+                <JobGridView jobs={paginatedJobs} />
             ) : viewMode === 'TIMELINE' ? (
-                <TimelineView jobs={filteredJobs} />
+                <TimelineView jobs={paginatedJobs} />
             ) : (
                 <div className="bg-white/40 dark:bg-slate-900/40 p-4 rounded-3xl border border-slate-200/60 dark:border-slate-800/60 shadow-inner">
                     <KanbanBoard initialJobs={filteredJobs} />
                 </div>
             )}
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+                onItemsPerPageChange={handleItemsPerPageChange}
+            />
 
             <AskAI />
         </div>
