@@ -26,6 +26,7 @@ export default async function KanbanPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
             <Navbar />
+            <h1 className="sr-only">Application pipeline board</h1>
             <div className="max-w-7xl mx-auto p-6 lg:p-10">
                 <DashboardClient jobs={jobs} initialView="PIPELINE" />
             </div>

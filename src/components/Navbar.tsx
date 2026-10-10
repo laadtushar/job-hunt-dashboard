@@ -24,10 +24,11 @@ export default async function Navbar() {
                             <circle cx="48" cy="52" r="4" fill="#22d3ee" />
                         </svg>
                     </div>
-                    <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+                    {/* Not an <h1>: each page owns its single h1. */}
+                    <span className="text-xl md:text-2xl font-bold tracking-tight">
                         <span className="text-slate-900 dark:text-white">Hyred</span>
                         <span className="font-light text-slate-500 dark:text-slate-400">Lab</span>
-                    </h1>
+                    </span>
                 </a>
 
                 <div className="flex items-center gap-2 sm:gap-4 md:gap-6">

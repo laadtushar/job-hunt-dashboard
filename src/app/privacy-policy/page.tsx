@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { LEGAL_LAST_UPDATED, formatLegalDate, publicPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = publicPageMetadata({
+    title: "Privacy Policy: Data We Collect and Your Rights | HyredLab",
+    description:
+        "How HyredLab collects, uses and protects your personal data, and the rights you have under data protection law, including access, correction and erasure.",
+    path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
     return (
@@ -8,7 +17,7 @@ export default function PrivacyPolicyPage() {
                 <h1 className="text-3xl font-bold mb-8 text-slate-900 dark:text-slate-100">Privacy Policy</h1>
 
                 <div className="prose dark:prose-invert max-w-none space-y-6 text-slate-700 dark:text-slate-300">
-                    <p>Last updated: {new Date().toLocaleDateString()}</p>
+                    <p>Last updated: {formatLegalDate(LEGAL_LAST_UPDATED)}</p>
 
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">1. Introduction</h2>

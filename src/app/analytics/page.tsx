@@ -11,6 +11,9 @@ import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { ArrowLeft, TrendingUp, Users, CheckCircle, Clock } from "lucide-react";
 import Link from "next/link";
+import { privatePageMetadata } from "@/lib/seo";
+
+export const metadata = privatePageMetadata("Analytics");
 
 export default async function AnalyticsPage() {
     const session = await auth();

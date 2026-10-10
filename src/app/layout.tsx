@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { FOUNDER, STUDIO } from "@/lib/family";
+import { HOME_DESCRIPTION, HOME_TITLE, OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +15,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HyredLab | AI Job Hunt Dashboard",
-  description: "AI-powered job application tracker with automated Gmail sync.",
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  title: { default: HOME_TITLE, template: `%s | ${SITE_NAME}` },
+  description: HOME_DESCRIPTION,
+  authors: [{ name: FOUNDER.name, url: FOUNDER.url }],
+  creator: FOUNDER.name,
+  publisher: STUDIO.name,
+  // Defaults for pages that set no metadata of their own (the signed-in pages).
+  // Public pages build full tags, with a canonical, through publicPageMetadata.
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    locale: "en_US",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [{ url: OG_IMAGE.url, alt: OG_IMAGE.alt }],
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '32x32' },

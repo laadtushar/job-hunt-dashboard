@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { publicPageMetadata } from "@/lib/seo";
 import DataRequestForm from "@/components/compliance/DataRequestForm";
+
+export const metadata: Metadata = publicPageMetadata({
+    title: "GDPR Data Request: Access or Delete Your Data | HyredLab",
+    description:
+        "Ask HyredLab for a copy of your data or request its deletion under GDPR and other privacy laws. Submit the form with your account email and request details.",
+    path: "/data-request",
+});
 
 export default function DataRequestPage() {
     return (
