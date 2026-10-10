@@ -1,12 +1,12 @@
-# 👔 Meridian: Agentic Career Orchestration Platform
+# 👔 HyredLab: Agentic Career Orchestration Platform
 
-**Meridian** is an enterprise-grade, **LLM-driven job application tracker** that leverages **Agentic Workflows** and **Chain-of-Thought (CoT) reasoning** to autonomously synchronize your career search. It replaces manual data entry with a **multi-agent system** that ingests, cleans, and structures unstructured data from Gmail.
+**HyredLab** is an enterprise-grade, **LLM-driven job application tracker** that leverages **Agentic Workflows** and **Chain-of-Thought (CoT) reasoning** to autonomously synchronize your career search. It replaces manual data entry with a **multi-agent system** that ingests, cleans, and structures unstructured data from Gmail.
 
 [**Architecture Deep Dive 🏗️**](./ARCHITECTURE.md)
 
-**Live Demo:** [meridian-job-sync.vercel.app](https://meridian-job-sync.vercel.app)
+**Live:** [www.hyredlab.com](https://www.hyredlab.com)
 
-![Next.js 15](https://img.shields.io/badge/Next.js-15-black)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
 ![Agent Architecture](https://img.shields.io/badge/Architecture-Agentic-purple)
 ![RAG](https://img.shields.io/badge/AI-RAG%20%26%20CoT-blue)
 ![Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748)
@@ -24,7 +24,7 @@
 
 ### Semantic Identity Resolution
 ![Smart Consolidation](./public/screenshots/Smart_consolidation.png)
-*Meridian uses **L4 Semantic Matching** (a proprietary ranking algorithm) to merge fragmented signals (updates, interviews) into a single **Canonical Application Entity**.*
+*HyredLab uses **L4 Semantic Matching** (a proprietary ranking algorithm) to merge fragmented signals (updates, interviews) into a single **Canonical Application Entity**.*
 
 ### Neural Decision Logs
 ![Neural Logs](./public/screenshots/Log.png)
@@ -63,7 +63,7 @@
 - **🚫 Rejection Extraction**: Automatically identifies and summarizes rejection reasons from candidate communications.
 - **⚙️ Column Customization**: Tailor the Grid view to show exactly what you need (Salary, Hiring Manager, etc.).
 - **🛠️ Maintenance Tools**: Built-in controls for database consolidation and cleanup.
-- **🔒 Privacy First**: Your data stays on your local SQLite database/Vercel instance.
+- **🔒 Privacy First**: Gmail is read with the `gmail.readonly` scope, and your data lives in your own PostgreSQL database (not a local SQLite file).
 - **🚀 Vercel Analytics**: Built-in performance and traffic tracking via `@vercel/analytics`.
 
 ## 🚀 Tech Stack
@@ -77,7 +77,7 @@
 
 ## 🧠 Agentic AI Flow
 
-The core of Meridian is a multi-stage agentic workflow designed to handle the noise of a real inbox:
+The core of HyredLab is a multi-stage agentic workflow designed to handle the noise of a real inbox:
 
 1. **Extraction Agent (Front-Line)**: 
    - Scans incoming emails and structures unstructured text into a standard Job schema.
@@ -108,21 +108,24 @@ The core of Meridian is a multi-stage agentic workflow designed to handle the no
 
 ### 2. Installation
 ```bash
-git clone https://github.com/your-username/job-hunt-dashboard.git
+git clone https://github.com/laadtushar/job-hunt-dashboard.git
 cd job-hunt-dashboard
 npm install
 ```
 
 ### 3. Environment Setup
-Copy `.env.example` to `.env` (or `.env.local`):
-```bash
-cp .env.example .env
-```
+Create a `.env` file (or `.env.local`) in the project root. The repo ships no `.env.example`, and `.env*` is git-ignored, so never commit it. Set:
 
-Fill in the following variables:
+- `POSTGRES_PRISMA_URL` & `POSTGRES_URL_NON_POOLING`: Your PostgreSQL connection strings (pooled and direct). The database needs the `pgvector` extension. These are the names Vercel's Postgres integration provides.
 - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET`: From your [GCP Console](https://console.cloud.google.com/).
-- `GEMINI_API_KEY`: From [Google AI Studio](https://aistudio.google.com/).
 - `AUTH_SECRET`: Generate one using `npx auth secret`.
+- `GEMINI_API_KEY`: From [Google AI Studio](https://aistudio.google.com/). Used when `AI_PROVIDER` is unset or `GEMINI`.
+- `SUPERADMIN_EMAIL`: The Google account that is always allowed in and gets the admin role. Without it, the first user to sign in is allowed.
+
+Optional:
+- `AI_PROVIDER`: `GEMINI` (default) or `OPENROUTER`. With `OPENROUTER`, also set `OPENROUTER_API_KEY` (and `OPENROUTER_MODEL` to pick the model).
+- `EMBEDDING_PROVIDER`: `GEMINI`, `OPENROUTER` or `HUGGINGFACE` (runs a local model). Defaults to `AI_PROVIDER`, then `GEMINI`. `OPENROUTER_EMBEDDING_MODEL` picks the OpenRouter embedding model.
+- `NEXT_PUBLIC_LOGO_DEV_TOKEN`: A [logo.dev](https://logo.dev/) token for company logos.
 
 ### 4. Database Setup
 ```bash

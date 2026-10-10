@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { LEGAL_LAST_UPDATED, formatLegalDate, publicPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = publicPageMetadata({
+    title: "Terms of Service: Use License and Disclaimers | HyredLab",
+    description:
+        "The terms for using HyredLab: the use license, disclaimer of warranties, limitation of liability and governing law that apply when you use the website.",
+    path: "/terms-of-service",
+});
 
 export default function TermsOfServicePage() {
     return (
@@ -8,7 +17,7 @@ export default function TermsOfServicePage() {
                 <h1 className="text-3xl font-bold mb-8 text-slate-900 dark:text-slate-100">Terms of Service</h1>
 
                 <div className="prose dark:prose-invert max-w-none space-y-6 text-slate-700 dark:text-slate-300">
-                    <p>Last updated: {new Date().toLocaleDateString()}</p>
+                    <p>Last updated: {formatLegalDate(LEGAL_LAST_UPDATED)}</p>
 
                     <section>
                         <h2 className="text-xl font-semibold mb-3 text-slate-900 dark:text-slate-100">1. Agreement to Terms</h2>

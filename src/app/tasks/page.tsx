@@ -3,13 +3,11 @@ import TasksClient from "@/components/tasks/TasksClient"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import { privatePageMetadata } from "@/lib/seo"
 
 export const dynamic = "force-dynamic"
 
-export const metadata = {
-    title: "Tasks | HyredLab",
-    description: "AI-powered task management for your job search",
-}
+export const metadata = privatePageMetadata("Tasks", "AI-powered task management for your job search")
 
 export default async function TasksPage() {
     const session = await auth()

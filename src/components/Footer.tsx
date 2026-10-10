@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FOUNDER, SIBLING_APPS, STUDIO } from '@/lib/family';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -40,6 +41,34 @@ export default function Footer() {
                     </Link>
                 </div>
             </div>
+
+            {/* LabyNator family: plain same-tab links to the sibling sites. List lives in lib/family.ts. */}
+            <nav
+                aria-label="LabyNator family"
+                className="max-w-7xl mx-auto px-6 mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:flex-wrap items-center md:justify-between gap-x-8 gap-y-3 text-sm text-slate-500 dark:text-slate-400"
+            >
+                <p>
+                    Part of{' '}
+                    <a href={STUDIO.url} className="font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        {STUDIO.name}
+                    </a>
+                </p>
+                <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                    {SIBLING_APPS.map((app) => (
+                        <li key={app.name}>
+                            <a href={app.url} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                {`${app.name} — ${app.blurb}`}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+                <p>
+                    Built by{' '}
+                    <a href={FOUNDER.url} className="font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        {FOUNDER.name}
+                    </a>
+                </p>
+            </nav>
         </footer>
     );
 }

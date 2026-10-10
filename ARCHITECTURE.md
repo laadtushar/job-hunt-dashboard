@@ -1,6 +1,6 @@
 # 🏗️ Architecture Deep Dive: Agentic Systems & Data Mesh
 
-Meridian is architected as a **Neural-First Application**, treating unstructured email data as a stream of events that are processed by a **Multi-Agent System (MAS)**.
+HyredLab is architected as a **Neural-First Application**, treating unstructured email data as a stream of events that are processed by a **Multi-Agent System (MAS)**.
 
 ## 🗺️ Microservices & Agent Topology
 
@@ -26,7 +26,7 @@ graph TD
 
 ## 🔄 Event-Driven Ingestion Mesh
 
-To bypass serverless execution limits (Vercel 60s timeout), Meridian employs a **Client-Side Orchestrator** pattern that manages distributed job queues.
+To bypass serverless execution limits (Vercel 60s timeout), HyredLab employs a **Client-Side Orchestrator** pattern that manages distributed job queues.
 
 ### 1. The Distributed Worker Pattern
 ```mermaid
@@ -71,7 +71,7 @@ sequenceDiagram
 
 ## 🧬 Semantic Identity Resolution (L4 Neural Judge)
 
-Meridian solves the "Fragmented Data Problem" (e.g., "Google" vs "Alphabet Inc") using a multi-layered resolution strategy culminating in an LLM-based judge.
+HyredLab solves the "Fragmented Data Problem" (e.g., "Google" vs "Alphabet Inc") using a multi-layered resolution strategy culminating in an LLM-based judge.
 
 | Layer | Strategy | Algorithmic Complexity |
 | :--- | :--- | :--- |
@@ -94,7 +94,7 @@ The ingestion engine monitors `429 Too Many Requests` signals and automatically 
 ## 🔐 Zero-Trust Governance
 
 ### 1. RBAC & Allowlist Protocol
-Meridian enforces a **Data Sovereignty** model where only whitelisted identities can instantiate a session.
+HyredLab enforces a **Data Sovereignty** model where only whitelisted identities can instantiate a session.
 - **Middleware Guardrails**: Edge-level JWT verification.
 - **Database-Level Policies**: Row-Level Security (RLS) simulation via Prisma middleware.
 
